@@ -1,17 +1,27 @@
 import 'package:equatable/equatable.dart';
+import 'package:isar/isar.dart';
 
+part 'idea.g.dart';
+
+@Collection()
 class Idea extends Equatable {
-  final String uid;
+  final int id;
+  @Index(caseSensitive: false)
   final String title;
+  @Index(caseSensitive: false)
   final String description;
   final String ideaStatus;
+  @Index()
   final double index;
+  @Index()
   final int rating;
+  @Index(caseSensitive: false)
   final List<String> categories;
+  @Index()
   final DateTime dateTimeCreated;
 
   const Idea({
-    required this.uid,
+    required this.id,
     required this.title,
     required this.description,
     required this.ideaStatus,
@@ -23,10 +33,10 @@ class Idea extends Equatable {
 
   @override
   String toString() =>
-      'Idea{ uid: $uid, title: $title, description: $description, ideaStatus: $ideaStatus, index: $index, rating: $rating, categories: $categories, dateTimeCreated: $dateTimeCreated,}';
+      'Idea{ id: $id, title: $title, description: $description, ideaStatus: $ideaStatus, index: $index, rating: $rating, categories: $categories, dateTimeCreated: $dateTimeCreated,}';
 
   Idea copyWith({
-    String? uid,
+    int? id,
     String? title,
     String? description,
     String? ideaStatus,
@@ -36,7 +46,7 @@ class Idea extends Equatable {
     DateTime? dateTimeCreated,
   }) =>
       Idea(
-        uid: uid ?? this.uid,
+        id: id ?? this.id,
         title: title ?? this.title,
         description: description ?? this.description,
         ideaStatus: ideaStatus ?? this.ideaStatus,
@@ -47,7 +57,7 @@ class Idea extends Equatable {
       );
 
   Map<String, dynamic> toMap() => {
-        'uid': uid,
+        'id': id,
         'title': title,
         'description': description,
         'ideaStatus': ideaStatus,
@@ -58,7 +68,7 @@ class Idea extends Equatable {
       };
 
   factory Idea.fromMap(Map<String, dynamic> map) => Idea(
-        uid: map['uid'] as String? ?? '',
+        id: map['id'] as int,
         title: map['title'] as String? ?? '',
         description: map['description'] as String? ?? '',
         ideaStatus: map['ideaStatus'] as String? ?? '',
@@ -70,7 +80,7 @@ class Idea extends Equatable {
 
   @override
   List<Object?> get props => [
-        uid,
+        id,
         title,
         description,
         ideaStatus,
