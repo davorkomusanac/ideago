@@ -1,33 +1,29 @@
-import 'package:ideago/data/databases/ideas_db.dart';
-import 'package:ideago/data/models/idea.dart';
+import 'package:ideago/data/databases/ideas_offline_db.dart';
+import 'package:ideago/data/models/idea/idea.dart';
 import 'package:ideago/repository/ideas_interface.dart';
 
 class IdeasRepository implements IdeasInterface {
-  final IdeasDB db;
+  final IdeasOfflineDB offlineDb;
 
-  IdeasRepository(this.db);
+  IdeasRepository({required this.offlineDb});
 
   @override
-  Future<void> addIdea(Idea idea) {
-    // TODO: implement addIdea
-    throw UnimplementedError();
+  Future<List<Idea>> getAllIdeas() async {
+    return await offlineDb.getAllIdeas();
   }
 
   @override
-  Future<void> deleteIdea(Idea idea) {
-    // TODO: implement deleteIdea
-    throw UnimplementedError();
+  Future<void> addIdea(Idea idea) async {
+    await offlineDb.addIdea(idea);
   }
 
   @override
-  Future<List<Idea>> getAllIdeas() {
-    // TODO: implement getAllIdeas
-    throw UnimplementedError();
+  Future<void> deleteIdea(Idea idea) async {
+    await offlineDb.deleteIdea(idea);
   }
 
   @override
-  Future<void> updateIdea(Idea idea) {
-    // TODO: implement updateIdea
-    throw UnimplementedError();
+  Future<void> updateIdea(Idea idea) async {
+    await offlineDb.updateIdea(idea);
   }
 }

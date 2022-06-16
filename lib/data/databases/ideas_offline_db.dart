@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 
-import '../models/idea.dart';
+import '../models/idea/idea.dart';
 
 class IdeasOfflineDB {
   late Isar _isar;
@@ -10,10 +10,9 @@ class IdeasOfflineDB {
     initDb();
   }
 
-  Future<void> initDb() async {
-    _isar = await Isar.open(
-      schemas: [IdeaSchema],
-    );
+  void initDb() {
+    //TODO Error Handling
+    _isar = Isar.getInstance()!;
     _ideas = _isar.ideas;
   }
 
