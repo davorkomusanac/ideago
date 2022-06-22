@@ -38,3 +38,21 @@ List<Idea> tempIdeas = [
     dateTimeLastUpdated: DateTime.now(),
   ),
 ];
+
+/// Add/Update Idea possible statuses
+const String ideaStatusToDo = 'To Do';
+const String ideaStatusInProgress = 'In Progress';
+const String ideaStatusDone = 'Done';
+const String ideaStatusDiscarded = 'Discarded';
+
+/// Add/Update Idea Tab Titles
+const String ideaTabTitleOne = 'Idea';
+const String ideaTabTitleTwo = 'Features';
+
+/// IdeaTextFields values
+const String ideaTextFieldTitleLabel = 'Title';
+const String ideaTextFieldTitleHint = 'Type the name of your idea..';
+const String ideaTextFieldSummaryLabel = 'Summary';
+const String ideaTextFieldSummaryHint = 'Add short summary of your idea..';
+const String ideaTextFieldFullDescriptionLabel = 'Full description';
+const String ideaTextFieldFullDescriptionHint = 'Add full description regarding your idea..';
