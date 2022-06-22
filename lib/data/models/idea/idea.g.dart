@@ -6,7 +6,7 @@ part of 'idea.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetIdeaCollection on Isar {
   IsarCollection<Idea> get ideas => getCollection();
@@ -93,8 +93,8 @@ List<IsarLinkBase> _ideaGetLinks(Idea object) {
   return [];
 }
 
-void _ideaSerializeNative(IsarCollection<Idea> collection, IsarRawObject rawObj,
-    Idea object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
+void _ideaSerializeNative(IsarCollection<Idea> collection, IsarRawObject rawObj, Idea object, int staticSize,
+    List<int> offsets, AdapterAlloc alloc) {
   var dynamicSize = 0;
   final value0 = object.categories;
   dynamicSize += (value0.length) * 8;
@@ -148,8 +148,7 @@ void _ideaSerializeNative(IsarCollection<Idea> collection, IsarRawObject rawObj,
   writer.writeBytes(offsets[10], _title);
 }
 
-Idea _ideaDeserializeNative(IsarCollection<Idea> collection, int id,
-    IsarBinaryReader reader, List<int> offsets) {
+Idea _ideaDeserializeNative(IsarCollection<Idea> collection, int id, IsarBinaryReader reader, List<int> offsets) {
   final object = Idea(
     categories: reader.readStringList(offsets[0]) ?? [],
     dateTimeCreated: reader.readDateTime(offsets[1]),
@@ -165,8 +164,7 @@ Idea _ideaDeserializeNative(IsarCollection<Idea> collection, int id,
   return object;
 }
 
-P _ideaDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+P _ideaDeserializePropNative<P>(int id, IsarBinaryReader reader, int propertyIndex, int offset) {
   switch (propertyIndex) {
     case -1:
       return id as P;
@@ -200,10 +198,8 @@ P _ideaDeserializePropNative<P>(
 dynamic _ideaSerializeWeb(IsarCollection<Idea> collection, Idea object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'categories', object.categories);
-  IsarNative.jsObjectSet(jsObj, 'dateTimeCreated',
-      object.dateTimeCreated.toUtc().millisecondsSinceEpoch);
-  IsarNative.jsObjectSet(jsObj, 'dateTimeLastUpdated',
-      object.dateTimeLastUpdated.toUtc().millisecondsSinceEpoch);
+  IsarNative.jsObjectSet(jsObj, 'dateTimeCreated', object.dateTimeCreated.toUtc().millisecondsSinceEpoch);
+  IsarNative.jsObjectSet(jsObj, 'dateTimeLastUpdated', object.dateTimeLastUpdated.toUtc().millisecondsSinceEpoch);
   IsarNative.jsObjectSet(jsObj, 'fullDescription', object.fullDescription);
   IsarNative.jsObjectSet(jsObj, 'hashCode', object.hashCode);
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
@@ -218,24 +214,15 @@ dynamic _ideaSerializeWeb(IsarCollection<Idea> collection, Idea object) {
 
 Idea _ideaDeserializeWeb(IsarCollection<Idea> collection, dynamic jsObj) {
   final object = Idea(
-    categories: (IsarNative.jsObjectGet(jsObj, 'categories') as List?)
-            ?.map((e) => e ?? '')
-            .toList()
-            .cast<String>() ??
-        [],
+    categories:
+        (IsarNative.jsObjectGet(jsObj, 'categories') as List?)?.map((e) => e ?? '').toList().cast<String>() ?? [],
     dateTimeCreated: IsarNative.jsObjectGet(jsObj, 'dateTimeCreated') != null
-        ? DateTime.fromMillisecondsSinceEpoch(
-                IsarNative.jsObjectGet(jsObj, 'dateTimeCreated'),
-                isUtc: true)
+        ? DateTime.fromMillisecondsSinceEpoch(IsarNative.jsObjectGet(jsObj, 'dateTimeCreated'), isUtc: true).toLocal()
+        : DateTime.fromMillisecondsSinceEpoch(0),
+    dateTimeLastUpdated: IsarNative.jsObjectGet(jsObj, 'dateTimeLastUpdated') != null
+        ? DateTime.fromMillisecondsSinceEpoch(IsarNative.jsObjectGet(jsObj, 'dateTimeLastUpdated'), isUtc: true)
             .toLocal()
         : DateTime.fromMillisecondsSinceEpoch(0),
-    dateTimeLastUpdated:
-        IsarNative.jsObjectGet(jsObj, 'dateTimeLastUpdated') != null
-            ? DateTime.fromMillisecondsSinceEpoch(
-                    IsarNative.jsObjectGet(jsObj, 'dateTimeLastUpdated'),
-                    isUtc: true)
-                .toLocal()
-            : DateTime.fromMillisecondsSinceEpoch(0),
     fullDescription: IsarNative.jsObjectGet(jsObj, 'fullDescription') ?? '',
     id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
     ideaStatus: IsarNative.jsObjectGet(jsObj, 'ideaStatus') ?? '',
@@ -250,41 +237,29 @@ Idea _ideaDeserializeWeb(IsarCollection<Idea> collection, dynamic jsObj) {
 P _ideaDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'categories':
-      return ((IsarNative.jsObjectGet(jsObj, 'categories') as List?)
-              ?.map((e) => e ?? '')
-              .toList()
-              .cast<String>() ??
-          []) as P;
+      return ((IsarNative.jsObjectGet(jsObj, 'categories') as List?)?.map((e) => e ?? '').toList().cast<String>() ?? [])
+          as P;
     case 'dateTimeCreated':
       return (IsarNative.jsObjectGet(jsObj, 'dateTimeCreated') != null
-          ? DateTime.fromMillisecondsSinceEpoch(
-                  IsarNative.jsObjectGet(jsObj, 'dateTimeCreated'),
-                  isUtc: true)
-              .toLocal()
+          ? DateTime.fromMillisecondsSinceEpoch(IsarNative.jsObjectGet(jsObj, 'dateTimeCreated'), isUtc: true).toLocal()
           : DateTime.fromMillisecondsSinceEpoch(0)) as P;
     case 'dateTimeLastUpdated':
       return (IsarNative.jsObjectGet(jsObj, 'dateTimeLastUpdated') != null
-          ? DateTime.fromMillisecondsSinceEpoch(
-                  IsarNative.jsObjectGet(jsObj, 'dateTimeLastUpdated'),
-                  isUtc: true)
+          ? DateTime.fromMillisecondsSinceEpoch(IsarNative.jsObjectGet(jsObj, 'dateTimeLastUpdated'), isUtc: true)
               .toLocal()
           : DateTime.fromMillisecondsSinceEpoch(0)) as P;
     case 'fullDescription':
       return (IsarNative.jsObjectGet(jsObj, 'fullDescription') ?? '') as P;
     case 'hashCode':
-      return (IsarNative.jsObjectGet(jsObj, 'hashCode') ??
-          double.negativeInfinity) as P;
+      return (IsarNative.jsObjectGet(jsObj, 'hashCode') ?? double.negativeInfinity) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity) as P;
     case 'ideaStatus':
       return (IsarNative.jsObjectGet(jsObj, 'ideaStatus') ?? '') as P;
     case 'index':
-      return (IsarNative.jsObjectGet(jsObj, 'index') ?? double.negativeInfinity)
-          as P;
+      return (IsarNative.jsObjectGet(jsObj, 'index') ?? double.negativeInfinity) as P;
     case 'rating':
-      return (IsarNative.jsObjectGet(jsObj, 'rating') ??
-          double.negativeInfinity) as P;
+      return (IsarNative.jsObjectGet(jsObj, 'rating') ?? double.negativeInfinity) as P;
     case 'stringify':
       return (IsarNative.jsObjectGet(jsObj, 'stringify')) as P;
     case 'summary':
@@ -304,43 +279,35 @@ extension IdeaQueryWhereSort on QueryBuilder<Idea, Idea, QWhere> {
   }
 
   QueryBuilder<Idea, Idea, QAfterWhere> anyCategoriesAny() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'categories'));
+    return addWhereClauseInternal(const IndexWhereClause.any(indexName: 'categories'));
   }
 
   QueryBuilder<Idea, Idea, QAfterWhere> anyDateTimeCreated() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'dateTimeCreated'));
+    return addWhereClauseInternal(const IndexWhereClause.any(indexName: 'dateTimeCreated'));
   }
 
   QueryBuilder<Idea, Idea, QAfterWhere> anyDateTimeLastUpdated() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'dateTimeLastUpdated'));
+    return addWhereClauseInternal(const IndexWhereClause.any(indexName: 'dateTimeLastUpdated'));
   }
 
   QueryBuilder<Idea, Idea, QAfterWhere> anyFullDescription() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'fullDescription'));
+    return addWhereClauseInternal(const IndexWhereClause.any(indexName: 'fullDescription'));
   }
 
   QueryBuilder<Idea, Idea, QAfterWhere> anyIndex() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'index'));
+    return addWhereClauseInternal(const IndexWhereClause.any(indexName: 'index'));
   }
 
   QueryBuilder<Idea, Idea, QAfterWhere> anyRating() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'rating'));
+    return addWhereClauseInternal(const IndexWhereClause.any(indexName: 'rating'));
   }
 
   QueryBuilder<Idea, Idea, QAfterWhere> anySummary() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'summary'));
+    return addWhereClauseInternal(const IndexWhereClause.any(indexName: 'summary'));
   }
 
   QueryBuilder<Idea, Idea, QAfterWhere> anyTitle() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'title'));
+    return addWhereClauseInternal(const IndexWhereClause.any(indexName: 'title'));
   }
 }
 
@@ -370,15 +337,13 @@ extension IdeaQueryWhere on QueryBuilder<Idea, Idea, QWhereClause> {
     }
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> idGreaterThan(int id,
-      {bool include = false}) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> idGreaterThan(int id, {bool include = false}) {
     return addWhereClauseInternal(
       IdWhereClause.greaterThan(lower: id, includeLower: include),
     );
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> idLessThan(int id,
-      {bool include = false}) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> idLessThan(int id, {bool include = false}) {
     return addWhereClauseInternal(
       IdWhereClause.lessThan(upper: id, includeUpper: include),
     );
@@ -398,16 +363,14 @@ extension IdeaQueryWhere on QueryBuilder<Idea, Idea, QWhereClause> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> categoriesAnyEqualTo(
-      String categoriesElement) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> categoriesAnyEqualTo(String categoriesElement) {
     return addWhereClauseInternal(IndexWhereClause.equalTo(
       indexName: 'categories',
       value: [categoriesElement],
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> categoriesAnyNotEqualTo(
-      String categoriesElement) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> categoriesAnyNotEqualTo(String categoriesElement) {
     if (whereSortInternal == Sort.asc) {
       return addWhereClauseInternal(IndexWhereClause.lessThan(
         indexName: 'categories',
@@ -468,8 +431,7 @@ extension IdeaQueryWhere on QueryBuilder<Idea, Idea, QWhereClause> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> categoriesAnyStartsWith(
-      String CategoriesElementPrefix) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> categoriesAnyStartsWith(String CategoriesElementPrefix) {
     return addWhereClauseInternal(IndexWhereClause.between(
       indexName: 'categories',
       lower: [CategoriesElementPrefix],
@@ -479,16 +441,14 @@ extension IdeaQueryWhere on QueryBuilder<Idea, Idea, QWhereClause> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> dateTimeCreatedEqualTo(
-      DateTime dateTimeCreated) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> dateTimeCreatedEqualTo(DateTime dateTimeCreated) {
     return addWhereClauseInternal(IndexWhereClause.equalTo(
       indexName: 'dateTimeCreated',
       value: [dateTimeCreated],
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> dateTimeCreatedNotEqualTo(
-      DateTime dateTimeCreated) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> dateTimeCreatedNotEqualTo(DateTime dateTimeCreated) {
     if (whereSortInternal == Sort.asc) {
       return addWhereClauseInternal(IndexWhereClause.lessThan(
         indexName: 'dateTimeCreated',
@@ -549,16 +509,14 @@ extension IdeaQueryWhere on QueryBuilder<Idea, Idea, QWhereClause> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> dateTimeLastUpdatedEqualTo(
-      DateTime dateTimeLastUpdated) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> dateTimeLastUpdatedEqualTo(DateTime dateTimeLastUpdated) {
     return addWhereClauseInternal(IndexWhereClause.equalTo(
       indexName: 'dateTimeLastUpdated',
       value: [dateTimeLastUpdated],
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> dateTimeLastUpdatedNotEqualTo(
-      DateTime dateTimeLastUpdated) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> dateTimeLastUpdatedNotEqualTo(DateTime dateTimeLastUpdated) {
     if (whereSortInternal == Sort.asc) {
       return addWhereClauseInternal(IndexWhereClause.lessThan(
         indexName: 'dateTimeLastUpdated',
@@ -619,16 +577,14 @@ extension IdeaQueryWhere on QueryBuilder<Idea, Idea, QWhereClause> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> fullDescriptionEqualTo(
-      String fullDescription) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> fullDescriptionEqualTo(String fullDescription) {
     return addWhereClauseInternal(IndexWhereClause.equalTo(
       indexName: 'fullDescription',
       value: [fullDescription],
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> fullDescriptionNotEqualTo(
-      String fullDescription) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> fullDescriptionNotEqualTo(String fullDescription) {
     if (whereSortInternal == Sort.asc) {
       return addWhereClauseInternal(IndexWhereClause.lessThan(
         indexName: 'fullDescription',
@@ -668,8 +624,7 @@ extension IdeaQueryWhere on QueryBuilder<Idea, Idea, QWhereClause> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> indexBetween(
-      double lowerIndex, double upperIndex) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> indexBetween(double lowerIndex, double upperIndex) {
     return addWhereClauseInternal(IndexWhereClause.between(
       indexName: 'index',
       lower: [lowerIndex],
@@ -754,8 +709,7 @@ extension IdeaQueryWhere on QueryBuilder<Idea, Idea, QWhereClause> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterWhereClause> summaryNotEqualTo(
-      String summary) {
+  QueryBuilder<Idea, Idea, QAfterWhereClause> summaryNotEqualTo(String summary) {
     if (whereSortInternal == Sort.asc) {
       return addWhereClauseInternal(IndexWhereClause.lessThan(
         indexName: 'summary',
@@ -893,9 +847,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> categoriesAnyContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> categoriesAnyContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'categories',
@@ -904,9 +856,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> categoriesAnyMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> categoriesAnyMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'categories',
@@ -915,8 +865,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> dateTimeCreatedEqualTo(
-      DateTime value) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> dateTimeCreatedEqualTo(DateTime value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'dateTimeCreated',
@@ -963,8 +912,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> dateTimeLastUpdatedEqualTo(
-      DateTime value) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> dateTimeLastUpdatedEqualTo(DateTime value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'dateTimeLastUpdated',
@@ -972,8 +920,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition>
-      dateTimeLastUpdatedGreaterThan(
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> dateTimeLastUpdatedGreaterThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -1093,9 +1040,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> fullDescriptionContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> fullDescriptionContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'fullDescription',
@@ -1104,9 +1049,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> fullDescriptionMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> fullDescriptionMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'fullDescription',
@@ -1290,9 +1233,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> ideaStatusContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> ideaStatusContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'ideaStatus',
@@ -1301,9 +1242,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> ideaStatusMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> ideaStatusMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'ideaStatus',
@@ -1312,8 +1251,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> indexGreaterThan(
-      double value) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> indexGreaterThan(double value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.gt,
       include: false,
@@ -1331,8 +1269,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> indexBetween(
-      double lower, double upper) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> indexBetween(double lower, double upper) {
     return addFilterConditionInternal(FilterCondition.between(
       property: 'index',
       lower: lower,
@@ -1397,8 +1334,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> stringifyEqualTo(
-      bool? value) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> stringifyEqualTo(bool? value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'stringify',
@@ -1487,8 +1423,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> summaryContains(String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> summaryContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'summary',
@@ -1497,8 +1432,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> summaryMatches(String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> summaryMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'summary',
@@ -1588,8 +1522,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> titleContains(String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> titleContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'title',
@@ -1598,8 +1531,7 @@ extension IdeaQueryFilter on QueryBuilder<Idea, Idea, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Idea, Idea, QAfterFilterCondition> titleMatches(String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QAfterFilterCondition> titleMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'title',
@@ -1800,10 +1732,8 @@ extension IdeaQueryWhereDistinct on QueryBuilder<Idea, Idea, QDistinct> {
     return addDistinctByInternal('dateTimeLastUpdated');
   }
 
-  QueryBuilder<Idea, Idea, QDistinct> distinctByFullDescription(
-      {bool caseSensitive = true}) {
-    return addDistinctByInternal('fullDescription',
-        caseSensitive: caseSensitive);
+  QueryBuilder<Idea, Idea, QDistinct> distinctByFullDescription({bool caseSensitive = true}) {
+    return addDistinctByInternal('fullDescription', caseSensitive: caseSensitive);
   }
 
   QueryBuilder<Idea, Idea, QDistinct> distinctByHashCode() {
@@ -1814,8 +1744,7 @@ extension IdeaQueryWhereDistinct on QueryBuilder<Idea, Idea, QDistinct> {
     return addDistinctByInternal('id');
   }
 
-  QueryBuilder<Idea, Idea, QDistinct> distinctByIdeaStatus(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QDistinct> distinctByIdeaStatus({bool caseSensitive = true}) {
     return addDistinctByInternal('ideaStatus', caseSensitive: caseSensitive);
   }
 
@@ -1831,13 +1760,11 @@ extension IdeaQueryWhereDistinct on QueryBuilder<Idea, Idea, QDistinct> {
     return addDistinctByInternal('stringify');
   }
 
-  QueryBuilder<Idea, Idea, QDistinct> distinctBySummary(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QDistinct> distinctBySummary({bool caseSensitive = true}) {
     return addDistinctByInternal('summary', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<Idea, Idea, QDistinct> distinctByTitle(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Idea, Idea, QDistinct> distinctByTitle({bool caseSensitive = true}) {
     return addDistinctByInternal('title', caseSensitive: caseSensitive);
   }
 }
