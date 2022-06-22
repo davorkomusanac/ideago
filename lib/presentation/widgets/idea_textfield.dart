@@ -6,11 +6,14 @@ class IdeaTextField extends StatelessWidget {
   final bool autofocus;
   final bool isDense;
   final bool expands;
+  final bool readOnly;
   final int? maxLines;
   final int? minLines;
   final TextEditingController controller;
   final FocusNode? focusNode;
   final EdgeInsets? contentPadding;
+  final Widget? suffixIcon;
+  final VoidCallback? onTap;
 
   const IdeaTextField({
     required this.labelText,
@@ -18,11 +21,14 @@ class IdeaTextField extends StatelessWidget {
     this.autofocus = false,
     this.isDense = true,
     this.expands = false,
+    this.readOnly = false,
     this.maxLines = 1,
     this.minLines = 1,
     this.hintText,
     this.focusNode,
     this.contentPadding,
+    this.suffixIcon,
+    this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -35,12 +41,15 @@ class IdeaTextField extends StatelessWidget {
       autofocus: autofocus,
       expands: expands,
       focusNode: focusNode,
+      readOnly: readOnly,
+      onTap: onTap,
       textAlignVertical: TextAlignVertical.top,
       decoration: InputDecoration(
         alignLabelWithHint: true,
         labelText: labelText,
         hintText: hintText,
         isDense: isDense,
+        suffixIcon: suffixIcon,
         contentPadding: contentPadding,
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(width: 1.0),
