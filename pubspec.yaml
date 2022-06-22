@@ -30,6 +30,7 @@ dependencies:
   isar: 2.5.0
   isar_flutter_libs: 2.5.0
   path_provider: ^2.0.10
+  modal_bottom_sheet: ^2.0.1
 
 dev_dependencies:
   flutter_test:
