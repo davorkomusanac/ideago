@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ideago/presentation/widgets/idea_textfield.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ideago/presentation/widgets/idea_status_bottom_sheet.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import '../../../application/add_or_update_idea/add_or_update_idea_cubit.dart';
+import '../../../constants.dart';
+import '../../widgets/idea_textfield.dart';
 
 class AddIdeaPage extends StatefulWidget {
   const AddIdeaPage({Key? key}) : super(key: key);
@@ -17,15 +23,10 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
   late TextEditingController _categoriesController;
   late TabController _tabController;
   final List<Tab> _tabs = <Tab>[
-    const Tab(
-      text: 'Idea',
-    ),
-    const Tab(
-      text: 'Features',
-    ),
+    const Tab(text: ideaTabTitleOne),
+    const Tab(text: ideaTabTitleTwo),
   ];
   final FocusNode _descriptionFullScreenFocusNode = FocusNode();
-  bool isDescriptionFullScreen = false;
 
   @override
   void initState() {
@@ -33,7 +34,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
     _titleController = TextEditingController();
     _summaryController = TextEditingController();
     _fullDescriptionController = TextEditingController();
-    _statusController = TextEditingController();
+    _statusController = TextEditingController(text: ideaStatusToDo);
     _ratingController = TextEditingController();
     _categoriesController = TextEditingController();
     _tabController = TabController(
@@ -55,7 +56,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
   }
 
   //TODO Extract this into separate file
-  List<Widget> getTabViews() {
+  List<Widget> getTabViews(BuildContext context) {
     return <Widget>[
       SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -70,10 +71,10 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: IdeaTextField(
-                      labelText: 'Title',
                       controller: _titleController,
+                      labelText: ideaTextFieldTitleLabel,
+                      hintText: ideaTextFieldTitleHint,
                       autofocus: true,
-                      hintText: 'Type the name of your idea..',
                     ),
                   ),
                 ),
@@ -88,9 +89,9 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: IdeaTextField(
-                labelText: 'Summary',
                 controller: _summaryController,
-                hintText: 'Add short summary of your idea..',
+                labelText: ideaTextFieldSummaryLabel,
+                hintText: ideaTextFieldSummaryHint,
               ),
             ),
             const SizedBox(height: 10),
@@ -99,9 +100,9 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
               child: Stack(
                 children: [
                   IdeaTextField(
-                    labelText: 'Full description',
                     controller: _fullDescriptionController,
-                    hintText: 'Add full description regarding your idea..',
+                    labelText: ideaTextFieldFullDescriptionLabel,
+                    hintText: ideaTextFieldFullDescriptionHint,
                     minLines: 10,
                     maxLines: 10,
                     contentPadding: const EdgeInsets.fromLTRB(12, 12, 20, 12),
@@ -111,11 +112,8 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                     bottom: 0,
                     child: IconButton(
                       onPressed: () {
-                        //TODO Change state with bloc here
-                        setState(() {
-                          _descriptionFullScreenFocusNode.requestFocus();
-                          isDescriptionFullScreen = !isDescriptionFullScreen;
-                        });
+                        _descriptionFullScreenFocusNode.requestFocus();
+                        context.read<AddOrUpdateIdeaCubit>().descriptionButtonPressed();
                       },
                       icon: const Icon(Icons.fullscreen),
                     ),
@@ -128,11 +126,28 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 children: [
-                  Expanded(
-                    //TODO Make a dropdown
-                    child: IdeaTextField(
-                      labelText: 'Status',
-                      controller: _statusController,
+                  BlocListener<AddOrUpdateIdeaCubit, AddOrUpdateIdeaState>(
+                    listener: (context, state) {
+                      if (state.ideaProjectStatus != _statusController.text) {
+                        _statusController.text = state.ideaProjectStatus;
+                      }
+                    },
+                    child: Expanded(
+                      child: IdeaTextField(
+                        labelText: 'Status',
+                        controller: _statusController,
+                        readOnly: true,
+                        suffixIcon: const Icon(Icons.arrow_drop_down),
+                        onTap: () {
+                          showMaterialModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            builder: (_) => IdeaStatusBottomSheet(
+                              cubit: BlocProvider.of<AddOrUpdateIdeaCubit>(context),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(width: 26),
@@ -157,16 +172,26 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
             ),
             const SizedBox(height: 26),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 5,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                shape: const RoundedRectangleBorder(
+                  //side: BorderSide(),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+              ),
               onPressed: () {
                 //TODO Create Idea
               },
-              child: Text('Finish'),
+              child: const Icon(Icons.add),
             ),
           ],
         ),
       ),
       //TODO Implement Features design
-      Center(
+      const Center(
         child: Text('Features Screen - To Be Implemented'),
       ),
     ];
@@ -174,88 +199,92 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      //Dismiss keyboard when user taps somewhere outside a TextField
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        //TODO Change design
-        backgroundColor: Colors.blue[900],
-        body: SafeArea(
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            switchInCurve: Curves.fastOutSlowIn,
-            switchOutCurve: Curves.fastOutSlowIn,
-            //Default animation is FadeTransition, changed type to Scale for smoother feel
-            transitionBuilder: (child, animation) => ScaleTransition(
-              scale: animation,
-              alignment: Alignment.bottomRight,
-              child: child,
-            ),
-            child: isDescriptionFullScreen
-                ? CustomScrollView(
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                    slivers: [
-                      //A scrollview is needed to be able to dismiss keyboard on drag, CustomScrollView works with Expanded
-                      SliverFillRemaining(
-                        child: Column(
-                          //A key is needed here so that AnimatedSwitcher can know the difference between children and animate them
-                          key: const ValueKey<int>(0),
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Stack(
-                                  children: [
-                                    IdeaTextField(
-                                      focusNode: _descriptionFullScreenFocusNode,
-                                      labelText: 'Full description',
-                                      controller: _fullDescriptionController,
-                                      hintText: 'Add full description regarding your idea..',
-                                      minLines: null,
-                                      maxLines: null,
-                                      expands: true,
-                                      contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 36),
-                                    ),
-                                    Positioned(
-                                      right: 0,
-                                      bottom: 0,
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            //TODO Change state with Bloc
-                                            isDescriptionFullScreen = !isDescriptionFullScreen;
-                                          });
-                                        },
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(12.0),
-                                          child: Icon(Icons.fullscreen_exit),
-                                        ),
+    return BlocProvider(
+      create: (context) => AddOrUpdateIdeaCubit(),
+      child: GestureDetector(
+        //Dismiss keyboard when user taps somewhere outside a TextField
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          //TODO Change design
+          backgroundColor: Colors.blue[900],
+          body: SafeArea(
+            child: BlocBuilder<AddOrUpdateIdeaCubit, AddOrUpdateIdeaState>(
+              builder: (context, state) {
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  switchInCurve: Curves.fastOutSlowIn,
+                  switchOutCurve: Curves.fastOutSlowIn,
+                  //Default animation is FadeTransition, changed type to Scale for smoother feel
+                  transitionBuilder: (child, animation) => ScaleTransition(
+                    scale: animation,
+                    alignment: Alignment.bottomRight,
+                    child: child,
+                  ),
+                  child: state.isDescriptionExpanded
+                      ? CustomScrollView(
+                          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                          slivers: [
+                            //A scrollview is needed to be able to dismiss keyboard on drag, CustomScrollView works with Expanded
+                            SliverFillRemaining(
+                              child: Column(
+                                //A key is needed here so that AnimatedSwitcher can know the difference between children and animate them
+                                key: const ValueKey<int>(0),
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Stack(
+                                        children: [
+                                          IdeaTextField(
+                                            focusNode: _descriptionFullScreenFocusNode,
+                                            controller: _fullDescriptionController,
+                                            labelText: ideaTextFieldFullDescriptionLabel,
+                                            hintText: ideaTextFieldFullDescriptionHint,
+                                            minLines: null,
+                                            maxLines: null,
+                                            expands: true,
+                                            contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 36),
+                                          ),
+                                          Positioned(
+                                            right: 0,
+                                            bottom: 0,
+                                            child: InkWell(
+                                              onTap: () =>
+                                                  context.read<AddOrUpdateIdeaCubit>().descriptionButtonPressed(),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(12.0),
+                                                child: Icon(Icons.fullscreen_exit),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
+                        )
+                      : Column(
+                          key: const ValueKey<int>(1),
+                          children: [
+                            Expanded(
+                              child: TabBarView(
+                                controller: _tabController,
+                                children: getTabViews(context),
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            TabBar(
+                              tabs: _tabs,
+                              controller: _tabController,
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  )
-                : Column(
-                    key: const ValueKey<int>(1),
-                    children: [
-                      Expanded(
-                        child: TabBarView(
-                          controller: _tabController,
-                          children: getTabViews(),
-                        ),
-                      ),
-                      TabBar(
-                        tabs: _tabs,
-                        controller: _tabController,
-                      ),
-                    ],
-                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
