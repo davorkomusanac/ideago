@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ideago/presentation/pages/rate_idea/rate_idea_page.dart';
 import 'package:ideago/presentation/widgets/idea_status_bottom_sheet.dart';
+import 'package:ideago/presentation/widgets/idea_textfield_label.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../application/add_or_update_idea/add_or_update_idea_cubit.dart';
@@ -35,7 +37,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
     _summaryController = TextEditingController();
     _fullDescriptionController = TextEditingController();
     _statusController = TextEditingController(text: ideaStatusToDo);
-    _ratingController = TextEditingController();
+    _ratingController = TextEditingController(text: '90 - Very Good');
     _categoriesController = TextEditingController();
     _tabController = TabController(
       length: _tabs.length,
@@ -63,45 +65,52 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
         child: Column(
           children: [
             const SizedBox(height: 10),
+            const IdeaTextFieldLabel(
+              label: ideaTextFieldTitleLabel,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(width: 8),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: IdeaTextField(
                       controller: _titleController,
-                      labelText: ideaTextFieldTitleLabel,
                       hintText: ideaTextFieldTitleHint,
                       autofocus: true,
                     ),
                   ),
                 ),
                 IconButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(Icons.close),
                 ),
                 const SizedBox(width: 8),
               ],
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 24),
+            const IdeaTextFieldLabel(
+              label: ideaTextFieldSummaryLabel,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: IdeaTextField(
                 controller: _summaryController,
-                labelText: ideaTextFieldSummaryLabel,
                 hintText: ideaTextFieldSummaryHint,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 24),
+            const IdeaTextFieldLabel(
+              label: ideaTextFieldFullDescriptionLabel,
+            ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Stack(
                 children: [
                   IdeaTextField(
                     controller: _fullDescriptionController,
-                    labelText: ideaTextFieldFullDescriptionLabel,
                     hintText: ideaTextFieldFullDescriptionHint,
                     minLines: 10,
                     maxLines: 10,
@@ -121,7 +130,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
@@ -133,50 +142,85 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                       }
                     },
                     child: Expanded(
-                      child: IdeaTextField(
-                        labelText: 'Status',
-                        controller: _statusController,
-                        readOnly: true,
-                        suffixIcon: const Icon(Icons.arrow_drop_down),
-                        onTap: () {
-                          showMaterialModalBottomSheet(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (_) => IdeaStatusBottomSheet(
-                              cubit: BlocProvider.of<AddOrUpdateIdeaCubit>(context),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const IdeaTextFieldLabel(
+                            label: ideaTextFieldStatus,
+                            leftPadding: 12.0,
+                          ),
+                          IdeaTextField(
+                            controller: _statusController,
+                            readOnly: true,
+                            suffixIcon: const Icon(
+                              Icons.arrow_drop_down,
+                              size: 30,
                             ),
-                          );
-                        },
+                            onTap: () {
+                              showMaterialModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                builder: (_) => IdeaStatusBottomSheet(
+                                  cubit: BlocProvider.of<AddOrUpdateIdeaCubit>(context),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   const SizedBox(width: 26),
                   //TODO Make it a button which takes to review your idea screen
                   Expanded(
-                    child: IdeaTextField(
-                      labelText: 'Rating',
-                      controller: _ratingController,
+                    child: Column(
+                      children: [
+                        const IdeaTextFieldLabel(
+                          label: ideaTextFieldRatingTitle,
+                          leftPadding: 12.0,
+                        ),
+                        IdeaTextField(
+                          controller: _ratingController,
+                          readOnly: true,
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const RateIdeaPage(),
+                              ),
+                            );
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 26),
+            const SizedBox(height: 24),
+            const IdeaTextFieldLabel(
+              label: ideaTextFieldCategories,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               //TODO Implement Categories with a horizontal scroll?
               child: IdeaTextField(
-                labelText: 'Categories',
                 controller: _categoriesController,
+                maxLines: null,
               ),
             ),
-            const SizedBox(height: 26),
+            const SizedBox(height: 24),
+            Container(
+              child: Column(
+                children: [],
+              ),
+            ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 elevation: 5,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 shape: const RoundedRectangleBorder(
-                  //side: BorderSide(),
                   borderRadius: BorderRadius.all(
                     Radius.circular(20),
                   ),
@@ -230,15 +274,21 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                                 //A key is needed here so that AnimatedSwitcher can know the difference between children and animate them
                                 key: const ValueKey<int>(0),
                                 children: [
+                                  const IdeaTextFieldLabel(
+                                    label: ideaTextFieldFullDescriptionLabel,
+                                  ),
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
+                                      padding: const EdgeInsets.only(
+                                        left: 16.0,
+                                        right: 16.0,
+                                        bottom: 16.0,
+                                      ),
                                       child: Stack(
                                         children: [
                                           IdeaTextField(
                                             focusNode: _descriptionFullScreenFocusNode,
                                             controller: _fullDescriptionController,
-                                            labelText: ideaTextFieldFullDescriptionLabel,
                                             hintText: ideaTextFieldFullDescriptionHint,
                                             minLines: null,
                                             maxLines: null,
