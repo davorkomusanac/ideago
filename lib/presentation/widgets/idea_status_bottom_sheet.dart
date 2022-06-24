@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/add_or_update_idea/add_or_update_idea_cubit.dart';
 import '../../constants.dart';
+import '../../styles.dart';
 
 class IdeaStatusBottomSheet extends StatelessWidget {
   const IdeaStatusBottomSheet({
@@ -11,6 +12,12 @@ class IdeaStatusBottomSheet extends StatelessWidget {
   }) : super(key: key);
 
   final AddOrUpdateIdeaCubit cubit;
+
+  void statusTapped(String ideaStatus, BuildContext context) {
+    cubit.ideaStatusChanged(ideaStatus);
+    Navigator.of(context).pop();
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
 
   @override
   Widget build(BuildContext context) => BlocProvider<AddOrUpdateIdeaCubit>.value(
@@ -26,36 +33,51 @@ class IdeaStatusBottomSheet extends StatelessWidget {
             ),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //TODO Change Design
-              //TODO remove focus
-              InkWell(
-                onTap: () {
-                  cubit.ideaStatusChanged(ideaStatusToDo);
-                  Navigator.of(context).pop();
-                },
-                child: const Text(ideaStatusToDo),
+              Expanded(
+                child: TextButton(
+                  style: ideaStatusBottomSheetStyle,
+                  onPressed: () => statusTapped(ideaStatusToDo, context),
+                  child: const Text(ideaStatusToDo),
+                ),
               ),
-              InkWell(
-                onTap: () {
-                  cubit.ideaStatusChanged(ideaStatusInProgress);
-                  Navigator.of(context).pop();
-                },
-                child: const Text(ideaStatusInProgress),
+              const Divider(
+                height: 0,
+                thickness: 1,
+                color: Colors.black,
               ),
-              InkWell(
-                onTap: () {
-                  cubit.ideaStatusChanged(ideaStatusDone);
-                  Navigator.of(context).pop();
-                },
-                child: const Text(ideaStatusDone),
+              Expanded(
+                child: TextButton(
+                  style: ideaStatusBottomSheetStyle,
+                  onPressed: () => statusTapped(ideaStatusInProgress, context),
+                  child: const Text(ideaStatusInProgress),
+                ),
               ),
-              InkWell(
-                onTap: () {
-                  cubit.ideaStatusChanged(ideaStatusDiscarded);
-                  Navigator.of(context).pop();
-                },
-                child: const Text(ideaStatusDiscarded),
+              const Divider(
+                height: 0,
+                thickness: 1,
+                color: Colors.black,
+              ),
+              Expanded(
+                child: TextButton(
+                  style: ideaStatusBottomSheetStyle,
+                  onPressed: () => statusTapped(ideaStatusDone, context),
+                  child: const Text(ideaStatusDone),
+                ),
+              ),
+              const Divider(
+                height: 0,
+                thickness: 1,
+                color: Colors.black,
+              ),
+              Expanded(
+                child: TextButton(
+                  style: ideaStatusBottomSheetStyle,
+                  onPressed: () => statusTapped(ideaStatusDiscarded, context),
+                  child: const Text(ideaStatusDiscarded),
+                ),
               ),
             ],
           ),
