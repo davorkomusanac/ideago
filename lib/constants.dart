@@ -56,3 +56,7 @@ const String ideaTextFieldSummaryLabel = 'Summary';
 const String ideaTextFieldSummaryHint = 'Add short summary of your idea..';
 const String ideaTextFieldFullDescriptionLabel = 'Full description';
 const String ideaTextFieldFullDescriptionHint = 'Add full description regarding your idea..';
+const String ideaTextFieldStatus = 'Status';
+const String ideaTextFieldRatingTitle = 'Rating';
+const String ideaTextFieldRatingInitialValue = 'N/A';
+const String ideaTextFieldCategories = 'Categories';
