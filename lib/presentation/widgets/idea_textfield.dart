@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class IdeaTextField extends StatelessWidget {
-  final String labelText;
   final String? hintText;
   final bool autofocus;
   final bool isDense;
@@ -16,7 +15,6 @@ class IdeaTextField extends StatelessWidget {
   final VoidCallback? onTap;
 
   const IdeaTextField({
-    required this.labelText,
     required this.controller,
     this.autofocus = false,
     this.isDense = true,
@@ -46,19 +44,22 @@ class IdeaTextField extends StatelessWidget {
       textAlignVertical: TextAlignVertical.top,
       decoration: InputDecoration(
         alignLabelWithHint: true,
-        labelText: labelText,
         hintText: hintText,
         isDense: isDense,
         suffixIcon: suffixIcon,
         contentPadding: contentPadding,
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(width: 1.0),
+          borderSide: BorderSide(
+            //TODO Change textfield colors
+            color: Colors.green,
+            width: 1.5,
+          ),
           borderRadius: BorderRadius.all(
             Radius.circular(15.0),
           ),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(width: 1.0),
+          borderSide: BorderSide(width: 1.5),
           borderRadius: BorderRadius.all(
             Radius.circular(15.0),
           ),
