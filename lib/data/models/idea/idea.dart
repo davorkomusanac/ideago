@@ -1,6 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
 
+import '../idea_rating_question/idea_rating_question.dart';
+import '../idea_rating_question/idea_rating_question_converter.dart';
+
 part 'idea.g.dart';
 
 @Collection()
@@ -12,11 +15,13 @@ class Idea extends Equatable {
   final String summary;
   @Index(caseSensitive: false)
   final String fullDescription;
-  final String ideaStatus;
+  final String status;
   @Index()
   final double index;
   @Index()
   final int rating;
+  @IdeaRatingQuestionConverter()
+  final List<IdeaRatingQuestion> ratingQuestions;
   @Index(caseSensitive: false)
   final List<String> categories;
   @Index()
@@ -29,9 +34,10 @@ class Idea extends Equatable {
     required this.title,
     required this.summary,
     required this.fullDescription,
-    required this.ideaStatus,
+    required this.status,
     required this.index,
     required this.rating,
+    required this.ratingQuestions,
     required this.categories,
     required this.dateTimeCreated,
     required this.dateTimeLastUpdated,
@@ -39,8 +45,8 @@ class Idea extends Equatable {
 
   @override
   String toString() => 'Idea{ id: $id, title: $title, summary: $summary, '
-      'fullDescription: $fullDescription, ideaStatus: $ideaStatus, index: $index, '
-      'rating: $rating, categories: $categories, '
+      'fullDescription: $fullDescription, status: $status, index: $index, '
+      'rating: $rating, ratingQuestions: $ratingQuestions, categories: $categories, '
       'dateTimeCreated: $dateTimeCreated, dateTimeLastUpdated: $dateTimeLastUpdated,}';
 
   Idea copyWith({
@@ -48,9 +54,10 @@ class Idea extends Equatable {
     String? title,
     String? summary,
     String? fullDescription,
-    String? ideaStatus,
+    String? status,
     double? index,
     int? rating,
+    List<IdeaRatingQuestion>? ratingQuestions,
     List<String>? categories,
     DateTime? dateTimeCreated,
     DateTime? dateTimeLastUpdated,
@@ -60,39 +67,47 @@ class Idea extends Equatable {
         title: title ?? this.title,
         summary: summary ?? this.summary,
         fullDescription: fullDescription ?? this.fullDescription,
-        ideaStatus: ideaStatus ?? this.ideaStatus,
+        status: status ?? this.status,
         index: index ?? this.index,
         rating: rating ?? this.rating,
+        ratingQuestions: ratingQuestions ?? this.ratingQuestions,
         categories: categories ?? this.categories,
         dateTimeCreated: dateTimeCreated ?? this.dateTimeCreated,
         dateTimeLastUpdated: dateTimeLastUpdated ?? this.dateTimeLastUpdated,
       );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
         'summary': summary,
         'fullDescription': fullDescription,
-        'ideaStatus': ideaStatus,
+        'status': status,
         'index': index,
         'rating': rating,
+        'ratingQuestions': ratingQuestions.map((question) => question.toJson()).toList(),
         'categories': categories,
         'dateTimeCreated': dateTimeCreated,
         'dateTimeLastUpdated': dateTimeLastUpdated,
       };
 
-  factory Idea.fromMap(Map<String, dynamic> map) => Idea(
-        id: map['id'] as int,
-        title: map['title'] as String? ?? '',
-        summary: map['summary'] as String? ?? '',
-        fullDescription: map['fullDescription'] as String? ?? '',
-        ideaStatus: map['ideaStatus'] as String? ?? '',
-        index: map['index'] as double? ?? 0,
-        rating: map['rating'] as int? ?? 0,
-        categories: map['categories'] as List<String>? ?? <String>[],
-        dateTimeCreated: map['dateTimeCreated'] as DateTime? ?? DateTime.now(),
-        dateTimeLastUpdated:
-            map['dateTimeLastUpdated'] as DateTime? ?? DateTime.now(),
+  factory Idea.fromJson(Map<String, dynamic> json) => Idea(
+        id: json['id'] as int? ?? 0,
+        title: json['title'] as String? ?? '',
+        summary: json['summary'] as String? ?? '',
+        fullDescription: json['fullDescription'] as String? ?? '',
+        status: json['status'] as String? ?? '',
+        index: json['index'] as double? ?? 0,
+        rating: json['rating'] as int? ?? 0,
+        ratingQuestions: (json['ratingQuestions'] is List)
+            ? (json['ratingQuestions'] as List)
+                .map(
+                  (q) => IdeaRatingQuestion.fromJson(q),
+                )
+                .toList()
+            : <IdeaRatingQuestion>[],
+        categories: json['categories'] as List<String>? ?? <String>[],
+        dateTimeCreated: json['dateTimeCreated'] as DateTime? ?? DateTime.now(),
+        dateTimeLastUpdated: json['dateTimeLastUpdated'] as DateTime? ?? DateTime.now(),
       );
 
   @override
@@ -101,9 +116,10 @@ class Idea extends Equatable {
         title,
         summary,
         fullDescription,
-        ideaStatus,
+        status,
         index,
         rating,
+        ratingQuestions,
         categories,
         dateTimeCreated,
         dateTimeLastUpdated,

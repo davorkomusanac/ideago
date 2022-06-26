@@ -1,4 +1,5 @@
-import 'package:ideago/data/models/idea/idea.dart';
+import 'data/models/idea/idea.dart';
+import 'idea_rating_questions.dart';
 
 List<Idea> tempIdeas = [
   Idea(
@@ -6,9 +7,10 @@ List<Idea> tempIdeas = [
     title: 'First Idea',
     summary: 'Short description',
     fullDescription: 'Description of first idea, hmmm really good',
-    ideaStatus: 'TODO',
+    status: 'TODO',
     index: 0,
     rating: 50,
+    ratingQuestions: initialIdeaRatingQuestions,
     categories: const <String>['Android', 'iOS'],
     dateTimeCreated: DateTime.now(),
     dateTimeLastUpdated: DateTime.now(),
@@ -18,9 +20,10 @@ List<Idea> tempIdeas = [
     title: 'Second Idea',
     summary: 'Short description',
     fullDescription: 'Description of first idea, hmmm really good',
-    ideaStatus: 'TRIED',
+    status: 'TRIED',
     index: 1,
     rating: 70,
+    ratingQuestions: initialIdeaRatingQuestions,
     categories: const <String>['WEB', 'iOS'],
     dateTimeCreated: DateTime.now(),
     dateTimeLastUpdated: DateTime.now(),
@@ -30,9 +33,10 @@ List<Idea> tempIdeas = [
     title: 'Third Idea',
     summary: 'Short description',
     fullDescription: 'Description of first idea, hmmm really good',
-    ideaStatus: 'DISCARDED',
+    status: 'DISCARDED',
     index: 2,
     rating: 80,
+    ratingQuestions: initialIdeaRatingQuestions,
     categories: const <String>['Desktop', 'Android', 'iOS'],
     dateTimeCreated: DateTime.now(),
     dateTimeLastUpdated: DateTime.now(),
