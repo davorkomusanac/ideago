@@ -31,40 +31,38 @@ class IdeaTextField extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      minLines: minLines,
-      maxLines: maxLines,
-      autofocus: autofocus,
-      expands: expands,
-      focusNode: focusNode,
-      readOnly: readOnly,
-      onTap: onTap,
-      textAlignVertical: TextAlignVertical.top,
-      decoration: InputDecoration(
-        alignLabelWithHint: true,
-        hintText: hintText,
-        isDense: isDense,
-        suffixIcon: suffixIcon,
-        contentPadding: contentPadding,
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            //TODO Change textfield colors
-            color: Colors.green,
-            width: 1.5,
+  Widget build(BuildContext context) => TextField(
+        controller: controller,
+        minLines: minLines,
+        maxLines: maxLines,
+        autofocus: autofocus,
+        expands: expands,
+        focusNode: focusNode,
+        readOnly: readOnly,
+        onTap: onTap,
+        textAlignVertical: TextAlignVertical.top,
+        decoration: InputDecoration(
+          alignLabelWithHint: true,
+          hintText: hintText,
+          isDense: isDense,
+          suffixIcon: suffixIcon,
+          contentPadding: contentPadding,
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              //TODO Change textfield colors
+              color: Colors.green,
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15.0),
+            ),
           ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(15.0),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(width: 1.5),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15.0),
+            ),
           ),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(width: 1.5),
-          borderRadius: BorderRadius.all(
-            Radius.circular(15.0),
-          ),
-        ),
-      ),
-    );
-  }
+      );
 }
