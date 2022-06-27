@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ideago/presentation/widgets/idea_textfield.dart';
+
+import '../../widgets/idea_textfield.dart';
 
 class AddIdeaPage extends StatefulWidget {
   const AddIdeaPage({Key? key}) : super(key: key);
@@ -8,8 +9,7 @@ class AddIdeaPage extends StatefulWidget {
   State<AddIdeaPage> createState() => _AddIdeaPageState();
 }
 
-class _AddIdeaPageState extends State<AddIdeaPage>
-    with TickerProviderStateMixin {
+class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin {
   late TextEditingController _titleController;
   late TextEditingController _shortDescriptionController;
   late TextEditingController _longDescriptionController;
@@ -54,106 +54,102 @@ class _AddIdeaPageState extends State<AddIdeaPage>
   }
 
   //TODO Extract this into separate file
-  List<Widget> getTabViews() {
-    return <Widget>[
-      SingleChildScrollView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                BackButton(),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: IdeaTextField(
-                      labelText: 'Title',
-                      controller: _titleController,
-                      autofocus: true,
-                    ),
-                  ),
-                ),
-                //TODO Show only on update screen?
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.delete),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                minLines: 1,
-                maxLines: 15,
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: TextField(
-                      minLines: 1,
-                      maxLines: 15,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: TextField(
-                      minLines: 1,
-                      maxLines: 15,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                minLines: 1,
-                maxLines: 15,
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('Finish'),
-            ),
-          ],
-        ),
-      ),
-      //TODO Implement Features design
-      Center(
-        child: Text('Features Screen - To Be Implemented'),
-      ),
-    ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      //Dismiss keyboard when user taps somewhere outside a TextField
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        backgroundColor: Colors.blue[900],
-        body: SafeArea(
+  List<Widget> getTabViews() => <Widget>[
+        SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Column(
             children: [
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: getTabViews(),
+              Row(
+                children: [
+                  const BackButton(),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IdeaTextField(
+                        // labelText: 'Title',
+                        controller: _titleController,
+                        autofocus: true,
+                      ),
+                    ),
+                  ),
+                  //TODO Show only on update screen?
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.delete),
+                  ),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextField(
+                  minLines: 1,
+                  maxLines: 15,
                 ),
               ),
-              TabBar(
-                tabs: _tabs,
-                controller: _tabController,
+              Row(
+                children: const [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: TextField(
+                        minLines: 1,
+                        maxLines: 15,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: TextField(
+                        minLines: 1,
+                        maxLines: 15,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextField(
+                  minLines: 1,
+                  maxLines: 15,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Finish'),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
+        //TODO Implement Features design
+        const Center(
+          child: Text('Features Screen - To Be Implemented'),
+        ),
+      ];
+
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+        //Dismiss keyboard when user taps somewhere outside a TextField
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          backgroundColor: Colors.blue[900],
+          body: SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: getTabViews(),
+                  ),
+                ),
+                TabBar(
+                  tabs: _tabs,
+                  controller: _tabController,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 }
