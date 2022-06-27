@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ideago/constants.dart';
+
+import '../../constants.dart';
 
 part 'add_or_update_idea_state.dart';
 

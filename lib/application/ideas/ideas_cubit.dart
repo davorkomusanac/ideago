@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ideago/data/models/idea/idea.dart';
-import 'package:ideago/repository/ideas_repository.dart';
+
+import '../../data/models/idea/idea.dart';
+import '../../repository/ideas_repository.dart';
 
 part 'ideas_state.dart';
 
