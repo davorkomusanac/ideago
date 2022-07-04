@@ -1,4 +1,4 @@
-import 'package:ideago/data/models/idea/idea.dart';
+import '../data/models/idea/idea.dart';
 
 abstract class IdeasInterface {
   Future<List<Idea>> getAllIdeas();

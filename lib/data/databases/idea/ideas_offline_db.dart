@@ -16,9 +16,15 @@ class IdeasOfflineDB {
     _ideas = _isar.ideas;
   }
 
+  //TODO Convert to Stream
   Future<List<Idea>> getAllIdeas() async {
-    List<Idea> allIdeas = await _ideas.where().findAll();
-    return allIdeas;
+    try {
+      List<Idea> allIdeas = await _ideas.where().findAll();
+      return allIdeas;
+    } catch (exception) {
+      print('caught first');
+      rethrow;
+    }
   }
 
   Future<void> addIdea(Idea idea) async {

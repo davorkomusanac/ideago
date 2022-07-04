@@ -1,15 +1,20 @@
-import 'package:ideago/data/databases/ideas_offline_db.dart';
-import 'package:ideago/data/models/idea/idea.dart';
-import 'package:ideago/repository/ideas_interface.dart';
+import '../data/databases/idea/ideas_offline_db.dart';
+import '../data/models/idea/idea.dart';
+import 'ideas_interface.dart';
 
 class IdeasRepository implements IdeasInterface {
-  final IdeasOfflineDB offlineDb;
+  final IdeaOfflineDB offlineDb;
 
   IdeasRepository({required this.offlineDb});
 
   @override
   Future<List<Idea>> getAllIdeas() async {
-    return await offlineDb.getAllIdeas();
+    try {
+      return await offlineDb.getAllIdeas();
+    } catch (e) {
+      print('second caught');
+      rethrow;
+    }
   }
 
   @override
