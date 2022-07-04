@@ -1,9 +1,11 @@
+import 'package:uuid/uuid.dart';
+
 import 'data/models/idea/idea.dart';
 import 'idea_rating_questions.dart';
 
 List<Idea> tempIdeas = [
   Idea(
-    id: 1,
+    uid: const Uuid().v4(),
     title: 'First Idea',
     summary: 'Short description',
     fullDescription: 'Description of first idea, hmmm really good',
@@ -16,7 +18,7 @@ List<Idea> tempIdeas = [
     dateTimeLastUpdated: DateTime.now(),
   ),
   Idea(
-    id: 2,
+    uid: const Uuid().v4(),
     title: 'Second Idea',
     summary: 'Short description',
     fullDescription: 'Description of first idea, hmmm really good',
@@ -29,7 +31,7 @@ List<Idea> tempIdeas = [
     dateTimeLastUpdated: DateTime.now(),
   ),
   Idea(
-    id: 3,
+    uid: const Uuid().v4(),
     title: 'Third Idea',
     summary: 'Short description',
     fullDescription: 'Description of first idea, hmmm really good',
@@ -62,5 +64,5 @@ const String ideaTextFieldFullDescriptionLabel = 'Full description';
 const String ideaTextFieldFullDescriptionHint = 'Add full description regarding your idea..';
 const String ideaTextFieldStatus = 'Status';
 const String ideaTextFieldRatingTitle = 'Rating';
-const String ideaTextFieldRatingInitialValue = 'N/A';
+const String ideaTextFieldRatingInitialValue = 'Tap to Rate';
 const String ideaTextFieldCategories = 'Categories';

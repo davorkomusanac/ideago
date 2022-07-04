@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/idea/idea.dart';
-import '../../repository/ideas_repository.dart';
+import '../../repository/idea/idea_repository.dart';
 
 part 'ideas_state.dart';
 
 class IdeasCubit extends Cubit<IdeasState> {
   IdeasCubit(this._ideasRepository) : super(const IdeasState());
 
-  final IdeasRepository _ideasRepository;
+  final IdeaRepository _ideasRepository;
 
   //TODO add .listen to it, and listen as a stream to it
   Future<void> allIdeasLoaded() async {

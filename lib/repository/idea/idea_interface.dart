@@ -1,6 +1,6 @@
-import '../data/models/idea/idea.dart';
+import '../../data/models/idea/idea.dart';
 
-abstract class IdeasInterface {
+abstract class IdeaInterface {
   Future<List<Idea>> getAllIdeas();
 
   Future<void> addIdea(Idea idea);

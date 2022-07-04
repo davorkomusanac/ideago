@@ -163,22 +163,20 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                                 Icons.arrow_drop_down,
                                 size: 30,
                               ),
-                              onTap: () {
-                                showMaterialModalBottomSheet(
-                                  context: context,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (_) => IdeaStatusBottomSheet(
-                                    cubit: BlocProvider.of<AddOrUpdateIdeaCubit>(context),
-                                  ),
-                                );
-                              },
+                              onTap: () => showMaterialModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                builder: (_) => BlocProvider<AddOrUpdateIdeaCubit>.value(
+                                  value: BlocProvider.of<AddOrUpdateIdeaCubit>(context),
+                                  child: const IdeaStatusBottomSheet(),
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ),
                     const SizedBox(width: 26),
-                    //TODO Make it a button which takes to review your idea screen
                     BlocListener<RateIdeaCubit, RateIdeaState>(
                       listener: (context, state) {
                         _ratingController.text = formatIdeaRatingResult(state.ratingsSum);
@@ -196,8 +194,9 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (_) => RateIdeaPage(
-                                      cubit: BlocProvider.of<RateIdeaCubit>(context),
+                                    builder: (_) => BlocProvider<RateIdeaCubit>.value(
+                                      value: BlocProvider.of<RateIdeaCubit>(context),
+                                      child: const RateIdeaPage(),
                                     ),
                                   ),
                                 );
@@ -215,35 +214,80 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
               const IdeaTextFieldLabel(
                 label: ideaTextFieldCategories,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                //TODO Implement Categories with a horizontal scroll?
-                child: IdeaTextField(
-                  controller: _categoriesController,
-                  maxLines: null,
-                ),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 10,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      //TODO Change styling
+                      elevation: 5,
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                    ),
+                    onPressed: () => showMaterialModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      //TODO Implement Category Cubit here
+                      builder: (_) => BlocProvider<AddOrUpdateIdeaCubit>.value(
+                        value: BlocProvider.of<AddOrUpdateIdeaCubit>(context),
+                        child: const IdeaStatusBottomSheet(),
+                      ),
+                    ),
+                    child: const Icon(Icons.add),
+                  ),
+                  Chip(
+                    elevation: 5,
+                    label: Text('Android'),
+                    onDeleted: () {},
+                  ),
+                  Chip(
+                    elevation: 5,
+                    label: Text('iOS'),
+                    onDeleted: () {},
+                  ),
+                  Chip(
+                    elevation: 5,
+                    label: Text('Web'),
+                    onDeleted: () {},
+                  ),
+                  Chip(
+                    elevation: 5,
+                    label: Text('Movies'),
+                    onDeleted: () {},
+                  ),
+                  Chip(
+                    elevation: 5,
+                    label: Text('Social Media'),
+                    onDeleted: () {},
+                  ),
+                ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               Container(
-                child: Column(
-                  children: [],
-                ),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 5,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 10,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
                     ),
                   ),
+                  onPressed: () {
+                    //TODO Create Idea
+                  },
+                  child: const Text('Create Idea'),
                 ),
-                onPressed: () {
-                  //TODO Create Idea
-                },
-                child: const Icon(Icons.add),
               ),
+              const SizedBox(height: 16),
             ],
           ),
         ),
