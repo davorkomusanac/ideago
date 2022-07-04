@@ -5,10 +5,11 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'application/ideas/ideas_cubit.dart';
-import 'data/databases/ideas_offline_db.dart';
-import 'data/models/idea/idea.dart';
+import 'data/databases/idea/ideas_offline_db.dart';
+import 'data/models/idea/isar_idea/isar_idea.dart';
+import 'data/models/idea_category/isar_idea_category/isar_idea_category.dart';
 import 'presentation/pages/home/home_page.dart';
-import 'repository/ideas_repository.dart';
+import 'repository/idea/idea_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,10 @@ Future<void> main() async {
   ]);
   final dir = await getApplicationSupportDirectory();
   await Isar.open(
-    schemas: [IdeaSchema],
+    schemas: [
+      IsarIdeaSchema,
+      IsarIdeaCategorySchema,
+    ],
     directory: dir.path,
     inspector: true,
   );
@@ -28,15 +32,15 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => RepositoryProvider<IdeasRepository>(
-        create: (_) => IdeasRepository(
-          offlineDb: IdeasOfflineDB(),
+  Widget build(BuildContext context) => RepositoryProvider<IdeaRepository>(
+        create: (_) => IdeaRepository(
+          offlineDb: IdeaOfflineDb(),
         ),
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
               create: (context) => IdeasCubit(
-                context.read<IdeasRepository>(),
+                context.read<IdeaRepository>(),
               )..allIdeasLoaded(),
             )
           ],

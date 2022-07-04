@@ -1,11 +1,11 @@
-import '../data/databases/idea/ideas_offline_db.dart';
-import '../data/models/idea/idea.dart';
-import 'ideas_interface.dart';
+import '../../data/databases/idea/ideas_offline_db.dart';
+import '../../data/models/idea/idea.dart';
+import 'idea_interface.dart';
 
-class IdeasRepository implements IdeasInterface {
-  final IdeaOfflineDB offlineDb;
+class IdeaRepository implements IdeaInterface {
+  final IdeaOfflineDb offlineDb;
 
-  IdeasRepository({required this.offlineDb});
+  IdeaRepository({required this.offlineDb});
 
   @override
   Future<List<Idea>> getAllIdeas() async {

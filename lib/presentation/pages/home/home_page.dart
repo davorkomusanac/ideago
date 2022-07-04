@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
                         return IdeaCard(
                           idea: idea,
                           key: ValueKey(
-                            idea.id,
+                            idea.uid,
                           ),
                         );
                       },
