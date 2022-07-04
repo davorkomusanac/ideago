@@ -6,7 +6,8 @@
 # invoked from the command line by running `flutter analyze`.
 analyzer:
   exclude:
-    - lib/data/models/idea/idea.g.dart
+    - lib/data/models/idea/isar_idea/isar_idea.g.dart
+    - lib/data/models/idea_category/isar_idea_category/isar_idea_category.g.dart
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
