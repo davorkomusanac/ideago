@@ -1,25 +1,31 @@
 import 'package:isar/isar.dart';
 
-import '../models/idea/idea.dart';
+import '../../models/idea/idea.dart';
+import '../../models/idea/isar_idea/isar_idea.dart';
 
-class IdeasOfflineDB {
+class IdeaOfflineDb {
   late Isar _isar;
-  late IsarCollection<Idea> _ideas;
+  late IsarCollection<IsarIdea> _isarIdeas;
 
-  IdeasOfflineDB() {
+  IdeaOfflineDb() {
     initDb();
   }
 
   void initDb() {
     //TODO Error Handling
     _isar = Isar.getInstance()!;
-    _ideas = _isar.ideas;
+    _isarIdeas = _isar.isarIdeas;
   }
 
   //TODO Convert to Stream
   Future<List<Idea>> getAllIdeas() async {
     try {
-      List<Idea> allIdeas = await _ideas.where().findAll();
+      List<IsarIdea> allIsarIdeas = await _isarIdeas.where().findAll();
+      List<Idea> allIdeas = allIsarIdeas
+          .map(
+            (e) => e.toIdea(),
+          )
+          .toList();
       return allIdeas;
     } catch (exception) {
       print('caught first');
@@ -30,7 +36,9 @@ class IdeasOfflineDB {
   Future<void> addIdea(Idea idea) async {
     await _isar.writeTxn(
       (isar) async {
-        await isar.ideas.put(idea);
+        await isar.isarIdeas.put(
+          IsarIdea.fromIdea(idea),
+        );
       },
     );
   }
@@ -38,7 +46,10 @@ class IdeasOfflineDB {
   Future<void> deleteIdea(Idea idea) async {
     await _isar.writeTxn(
       (isar) async {
-        await isar.ideas.delete(idea.id);
+        IsarIdea? isarIdea = await _isarIdeas.where().uidEqualTo(idea.uid).findFirst();
+        if (isarIdea != null) {
+          await isar.isarIdeas.delete(isarIdea.id);
+        }
       },
     );
   }
@@ -46,7 +57,10 @@ class IdeasOfflineDB {
   Future<void> updateIdea(Idea idea) async {
     await _isar.writeTxn(
       (isar) async {
-        await isar.ideas.put(idea);
+        await isar.isarIdeas.put(
+          IsarIdea.fromIdea(idea),
+          replaceOnConflict: true,
+        );
       },
     );
   }
