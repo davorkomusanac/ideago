@@ -1,3 +1,5 @@
+import 'data/models/idea_category/idea_category.dart';
+
 String formatIdeaRatingResult(int ratingsSum) {
   String result;
   if (ratingsSum < 25) {
@@ -12,4 +14,17 @@ String formatIdeaRatingResult(int ratingsSum) {
     result = '$ratingsSum - Amazing';
   }
   return result;
+}
+
+///Sort categories first by checkedStatus and then alphabetically
+void sortCategories(List<IdeaCategory> categories) {
+  categories.sort((prev, next) {
+    if (prev.isChecked && !next.isChecked) {
+      return -1;
+    } else if (!prev.isChecked && next.isChecked) {
+      return 1;
+    } else {
+      return prev.title.compareTo(next.title);
+    }
+  });
 }
