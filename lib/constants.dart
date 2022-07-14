@@ -66,3 +66,11 @@ const String ideaTextFieldStatus = 'Status';
 const String ideaTextFieldRatingTitle = 'Rating';
 const String ideaTextFieldRatingInitialValue = 'Tap to Rate';
 const String ideaTextFieldCategories = 'Categories';
+
+/// Delete Category Alert Dialog values
+const String deleteCategoryDialogTitle = 'Please confirm';
+const String deleteCategoryDialogContent = 'Are you sure you want to remove this category?';
+const String deleteCategoryDialogLeftButtonText = 'Cancel';
+const String deleteCategoryDialogRightButtonText = 'Confirm';
+
+const String addCategoryTextFieldHintText = 'Type to find category...';
