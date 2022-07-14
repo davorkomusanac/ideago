@@ -3,13 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../application/add_or_update_idea/add_or_update_idea_cubit.dart';
+import '../../../application/idea_categories/idea_categories_cubit.dart';
 import '../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../constants.dart';
 import '../../../functions.dart';
 import '../../../idea_rating_questions.dart';
+import '../../../repository/idea_category/idea_category_repository.dart';
 import '../../widgets/idea_status_bottom_sheet.dart';
 import '../../widgets/idea_textfield.dart';
 import '../../widgets/idea_textfield_label.dart';
+import '../add_idea_category/add_idea_category_bottom_sheet.dart';
 import '../rate_idea/rate_idea_page.dart';
 
 class AddIdeaPage extends StatefulWidget {
@@ -214,58 +217,53 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
               const IdeaTextFieldLabel(
                 label: ideaTextFieldCategories,
               ),
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 10,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      //TODO Change styling
-                      elevation: 5,
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
+              BlocBuilder<IdeaCategoriesCubit, IdeaCategoriesState>(
+                builder: (context, state) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 10,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 5,
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            context.read<IdeaCategoriesCubit>().allCategoriesLoaded();
+                            showMaterialModalBottomSheet(
+                              context: context,
+                              enableDrag: false,
+                              backgroundColor: Colors.transparent,
+                              //TODO Implement Category Cubit here
+                              builder: (_) => BlocProvider<IdeaCategoriesCubit>.value(
+                                value: BlocProvider.of<IdeaCategoriesCubit>(context),
+                                child: const AddIdeaCategoryBottomSheet(),
+                              ),
+                            );
+                          },
+                          child: const Icon(Icons.add),
                         ),
-                      ),
+                        ...state.checkedCategories
+                            .map(
+                              (category) => Chip(
+                                elevation: 5,
+                                label: Text(category),
+                                onDeleted: () => context.read<IdeaCategoriesCubit>().ideaCategoryRemoved(category),
+                              ),
+                            )
+                            .toList(),
+                      ],
                     ),
-                    onPressed: () => showMaterialModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      //TODO Implement Category Cubit here
-                      builder: (_) => BlocProvider<AddOrUpdateIdeaCubit>.value(
-                        value: BlocProvider.of<AddOrUpdateIdeaCubit>(context),
-                        child: const IdeaStatusBottomSheet(),
-                      ),
-                    ),
-                    child: const Icon(Icons.add),
                   ),
-                  Chip(
-                    elevation: 5,
-                    label: Text('Android'),
-                    onDeleted: () {},
-                  ),
-                  Chip(
-                    elevation: 5,
-                    label: Text('iOS'),
-                    onDeleted: () {},
-                  ),
-                  Chip(
-                    elevation: 5,
-                    label: Text('Web'),
-                    onDeleted: () {},
-                  ),
-                  Chip(
-                    elevation: 5,
-                    label: Text('Movies'),
-                    onDeleted: () {},
-                  ),
-                  Chip(
-                    elevation: 5,
-                    label: Text('Social Media'),
-                    onDeleted: () {},
-                  ),
-                ],
+                ),
               ),
               const SizedBox(height: 16),
               Container(
@@ -309,6 +307,11 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                 questionRatings: initialIdeaRatingQuestions,
                 ratingsSum: 50,
               ),
+          ),
+          BlocProvider<IdeaCategoriesCubit>(
+            create: (context) => IdeaCategoriesCubit(
+              context.read<IdeaCategoryRepository>(),
+            )..checkedCategoriesInitialized(['Android', 'iOS', 'Web']),
           ),
         ],
         child: GestureDetector(
