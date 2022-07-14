@@ -6,10 +6,12 @@ import 'package:path_provider/path_provider.dart';
 
 import 'application/ideas/ideas_cubit.dart';
 import 'data/databases/idea/ideas_offline_db.dart';
+import 'data/databases/idea_category/idea_category_offline_db.dart';
 import 'data/models/idea/isar_idea/isar_idea.dart';
 import 'data/models/idea_category/isar_idea_category/isar_idea_category.dart';
 import 'presentation/pages/home/home_page.dart';
 import 'repository/idea/idea_repository.dart';
+import 'repository/idea_category/idea_category_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,10 +34,19 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => RepositoryProvider<IdeaRepository>(
-        create: (_) => IdeaRepository(
-          offlineDb: IdeaOfflineDb(),
-        ),
+  Widget build(BuildContext context) => MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<IdeaRepository>(
+            create: (_) => IdeaRepository(
+              offlineDb: IdeaOfflineDb(),
+            ),
+          ),
+          RepositoryProvider<IdeaCategoryRepository>(
+            create: (context) => IdeaCategoryRepository(
+              offlineDb: IdeaCategoryOfflineDb(),
+            ),
+          ),
+        ],
         child: MultiBlocProvider(
           providers: [
             BlocProvider(

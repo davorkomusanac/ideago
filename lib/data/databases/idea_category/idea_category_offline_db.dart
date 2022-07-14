@@ -18,7 +18,7 @@ class IdeaCategoryOfflineDb {
   }
 
   Future<List<IdeaCategory>> getAllIdeaCategories() async {
-    List<IsarIdeaCategory> allIsarIdeaCategories = await _isarIdeaCategories.where().findAll();
+    List<IsarIdeaCategory> allIsarIdeaCategories = await _isarIdeaCategories.where().sortByTitle().findAll();
     List<IdeaCategory> allIdeaCategories = allIsarIdeaCategories
         .map(
           (e) => e.toIdeaCategory(),
