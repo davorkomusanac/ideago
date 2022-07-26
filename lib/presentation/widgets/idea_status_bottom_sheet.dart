@@ -32,8 +32,8 @@ class IdeaStatusBottomSheet extends StatelessWidget {
             Expanded(
               child: TextButton(
                 style: ideaStatusBottomSheetStyle,
-                onPressed: () => statusTapped(ideaStatusToDo, context),
-                child: const Text(ideaStatusToDo),
+                onPressed: () => statusTapped(kIdeaStatusToDo, context),
+                child: const Text(kIdeaStatusToDo),
               ),
             ),
             const Divider(
@@ -44,8 +44,8 @@ class IdeaStatusBottomSheet extends StatelessWidget {
             Expanded(
               child: TextButton(
                 style: ideaStatusBottomSheetStyle,
-                onPressed: () => statusTapped(ideaStatusInProgress, context),
-                child: const Text(ideaStatusInProgress),
+                onPressed: () => statusTapped(kIdeaStatusInProgress, context),
+                child: const Text(kIdeaStatusInProgress),
               ),
             ),
             const Divider(
@@ -56,8 +56,8 @@ class IdeaStatusBottomSheet extends StatelessWidget {
             Expanded(
               child: TextButton(
                 style: ideaStatusBottomSheetStyle,
-                onPressed: () => statusTapped(ideaStatusDone, context),
-                child: const Text(ideaStatusDone),
+                onPressed: () => statusTapped(kIdeaStatusDone, context),
+                child: const Text(kIdeaStatusDone),
               ),
             ),
             const Divider(
@@ -68,8 +68,8 @@ class IdeaStatusBottomSheet extends StatelessWidget {
             Expanded(
               child: TextButton(
                 style: ideaStatusBottomSheetStyle,
-                onPressed: () => statusTapped(ideaStatusDiscarded, context),
-                child: const Text(ideaStatusDiscarded),
+                onPressed: () => statusTapped(kIdeaStatusDiscarded, context),
+                child: const Text(kIdeaStatusDiscarded),
               ),
             ),
           ],

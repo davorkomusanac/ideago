@@ -46,31 +46,32 @@ List<Idea> tempIdeas = [
 ];
 
 /// Add/Update Idea possible statuses
-const String ideaStatusToDo = 'To Do';
-const String ideaStatusInProgress = 'In Progress';
-const String ideaStatusDone = 'Done';
-const String ideaStatusDiscarded = 'Discarded';
+const String kIdeaStatusToDo = 'To Do';
+const String kIdeaStatusInProgress = 'In Progress';
+const String kIdeaStatusDone = 'Done';
+const String kIdeaStatusDiscarded = 'Discarded';
 
 /// Add/Update Idea Tab Titles
-const String ideaTabTitleOne = 'Idea';
-const String ideaTabTitleTwo = 'Features';
+const String kIdeaTabTitleOne = 'Idea';
+const String kIdeaTabTitleTwo = 'Features';
 
 /// IdeaTextFields values
-const String ideaTextFieldTitleLabel = 'Title';
-const String ideaTextFieldTitleHint = 'Type the name of your idea..';
-const String ideaTextFieldSummaryLabel = 'Summary';
-const String ideaTextFieldSummaryHint = 'Add short summary of your idea..';
-const String ideaTextFieldFullDescriptionLabel = 'Full description';
-const String ideaTextFieldFullDescriptionHint = 'Add full description regarding your idea..';
-const String ideaTextFieldStatus = 'Status';
-const String ideaTextFieldRatingTitle = 'Rating';
-const String ideaTextFieldRatingInitialValue = 'Tap to Rate';
-const String ideaTextFieldCategories = 'Categories';
+const String kIdeaTextFieldTitleLabel = 'Title';
+const String kIdeaTextFieldTitleHint = 'Type the name of your idea..';
+const String kIdeaTextFieldSummaryLabel = 'Summary';
+const String kIdeaTextFieldSummaryHint = 'Add short summary of your idea..';
+const String kIdeaTextFieldFullDescriptionLabel = 'Full description';
+const String kIdeaTextFieldFullDescriptionHint = 'Add full description regarding your idea..';
+const String kIdeaTextFieldStatus = 'Status';
+const String kIdeaTextFieldRatingTitle = 'Rating';
+const String kIdeaTextFieldRatingInitialValue = 'Tap to Rate';
+const String kIdeaTextFieldCategories = 'Categories';
 
 /// Delete Category Alert Dialog values
-const String deleteCategoryDialogTitle = 'Please confirm';
-const String deleteCategoryDialogContent = 'Are you sure you want to remove this category?';
-const String deleteCategoryDialogLeftButtonText = 'Cancel';
-const String deleteCategoryDialogRightButtonText = 'Confirm';
+const String kDeleteCategoryDialogTitle = 'Please confirm';
+const String kDeleteCategoryDialogContent = 'Are you sure you want to remove this category?';
+const String kDeleteCategoryDialogLeftButtonText = 'Cancel';
+const String kDeleteCategoryDialogRightButtonText = 'Confirm';
 
-const String addCategoryTextFieldHintText = 'Type to find category...';
+const String kAddCategoryTextFieldHintText = 'Type to find category...';
+const String kAddCategoryTextEmptyCategories = 'Start typing to create your first category.';
