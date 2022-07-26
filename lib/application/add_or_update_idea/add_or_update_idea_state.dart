@@ -3,7 +3,7 @@ part of 'add_or_update_idea_cubit.dart';
 class AddOrUpdateIdeaState extends Equatable {
   const AddOrUpdateIdeaState({
     this.isDescriptionExpanded = false,
-    this.ideaProjectStatus = ideaStatusToDo,
+    this.ideaProjectStatus = kIdeaStatusToDo,
   });
 
   final bool isDescriptionExpanded;

@@ -31,8 +31,8 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
   late TextEditingController _categoriesController;
   late TabController _tabController;
   final List<Tab> _tabs = <Tab>[
-    const Tab(text: ideaTabTitleOne),
-    const Tab(text: ideaTabTitleTwo),
+    const Tab(text: kIdeaTabTitleOne),
+    const Tab(text: kIdeaTabTitleTwo),
   ];
   final FocusNode _descriptionFullScreenFocusNode = FocusNode();
 
@@ -42,8 +42,8 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
     _titleController = TextEditingController();
     _summaryController = TextEditingController();
     _fullDescriptionController = TextEditingController();
-    _statusController = TextEditingController(text: ideaStatusToDo);
-    _ratingController = TextEditingController(text: ideaTextFieldRatingInitialValue);
+    _statusController = TextEditingController(text: kIdeaStatusToDo);
+    _ratingController = TextEditingController(text: kIdeaTextFieldRatingInitialValue);
     _categoriesController = TextEditingController();
     _tabController = TabController(
       length: _tabs.length,
@@ -71,7 +71,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
             children: [
               const SizedBox(height: 10),
               const IdeaTextFieldLabel(
-                label: ideaTextFieldTitleLabel,
+                label: kIdeaTextFieldTitleLabel,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,7 +82,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: IdeaTextField(
                         controller: _titleController,
-                        hintText: ideaTextFieldTitleHint,
+                        hintText: kIdeaTextFieldTitleHint,
                         //TODO Turn on later
                         autofocus: false,
                       ),
@@ -101,18 +101,18 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
               ),
               const SizedBox(height: 24),
               const IdeaTextFieldLabel(
-                label: ideaTextFieldSummaryLabel,
+                label: kIdeaTextFieldSummaryLabel,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: IdeaTextField(
                   controller: _summaryController,
-                  hintText: ideaTextFieldSummaryHint,
+                  hintText: kIdeaTextFieldSummaryHint,
                 ),
               ),
               const SizedBox(height: 24),
               const IdeaTextFieldLabel(
-                label: ideaTextFieldFullDescriptionLabel,
+                label: kIdeaTextFieldFullDescriptionLabel,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -120,7 +120,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                   children: [
                     IdeaTextField(
                       controller: _fullDescriptionController,
-                      hintText: ideaTextFieldFullDescriptionHint,
+                      hintText: kIdeaTextFieldFullDescriptionHint,
                       minLines: 10,
                       maxLines: 10,
                       contentPadding: const EdgeInsets.fromLTRB(12, 12, 20, 12),
@@ -156,7 +156,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const IdeaTextFieldLabel(
-                              label: ideaTextFieldStatus,
+                              label: kIdeaTextFieldStatus,
                               leftPadding: 12.0,
                             ),
                             IdeaTextField(
@@ -188,7 +188,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                         child: Column(
                           children: [
                             const IdeaTextFieldLabel(
-                              label: ideaTextFieldRatingTitle,
+                              label: kIdeaTextFieldRatingTitle,
                               leftPadding: 12.0,
                             ),
                             IdeaTextField(
@@ -215,7 +215,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
               ),
               const SizedBox(height: 24),
               const IdeaTextFieldLabel(
-                label: ideaTextFieldCategories,
+                label: kIdeaTextFieldCategories,
               ),
               BlocBuilder<IdeaCategoriesCubit, IdeaCategoriesState>(
                 builder: (context, state) => Padding(
@@ -311,6 +311,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
           BlocProvider<IdeaCategoriesCubit>(
             create: (context) => IdeaCategoriesCubit(
               context.read<IdeaCategoryRepository>(),
+              //TODO Remove these categories as default?
             )..checkedCategoriesInitialized(['Android', 'iOS', 'Web']),
           ),
         ],
@@ -343,7 +344,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                                 key: const ValueKey<int>(0),
                                 children: [
                                   const IdeaTextFieldLabel(
-                                    label: ideaTextFieldFullDescriptionLabel,
+                                    label: kIdeaTextFieldFullDescriptionLabel,
                                   ),
                                   Expanded(
                                     child: Padding(
@@ -357,7 +358,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                                           IdeaTextField(
                                             focusNode: _descriptionFullScreenFocusNode,
                                             controller: _fullDescriptionController,
-                                            hintText: ideaTextFieldFullDescriptionHint,
+                                            hintText: kIdeaTextFieldFullDescriptionHint,
                                             minLines: null,
                                             maxLines: null,
                                             expands: true,
