@@ -64,7 +64,7 @@ class _AddIdeaCategoryBottomSheetState extends State<AddIdeaCategoryBottomSheet>
                             controller: _textEditingController,
                             onChanged: (val) => context.read<IdeaCategoriesCubit>().categorySearched(val),
                             decoration: const InputDecoration(
-                              hintText: addCategoryTextFieldHintText,
+                              hintText: kAddCategoryTextFieldHintText,
                             ),
                           ),
                         ),
@@ -88,27 +88,31 @@ class _AddIdeaCategoryBottomSheetState extends State<AddIdeaCategoryBottomSheet>
                               ),
                             )
                           : Expanded(
-                              child: ListView.builder(
-                                padding: const EdgeInsets.all(0.0),
-                                itemCount: state.isSearchedCategoryAlreadyCreated
-                                    ? state.categories.length
-                                    : state.categories.length + 1,
-                                itemBuilder: (context, index) {
-                                  if (state.isSearchedCategoryAlreadyCreated) {
-                                    return CategoryListTile(
-                                      category: state.categories[index],
-                                    );
-                                  } else {
-                                    return index == 0
-                                        ? AddCategoryListTile(
-                                            title: state.searchTerm,
-                                          )
-                                        : CategoryListTile(
-                                            category: state.categories[index - 1],
+                              child: state.categories.isEmpty
+                                  ? const Center(
+                                      child: Text(kAddCategoryTextEmptyCategories),
+                                    )
+                                  : ListView.builder(
+                                      padding: const EdgeInsets.all(0.0),
+                                      itemCount: state.isSearchedCategoryAlreadyCreated
+                                          ? state.categories.length
+                                          : state.categories.length + 1,
+                                      itemBuilder: (context, index) {
+                                        if (state.isSearchedCategoryAlreadyCreated) {
+                                          return CategoryListTile(
+                                            category: state.categories[index],
                                           );
-                                  }
-                                },
-                              ),
+                                        } else {
+                                          return index == 0
+                                              ? AddCategoryListTile(
+                                                  title: state.searchTerm,
+                                                )
+                                              : CategoryListTile(
+                                                  category: state.categories[index - 1],
+                                                );
+                                        }
+                                      },
+                                    ),
                             ),
                 ],
               ),
