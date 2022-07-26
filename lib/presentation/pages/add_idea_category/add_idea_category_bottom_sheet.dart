@@ -88,7 +88,7 @@ class _AddIdeaCategoryBottomSheetState extends State<AddIdeaCategoryBottomSheet>
                               ),
                             )
                           : Expanded(
-                              child: state.categories.isEmpty
+                              child: state.categories.isEmpty && _textEditingController.text.isEmpty
                                   ? const Center(
                                       child: Text(kAddCategoryTextEmptyCategories),
                                     )
