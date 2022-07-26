@@ -49,6 +49,7 @@ class IdeaCategoriesCubit extends Cubit<IdeaCategoriesState> {
       emit(
         state.copyWith(
           allLoadedCategories: updatedCategories,
+          status: IdeaCategoriesStatus.success,
           categories: updatedCategories,
         ),
       );
