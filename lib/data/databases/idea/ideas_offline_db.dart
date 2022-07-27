@@ -33,6 +33,19 @@ class IdeaOfflineDb {
     }
   }
 
+  /// With Isar, you need to create a Query and then watch it to get a Stream
+  /// From IsarDB we get back a Stream<List<IsarIdea>> so we need to convert it (map) to Stream<List<Idea>>
+  Stream<List<Idea>> getIdeas() {
+    Query<IsarIdea> allIdeas = _isarIdeas.where().sortByIndex().limit(15).build();
+    return allIdeas.watch(initialReturn: true).map(
+          (event) => event
+              .map(
+                (isarIdea) => isarIdea.toIdea(),
+              )
+              .toList(),
+        );
+  }
+
   Future<void> addIdea(Idea idea) async {
     await _isar.writeTxn(
       (isar) async {

@@ -18,6 +18,9 @@ class IdeaRepository implements IdeaInterface {
   }
 
   @override
+  Stream<List<Idea>> getIdeas() => offlineDb.getIdeas();
+
+  @override
   Future<void> addIdea(Idea idea) async {
     await offlineDb.addIdea(idea);
   }
