@@ -23,8 +23,6 @@ class IdeaFullDescriptionExpanded extends StatelessWidget {
           //A scrollview is needed to be able to dismiss keyboard on drag, CustomScrollView works with Expanded
           SliverFillRemaining(
             child: Column(
-              //A key is needed here so that AnimatedSwitcher can know the difference between children and animate them
-              key: const ValueKey<int>(0),
               children: [
                 const IdeaTextFieldLabel(
                   label: kIdeaTextFieldFullDescriptionLabel,
