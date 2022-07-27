@@ -67,11 +67,17 @@ const String kIdeaTextFieldRatingTitle = 'Rating';
 const String kIdeaTextFieldRatingInitialValue = 'Tap to Rate';
 const String kIdeaTextFieldCategories = 'Categories';
 
-/// Delete Category Alert Dialog values
-const String kDeleteCategoryDialogTitle = 'Please confirm';
+/// Alert Dialog values
+const String kAlertDialogConfirmationTitle = 'Please confirm';
 const String kDeleteCategoryDialogContent = 'Are you sure you want to remove this category?';
-const String kDeleteCategoryDialogLeftButtonText = 'Cancel';
-const String kDeleteCategoryDialogRightButtonText = 'Confirm';
+const String kAlertDialogLeftButtonText = 'Cancel';
+const String kAlertDialogRightButtonText = 'Confirm';
+const String kDiscardCreateIdeaDialogContent =
+    'Are you sure you want to discard this idea? All your unsaved progress will be lost.';
 
+/// Category bottomsheet
 const String kAddCategoryTextFieldHintText = 'Type to find category...';
 const String kAddCategoryTextEmptyCategories = 'Start typing to create your first category.';
+
+/// Button Text
+const String kCreateIdeaButtonText = 'Create Idea';
