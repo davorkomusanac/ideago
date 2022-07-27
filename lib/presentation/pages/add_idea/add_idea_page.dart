@@ -12,6 +12,7 @@ import '../../../functions.dart';
 import '../../../idea_rating_questions.dart';
 import '../../../repository/idea_category/idea_category_repository.dart';
 import '../../widgets/adaptive_alert_dialog.dart';
+import '../../widgets/idea_full_description_expanded.dart';
 import '../../widgets/idea_status_bottom_sheet.dart';
 import '../../widgets/idea_textfield.dart';
 import '../../widgets/idea_textfield_label.dart';
@@ -258,7 +259,6 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                               context: context,
                               enableDrag: false,
                               backgroundColor: Colors.transparent,
-                              //TODO Implement Category Cubit here
                               builder: (_) => BlocProvider<IdeaCategoriesCubit>.value(
                                 value: BlocProvider.of<IdeaCategoriesCubit>(context),
                                 child: const AddIdeaCategoryBottomSheet(),
@@ -381,56 +381,9 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                       child: child,
                     ),
                     child: state.isDescriptionExpanded
-                        ? CustomScrollView(
-                            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                            slivers: [
-                              //A scrollview is needed to be able to dismiss keyboard on drag, CustomScrollView works with Expanded
-                              SliverFillRemaining(
-                                child: Column(
-                                  //A key is needed here so that AnimatedSwitcher can know the difference between children and animate them
-                                  key: const ValueKey<int>(0),
-                                  children: [
-                                    const IdeaTextFieldLabel(
-                                      label: kIdeaTextFieldFullDescriptionLabel,
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 16.0,
-                                          right: 16.0,
-                                          bottom: 16.0,
-                                        ),
-                                        child: Stack(
-                                          children: [
-                                            IdeaTextField(
-                                              focusNode: _descriptionFullScreenFocusNode,
-                                              controller: _fullDescriptionController,
-                                              hintText: kIdeaTextFieldFullDescriptionHint,
-                                              minLines: null,
-                                              maxLines: null,
-                                              expands: true,
-                                              contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 36),
-                                            ),
-                                            Positioned(
-                                              right: 0,
-                                              bottom: 0,
-                                              child: InkWell(
-                                                onTap: () =>
-                                                    context.read<AddOrUpdateIdeaCubit>().descriptionButtonPressed(),
-                                                child: const Padding(
-                                                  padding: EdgeInsets.all(12.0),
-                                                  child: Icon(Icons.fullscreen_exit),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                        ? IdeaFullDescriptionExpanded(
+                            fullDescriptionController: _fullDescriptionController,
+                            descriptionFullScreenFocusNode: _descriptionFullScreenFocusNode,
                           )
                         : Column(
                             key: const ValueKey<int>(1),
