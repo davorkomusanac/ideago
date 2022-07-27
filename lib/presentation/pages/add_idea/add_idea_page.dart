@@ -1,14 +1,17 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../application/add_or_update_idea/add_or_update_idea_cubit.dart';
 import '../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../application/ideas/ideas_cubit.dart';
 import '../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../constants.dart';
 import '../../../functions.dart';
 import '../../../idea_rating_questions.dart';
 import '../../../repository/idea_category/idea_category_repository.dart';
+import '../../widgets/adaptive_alert_dialog.dart';
 import '../../widgets/idea_status_bottom_sheet.dart';
 import '../../widgets/idea_textfield.dart';
 import '../../widgets/idea_textfield_label.dart';
@@ -83,8 +86,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                       child: IdeaTextField(
                         controller: _titleController,
                         hintText: kIdeaTextFieldTitleHint,
-                        //TODO Turn on later
-                        autofocus: false,
+                        autofocus: true,
                       ),
                     ),
                   ),
@@ -92,7 +94,21 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     onPressed: () {
                       //TODO WIll pop scope, show alert dialog for unsaved changes
-                      Navigator.of(context).pop();
+                      showOkCancelAlertDialog(
+                        context: context,
+                        builder: (_, __) => AdaptiveAlertDialog(
+                          title: kAlertDialogConfirmationTitle,
+                          content: kDiscardCreateIdeaDialogContent,
+                          leftButtonText: kAlertDialogLeftButtonText,
+                          rightButtonText: kAlertDialogRightButtonText,
+                          onLeftButtonPressed: () => Navigator.of(context).pop(),
+                          onRightButtonPressed: () {
+                            //Pop until home page
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      );
                     },
                     icon: const Icon(Icons.close),
                   ),
@@ -280,9 +296,18 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                     ),
                   ),
                   onPressed: () {
-                    //TODO Create Idea
+                    context.read<IdeasCubit>().ideaAdded(
+                          title: _titleController.text,
+                          summary: _summaryController.text,
+                          fullDescription: _fullDescriptionController.text,
+                          status: _statusController.text,
+                          rating: context.read<RateIdeaCubit>().state.ratingsSum,
+                          ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
+                          categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                        );
+                    Navigator.of(context).pop();
                   },
-                  child: const Text('Create Idea'),
+                  child: const Text(kCreateIdeaButtonText),
                 ),
               ),
               const SizedBox(height: 16),
@@ -315,92 +340,115 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
             )..checkedCategoriesInitialized(['Android', 'iOS', 'Web']),
           ),
         ],
-        child: GestureDetector(
-          //Dismiss keyboard when user taps somewhere outside a TextField
-          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-          child: Scaffold(
-            //TODO Change design
-            backgroundColor: Colors.blue[900],
-            body: SafeArea(
-              child: BlocBuilder<AddOrUpdateIdeaCubit, AddOrUpdateIdeaState>(
-                builder: (context, state) => AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 500),
-                  switchInCurve: Curves.fastOutSlowIn,
-                  switchOutCurve: Curves.fastOutSlowIn,
-                  //Default animation is FadeTransition, changed type to Scale for smoother feel
-                  transitionBuilder: (child, animation) => ScaleTransition(
-                    scale: animation,
-                    alignment: Alignment.bottomRight,
-                    child: child,
-                  ),
-                  child: state.isDescriptionExpanded
-                      ? CustomScrollView(
-                          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                          slivers: [
-                            //A scrollview is needed to be able to dismiss keyboard on drag, CustomScrollView works with Expanded
-                            SliverFillRemaining(
-                              child: Column(
-                                //A key is needed here so that AnimatedSwitcher can know the difference between children and animate them
-                                key: const ValueKey<int>(0),
-                                children: [
-                                  const IdeaTextFieldLabel(
-                                    label: kIdeaTextFieldFullDescriptionLabel,
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 16.0,
-                                        right: 16.0,
-                                        bottom: 16.0,
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          IdeaTextField(
-                                            focusNode: _descriptionFullScreenFocusNode,
-                                            controller: _fullDescriptionController,
-                                            hintText: kIdeaTextFieldFullDescriptionHint,
-                                            minLines: null,
-                                            maxLines: null,
-                                            expands: true,
-                                            contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 36),
-                                          ),
-                                          Positioned(
-                                            right: 0,
-                                            bottom: 0,
-                                            child: InkWell(
-                                              onTap: () =>
-                                                  context.read<AddOrUpdateIdeaCubit>().descriptionButtonPressed(),
-                                              child: const Padding(
-                                                padding: EdgeInsets.all(12.0),
-                                                child: Icon(Icons.fullscreen_exit),
+        child: WillPopScope(
+          onWillPop: () async {
+            bool shouldPop = false;
+            await showOkCancelAlertDialog(
+              context: context,
+              builder: (_, __) => AdaptiveAlertDialog(
+                title: kAlertDialogConfirmationTitle,
+                content: kDiscardCreateIdeaDialogContent,
+                leftButtonText: kAlertDialogLeftButtonText,
+                rightButtonText: kAlertDialogRightButtonText,
+                onLeftButtonPressed: () {
+                  shouldPop = false;
+                  Navigator.of(context).pop();
+                },
+                onRightButtonPressed: () {
+                  shouldPop = true;
+                  Navigator.of(context).pop();
+                },
+              ),
+            );
+            return shouldPop;
+          },
+          child: GestureDetector(
+            //Dismiss keyboard when user taps somewhere outside a TextField
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: Scaffold(
+              //TODO Change design
+              backgroundColor: Colors.blue[900],
+              body: SafeArea(
+                child: BlocBuilder<AddOrUpdateIdeaCubit, AddOrUpdateIdeaState>(
+                  builder: (context, state) => AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    switchInCurve: Curves.fastOutSlowIn,
+                    switchOutCurve: Curves.fastOutSlowIn,
+                    //Default animation is FadeTransition, changed type to Scale for smoother feel
+                    transitionBuilder: (child, animation) => ScaleTransition(
+                      scale: animation,
+                      alignment: Alignment.bottomRight,
+                      child: child,
+                    ),
+                    child: state.isDescriptionExpanded
+                        ? CustomScrollView(
+                            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                            slivers: [
+                              //A scrollview is needed to be able to dismiss keyboard on drag, CustomScrollView works with Expanded
+                              SliverFillRemaining(
+                                child: Column(
+                                  //A key is needed here so that AnimatedSwitcher can know the difference between children and animate them
+                                  key: const ValueKey<int>(0),
+                                  children: [
+                                    const IdeaTextFieldLabel(
+                                      label: kIdeaTextFieldFullDescriptionLabel,
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 16.0,
+                                          right: 16.0,
+                                          bottom: 16.0,
+                                        ),
+                                        child: Stack(
+                                          children: [
+                                            IdeaTextField(
+                                              focusNode: _descriptionFullScreenFocusNode,
+                                              controller: _fullDescriptionController,
+                                              hintText: kIdeaTextFieldFullDescriptionHint,
+                                              minLines: null,
+                                              maxLines: null,
+                                              expands: true,
+                                              contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 36),
+                                            ),
+                                            Positioned(
+                                              right: 0,
+                                              bottom: 0,
+                                              child: InkWell(
+                                                onTap: () =>
+                                                    context.read<AddOrUpdateIdeaCubit>().descriptionButtonPressed(),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(12.0),
+                                                  child: Icon(Icons.fullscreen_exit),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        )
-                      : Column(
-                          key: const ValueKey<int>(1),
-                          children: [
-                            Expanded(
-                              child: TabBarView(
+                            ],
+                          )
+                        : Column(
+                            key: const ValueKey<int>(1),
+                            children: [
+                              Expanded(
+                                child: TabBarView(
+                                  controller: _tabController,
+                                  children: getTabViews(context),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              TabBar(
+                                tabs: _tabs,
                                 controller: _tabController,
-                                children: getTabViews(context),
                               ),
-                            ),
-                            const SizedBox(height: 5),
-                            TabBar(
-                              tabs: _tabs,
-                              controller: _tabController,
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                  ),
                 ),
               ),
             ),
