@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (context) => IdeasCubit(
                 context.read<IdeaRepository>(),
-              )..allIdeasLoaded(),
+              ),
             )
           ],
           child: MaterialApp(
