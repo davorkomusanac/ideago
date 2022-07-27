@@ -14,6 +14,7 @@ import '../../../widgets/idea_textfield_label.dart';
 import '../../add_idea_category/add_idea_category_bottom_sheet.dart';
 import '../../rate_idea/rate_idea_page.dart';
 import 'discard_idea_button.dart';
+import 'idea_full_description_minimized.dart';
 
 class AddIdeaAllFields extends StatelessWidget {
   const AddIdeaAllFields({
@@ -75,30 +76,9 @@ class AddIdeaAllFields extends StatelessWidget {
             const IdeaTextFieldLabel(
               label: kIdeaTextFieldFullDescriptionLabel,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Stack(
-                children: [
-                  IdeaTextField(
-                    controller: fullDescriptionController,
-                    hintText: kIdeaTextFieldFullDescriptionHint,
-                    minLines: 10,
-                    maxLines: 10,
-                    contentPadding: const EdgeInsets.fromLTRB(12, 12, 20, 12),
-                  ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: IconButton(
-                      onPressed: () {
-                        descriptionFullScreenFocusNode.requestFocus();
-                        context.read<AddOrUpdateIdeaCubit>().descriptionButtonPressed();
-                      },
-                      icon: const Icon(Icons.fullscreen),
-                    ),
-                  ),
-                ],
-              ),
+            IdeaFullDescriptionMinimized(
+              fullDescriptionController: fullDescriptionController,
+              descriptionFullScreenFocusNode: descriptionFullScreenFocusNode,
             ),
             const SizedBox(height: 24),
             Padding(
