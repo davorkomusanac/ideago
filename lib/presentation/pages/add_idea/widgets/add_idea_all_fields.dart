@@ -1,4 +1,3 @@
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -9,12 +8,12 @@ import '../../../../application/ideas/ideas_cubit.dart';
 import '../../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../../constants.dart';
 import '../../../../functions.dart';
-import '../../../widgets/adaptive_alert_dialog.dart';
 import '../../../widgets/idea_status_bottom_sheet.dart';
 import '../../../widgets/idea_textfield.dart';
 import '../../../widgets/idea_textfield_label.dart';
 import '../../add_idea_category/add_idea_category_bottom_sheet.dart';
 import '../../rate_idea/rate_idea_page.dart';
+import 'discard_idea_button.dart';
 
 class AddIdeaAllFields extends StatelessWidget {
   const AddIdeaAllFields({
@@ -57,27 +56,7 @@ class AddIdeaAllFields extends StatelessWidget {
                     ),
                   ),
                 ),
-                IconButton(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  onPressed: () {
-                    showOkCancelAlertDialog(
-                      context: context,
-                      builder: (_, __) => AdaptiveAlertDialog(
-                        title: kAlertDialogConfirmationTitle,
-                        content: kDiscardCreateIdeaDialogContent,
-                        leftButtonText: kAlertDialogLeftButtonText,
-                        rightButtonText: kAlertDialogRightButtonText,
-                        onLeftButtonPressed: () => Navigator.of(context).pop(),
-                        onRightButtonPressed: () {
-                          //Pop until home page
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.close),
-                ),
+                const DiscardIdeaButton(),
                 const SizedBox(width: 8),
               ],
             ),
