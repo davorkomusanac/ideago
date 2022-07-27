@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../../../../application/add_or_update_idea/add_or_update_idea_cubit.dart';
 import '../../../../application/idea_categories/idea_categories_cubit.dart';
 import '../../../../application/ideas/ideas_cubit.dart';
 import '../../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../../constants.dart';
 import '../../../../functions.dart';
-import '../../../widgets/idea_status_bottom_sheet.dart';
 import '../../../widgets/idea_textfield.dart';
 import '../../../widgets/idea_textfield_label.dart';
 import '../../add_idea_category/add_idea_category_bottom_sheet.dart';
 import '../../rate_idea/rate_idea_page.dart';
 import 'discard_idea_button.dart';
 import 'idea_full_description_minimized.dart';
+import 'idea_status_field.dart';
 
 class AddIdeaAllFields extends StatelessWidget {
   const AddIdeaAllFields({
@@ -85,41 +84,7 @@ class AddIdeaAllFields extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 children: [
-                  BlocListener<AddOrUpdateIdeaCubit, AddOrUpdateIdeaState>(
-                    listener: (context, state) {
-                      if (state.ideaProjectStatus != statusController.text) {
-                        statusController.text = state.ideaProjectStatus;
-                      }
-                    },
-                    child: Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const IdeaTextFieldLabel(
-                            label: kIdeaTextFieldStatus,
-                            leftPadding: 12.0,
-                          ),
-                          IdeaTextField(
-                            controller: statusController,
-                            readOnly: true,
-                            suffixIcon: const Icon(
-                              Icons.arrow_drop_down,
-                              size: 30,
-                            ),
-                            onTap: () => showMaterialModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              builder: (_) => BlocProvider<AddOrUpdateIdeaCubit>.value(
-                                value: BlocProvider.of<AddOrUpdateIdeaCubit>(context),
-                                child: const IdeaStatusBottomSheet(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  IdeaStatusField(statusController: statusController),
                   const SizedBox(width: 26),
                   BlocListener<RateIdeaCubit, RateIdeaState>(
                     listener: (context, state) {
