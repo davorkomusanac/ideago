@@ -46,10 +46,10 @@ class CategoryListTile extends StatelessWidget {
                 showOkCancelAlertDialog(
                   context: context,
                   builder: (_, __) => AdaptiveAlertDialog(
-                    title: kDeleteCategoryDialogTitle,
+                    title: kAlertDialogConfirmationTitle,
                     content: kDeleteCategoryDialogContent,
-                    leftButtonText: kDeleteCategoryDialogLeftButtonText,
-                    rightButtonText: kDeleteCategoryDialogRightButtonText,
+                    leftButtonText: kAlertDialogLeftButtonText,
+                    rightButtonText: kAlertDialogRightButtonText,
                     onLeftButtonPressed: () => Navigator.of(context).pop(),
                     onRightButtonPressed: () {
                       Navigator.of(context).pop();
