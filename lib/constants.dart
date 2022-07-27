@@ -73,7 +73,11 @@ const String kDeleteCategoryDialogContent = 'Are you sure you want to remove thi
 const String kAlertDialogLeftButtonText = 'Cancel';
 const String kAlertDialogRightButtonText = 'Confirm';
 const String kDiscardCreateIdeaDialogContent =
-    'Are you sure you want to discard this idea? All your unsaved progress will be lost.';
+    'Are you sure you want to discard this idea? All of your unsaved progress will be lost.';
+const String kDiscardUpdateIdeaDialogContent =
+    'Are you sure you want to go back? All of your unsaved progress will be lost.';
+const String kDeleteIdeaDialogContent = 'Are you sure you want to delete this idea? This action cannot be undone.';
+const String kDeleteIdeaDialogRightButtonText = 'Delete';
 
 /// Category bottomsheet
 const String kAddCategoryTextFieldHintText = 'Type to find category...';
@@ -81,3 +85,4 @@ const String kAddCategoryTextEmptyCategories = 'Start typing to create your firs
 
 /// Button Text
 const String kCreateIdeaButtonText = 'Create Idea';
+const String kUpdateIdeaButtonText = 'Update Idea';
