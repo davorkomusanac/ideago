@@ -8,6 +8,7 @@ import '../../../../constants.dart';
 import '../../../widgets/idea_textfield.dart';
 import '../../../widgets/idea_textfield_label.dart';
 import 'discard_idea_button.dart';
+import 'idea_button.dart';
 import 'idea_categories_field.dart';
 import 'idea_full_description_minimized.dart';
 import 'idea_rating_field.dart';
@@ -94,33 +95,20 @@ class AddIdeaAllFields extends StatelessWidget {
             ),
             const IdeaCategoriesField(),
             const SizedBox(height: 16),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 10,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  context.read<IdeasCubit>().ideaAdded(
-                        title: titleController.text,
-                        summary: summaryController.text,
-                        fullDescription: fullDescriptionController.text,
-                        status: statusController.text,
-                        rating: context.read<RateIdeaCubit>().state.ratingsSum,
-                        ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
-                        categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
-                      );
-                  Navigator.of(context).pop();
-                },
-                child: const Text(kCreateIdeaButtonText),
-              ),
+            IdeaButton(
+              onPressed: () {
+                context.read<IdeasCubit>().ideaAdded(
+                      title: titleController.text,
+                      summary: summaryController.text,
+                      fullDescription: fullDescriptionController.text,
+                      status: statusController.text,
+                      rating: context.read<RateIdeaCubit>().state.ratingsSum,
+                      ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
+                      categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                    );
+                Navigator.of(context).pop();
+              },
+              text: kCreateIdeaButtonText,
             ),
             const SizedBox(height: 16),
           ],
