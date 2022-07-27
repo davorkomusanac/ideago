@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/ideas/ideas_cubit.dart';
-import '../../../constants.dart';
 import '../../widgets/idea_card.dart';
 import '../add_idea/add_idea_page.dart';
 
@@ -69,27 +68,15 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    context.read<IdeasCubit>().ideaAdded(
-                          tempIdeas[2],
-                        );
-                  },
+                  onPressed: () {},
                   child: const Text('Add'),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    context.read<IdeasCubit>().ideaAdded(
-                          tempIdeas[2],
-                        );
-                  },
+                  onPressed: () {},
                   child: const Text('Delete'),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    context.read<IdeasCubit>().ideaAdded(
-                          tempIdeas[2],
-                        );
-                  },
+                  onPressed: () {},
                   child: const Text('Update'),
                 ),
               ],
