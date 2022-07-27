@@ -1,18 +1,19 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../application/ideas/ideas_cubit.dart';
 import '../../../../constants.dart';
+import '../../../../data/models/idea/idea.dart';
 import '../../../widgets/adaptive_alert_dialog.dart';
 
-class DiscardIdeaButton extends StatelessWidget {
-  const DiscardIdeaButton({
+class DeleteIdeaButton extends StatelessWidget {
+  const DeleteIdeaButton({
     Key? key,
-    required this.content,
-    required this.icon,
+    required this.idea,
   }) : super(key: key);
 
-  final String content;
-  final IconData icon;
+  final Idea idea;
 
   @override
   Widget build(BuildContext context) => IconButton(
@@ -22,19 +23,20 @@ class DiscardIdeaButton extends StatelessWidget {
             context: context,
             builder: (_, __) => AdaptiveAlertDialog(
               title: kAlertDialogConfirmationTitle,
-              content: content,
+              content: kDeleteIdeaDialogContent,
               leftButtonText: kAlertDialogLeftButtonText,
-              rightButtonText: kAlertDialogRightButtonText,
+              rightButtonText: kDeleteIdeaDialogRightButtonText,
               onLeftButtonPressed: () => Navigator.of(context).pop(),
               onRightButtonPressed: () {
                 //Pop until home page
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
+                context.read<IdeasCubit>().ideaDeleted(idea: idea);
               },
             ),
           );
           FocusManager.instance.primaryFocus?.unfocus();
         },
-        icon: Icon(icon),
+        icon: const Icon(Icons.delete),
       );
 }

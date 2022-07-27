@@ -5,17 +5,20 @@ import '../../../../application/idea_categories/idea_categories_cubit.dart';
 import '../../../../application/ideas/ideas_cubit.dart';
 import '../../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../../constants.dart';
+import '../../../../data/models/idea/idea.dart';
 import '../../../widgets/idea_textfield.dart';
 import '../../../widgets/idea_textfield_label.dart';
-import 'discard_idea_button.dart';
-import 'idea_button.dart';
-import 'idea_categories_field.dart';
-import 'idea_full_description_minimized.dart';
-import 'idea_rating_field.dart';
-import 'idea_status_field.dart';
+import '../../add_idea/widgets/discard_idea_button.dart';
+import '../../add_idea/widgets/idea_button.dart';
+import '../../add_idea/widgets/idea_categories_field.dart';
+import '../../add_idea/widgets/idea_full_description_minimized.dart';
+import '../../add_idea/widgets/idea_rating_field.dart';
+import '../../add_idea/widgets/idea_status_field.dart';
+import 'delete_idea_button.dart';
 
-class AddIdeaAllFields extends StatelessWidget {
-  const AddIdeaAllFields({
+class UpdateIdeaAllFields extends StatelessWidget {
+  const UpdateIdeaAllFields({
+    required this.idea,
     required this.titleController,
     required this.summaryController,
     required this.fullDescriptionController,
@@ -25,6 +28,7 @@ class AddIdeaAllFields extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  final Idea idea;
   final TextEditingController titleController;
   final TextEditingController summaryController;
   final TextEditingController fullDescriptionController;
@@ -39,26 +43,27 @@ class AddIdeaAllFields extends StatelessWidget {
           children: [
             const SizedBox(height: 10),
             const IdeaTextFieldLabel(
+              leftPadding: 68,
               label: kIdeaTextFieldTitleLabel,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(width: 8),
+                const DiscardIdeaButton(
+                  content: kDiscardUpdateIdeaDialogContent,
+                  icon: Icons.arrow_back,
+                ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.only(right: 8.0),
                     child: IdeaTextField(
                       controller: titleController,
                       hintText: kIdeaTextFieldTitleHint,
-                      autofocus: true,
                     ),
                   ),
                 ),
-                const DiscardIdeaButton(
-                  content: kDiscardCreateIdeaDialogContent,
-                  icon: Icons.close,
-                ),
+                DeleteIdeaButton(idea: idea),
                 const SizedBox(width: 8),
               ],
             ),
@@ -100,18 +105,21 @@ class AddIdeaAllFields extends StatelessWidget {
             const SizedBox(height: 16),
             IdeaButton(
               onPressed: () {
-                context.read<IdeasCubit>().ideaAdded(
+                context.read<IdeasCubit>().ideaUpdated(
+                      uid: idea.uid,
                       title: titleController.text,
                       summary: summaryController.text,
                       fullDescription: fullDescriptionController.text,
                       status: statusController.text,
+                      index: idea.index,
                       rating: context.read<RateIdeaCubit>().state.ratingsSum,
                       ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
                       categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                      dateTimeCreated: idea.dateTimeCreated,
                     );
                 Navigator.of(context).pop();
               },
-              text: kCreateIdeaButtonText,
+              text: kUpdateIdeaButtonText,
             ),
             const SizedBox(height: 16),
           ],
