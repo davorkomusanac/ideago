@@ -86,9 +86,83 @@ class IdeasCubit extends Cubit<IdeasState> {
     }
   }
 
-  void ideaDeleted() {}
+  Future<void> ideaDeleted({required Idea idea}) async {
+    try {
+      await _ideasRepository.deleteIdea(idea);
+      var updatedIdeas = state.ideas
+          .where(
+            (e) => e.uid != idea.uid,
+          )
+          .toList();
 
-  void ideaUpdated() {}
+      emit(
+        state.copyWith(
+          status: IdeasStatus.success,
+          ideas: updatedIdeas,
+          errorMessage: '',
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: IdeasStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> ideaUpdated({
+    required String uid,
+    required String title,
+    required String summary,
+    required String fullDescription,
+    required String status,
+    required double index,
+    required int rating,
+    required List<IdeaRatingQuestion> ratingQuestions,
+    required List<String> categories,
+    required DateTime dateTimeCreated,
+  }) async {
+    var idea = Idea(
+      uid: uid,
+      title: title,
+      summary: summary,
+      fullDescription: fullDescription,
+      status: status,
+      index: index,
+      rating: rating,
+      ratingQuestions: ratingQuestions,
+      categories: categories,
+      dateTimeCreated: dateTimeCreated,
+      dateTimeLastUpdated: DateTime.now(),
+    );
+
+    try {
+      await _ideasRepository.updateIdea(idea);
+
+      var updatedIdeas = state.ideas
+          .map(
+            (e) => e.uid == idea.uid ? idea : e,
+          )
+          .toList();
+
+      emit(
+        state.copyWith(
+          status: IdeasStatus.success,
+          ideas: updatedIdeas,
+          errorMessage: '',
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: IdeasStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
 
   void ideasSorted() {}
 
