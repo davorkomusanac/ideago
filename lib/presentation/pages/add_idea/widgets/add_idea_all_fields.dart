@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../application/idea_categories/idea_categories_cubit.dart';
 import '../../../../application/ideas/ideas_cubit.dart';
@@ -8,8 +7,8 @@ import '../../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../../constants.dart';
 import '../../../widgets/idea_textfield.dart';
 import '../../../widgets/idea_textfield_label.dart';
-import '../../add_idea_category/add_idea_category_bottom_sheet.dart';
 import 'discard_idea_button.dart';
+import 'idea_categories_field.dart';
 import 'idea_full_description_minimized.dart';
 import 'idea_rating_field.dart';
 import 'idea_status_field.dart';
@@ -93,53 +92,7 @@ class AddIdeaAllFields extends StatelessWidget {
             const IdeaTextFieldLabel(
               label: kIdeaTextFieldCategories,
             ),
-            BlocBuilder<IdeaCategoriesCubit, IdeaCategoriesState>(
-              builder: (context, state) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 10,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 5,
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
-                          context.read<IdeaCategoriesCubit>().allCategoriesLoaded();
-                          showMaterialModalBottomSheet(
-                            context: context,
-                            enableDrag: false,
-                            backgroundColor: Colors.transparent,
-                            builder: (_) => BlocProvider<IdeaCategoriesCubit>.value(
-                              value: BlocProvider.of<IdeaCategoriesCubit>(context),
-                              child: const AddIdeaCategoryBottomSheet(),
-                            ),
-                          );
-                        },
-                        child: const Icon(Icons.add),
-                      ),
-                      ...state.checkedCategories
-                          .map(
-                            (category) => Chip(
-                              elevation: 5,
-                              label: Text(category),
-                              onDeleted: () => context.read<IdeaCategoriesCubit>().ideaCategoryRemoved(category),
-                            ),
-                          )
-                          .toList(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            const IdeaCategoriesField(),
             const SizedBox(height: 16),
             Container(
               width: double.infinity,
