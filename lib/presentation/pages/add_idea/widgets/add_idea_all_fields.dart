@@ -6,13 +6,12 @@ import '../../../../application/idea_categories/idea_categories_cubit.dart';
 import '../../../../application/ideas/ideas_cubit.dart';
 import '../../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../../constants.dart';
-import '../../../../functions.dart';
 import '../../../widgets/idea_textfield.dart';
 import '../../../widgets/idea_textfield_label.dart';
 import '../../add_idea_category/add_idea_category_bottom_sheet.dart';
-import '../../rate_idea/rate_idea_page.dart';
 import 'discard_idea_button.dart';
 import 'idea_full_description_minimized.dart';
+import 'idea_rating_field.dart';
 import 'idea_status_field.dart';
 
 class AddIdeaAllFields extends StatelessWidget {
@@ -86,36 +85,7 @@ class AddIdeaAllFields extends StatelessWidget {
                 children: [
                   IdeaStatusField(statusController: statusController),
                   const SizedBox(width: 26),
-                  BlocListener<RateIdeaCubit, RateIdeaState>(
-                    listener: (context, state) {
-                      ratingController.text = formatIdeaRatingResult(state.ratingsSum);
-                    },
-                    child: Expanded(
-                      child: Column(
-                        children: [
-                          const IdeaTextFieldLabel(
-                            label: kIdeaTextFieldRatingTitle,
-                            leftPadding: 12.0,
-                          ),
-                          IdeaTextField(
-                            controller: ratingController,
-                            readOnly: true,
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => BlocProvider<RateIdeaCubit>.value(
-                                    value: BlocProvider.of<RateIdeaCubit>(context),
-                                    child: const RateIdeaPage(),
-                                  ),
-                                ),
-                              );
-                              FocusManager.instance.primaryFocus?.unfocus();
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  IdeaRatingField(ratingController: ratingController),
                 ],
               ),
             ),
