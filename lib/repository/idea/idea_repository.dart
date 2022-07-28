@@ -1,4 +1,7 @@
-import '../../data/databases/idea/ideas_offline_db.dart';
+import 'dart:developer';
+
+import '../../constants.dart';
+import '../../data/databases/idea/idea_offline_db.dart';
 import '../../data/models/idea/idea.dart';
 import 'idea_interface.dart';
 
@@ -8,30 +11,40 @@ class IdeaRepository implements IdeaInterface {
   IdeaRepository({required this.offlineDb});
 
   @override
-  Future<List<Idea>> getAllIdeas() async {
+  Stream<List<Idea>> getIdeas() => offlineDb.getIdeas().handleError(
+        (e) {
+          log(e);
+          throw kErrorLoadingIdeas;
+        },
+      );
+
+  @override
+  Future<void> addIdea(Idea idea) async {
     try {
-      return await offlineDb.getAllIdeas();
+      await offlineDb.addIdea(idea);
     } catch (e) {
-      print('second caught');
-      rethrow;
+      log(e.toString());
+      throw kErrorAddingIdea;
     }
   }
 
   @override
-  Stream<List<Idea>> getIdeas() => offlineDb.getIdeas();
-
-  @override
-  Future<void> addIdea(Idea idea) async {
-    await offlineDb.addIdea(idea);
-  }
-
-  @override
   Future<void> deleteIdea(Idea idea) async {
-    await offlineDb.deleteIdea(idea);
+    try {
+      await offlineDb.deleteIdea(idea);
+    } catch (e) {
+      log(e.toString());
+      throw kErrorDeletingIdea;
+    }
   }
 
   @override
   Future<void> updateIdea(Idea idea) async {
-    await offlineDb.updateIdea(idea);
+    try {
+      await offlineDb.updateIdea(idea);
+    } catch (e) {
+      log(e.toString());
+      throw kErrorUpdatingIdea;
+    }
   }
 }

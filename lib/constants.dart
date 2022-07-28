@@ -93,3 +93,8 @@ const String kErrorLoadingCategories =
 const String kErrorAddingCategory = 'There was an error while creating your category. Please try again.';
 const String kErrorDeletingCategory = 'There was an error while deleting your category. Please try again.';
 const String kErrorUpdatingCategory = 'There was an error while updating your category. Please try again.';
+
+const String kErrorLoadingIdeas = 'There was an error while loading your ideas. Please restart your app and try again.';
+const String kErrorAddingIdea = 'There was an error while creating your idea. Please try again.';
+const String kErrorDeletingIdea = 'There was an error while deleting your idea. Please try again.';
+const String kErrorUpdatingIdea = 'There was an error while updating your idea. Please try again.';
