@@ -11,20 +11,23 @@ class IdeaCategoryOfflineDb {
     initDb();
   }
 
-  //TODO error handling
   void initDb() {
     _isar = Isar.getInstance()!;
     _isarIdeaCategories = _isar.isarIdeaCategorys;
   }
 
   Future<List<IdeaCategory>> getAllIdeaCategories() async {
-    List<IsarIdeaCategory> allIsarIdeaCategories = await _isarIdeaCategories.where().sortByTitle().findAll();
-    List<IdeaCategory> allIdeaCategories = allIsarIdeaCategories
-        .map(
-          (e) => e.toIdeaCategory(),
-        )
-        .toList();
-    return allIdeaCategories;
+    try {
+      List<IsarIdeaCategory> allIsarIdeaCategories = await _isarIdeaCategories.where().sortByTitle().findAll();
+      List<IdeaCategory> allIdeaCategories = allIsarIdeaCategories
+          .map(
+            (e) => e.toIdeaCategory(),
+          )
+          .toList();
+      return allIdeaCategories;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<void> addIdeaCategory(IdeaCategory ideaCategory) async {
@@ -37,27 +40,36 @@ class IdeaCategoryOfflineDb {
         },
       );
     } catch (e) {
-      print(e.toString());
+      rethrow;
     }
   }
 
   Future<void> deleteIdeaCategory(IdeaCategory ideaCategory) async {
-    await _isar.writeTxn(
-      (isar) async {
-        IsarIdeaCategory? isarIdeaCategory = await _isarIdeaCategories.where().uidEqualTo(ideaCategory.uid).findFirst();
-        if (isarIdeaCategory != null) await isar.isarIdeaCategorys.delete(isarIdeaCategory.id);
-      },
-    );
+    try {
+      await _isar.writeTxn(
+        (isar) async {
+          IsarIdeaCategory? isarIdeaCategory =
+              await _isarIdeaCategories.where().uidEqualTo(ideaCategory.uid).findFirst();
+          if (isarIdeaCategory != null) await isar.isarIdeaCategorys.delete(isarIdeaCategory.id);
+        },
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<void> updateIdeaCategory(IdeaCategory ideaCategory) async {
-    await _isar.writeTxn(
-      (isar) async {
-        await isar.isarIdeaCategorys.put(
-          IsarIdeaCategory.fromIdeaCategory(ideaCategory),
-          replaceOnConflict: true,
-        );
-      },
-    );
+    try {
+      await _isar.writeTxn(
+        (isar) async {
+          await isar.isarIdeaCategorys.put(
+            IsarIdeaCategory.fromIdeaCategory(ideaCategory),
+            replaceOnConflict: true,
+          );
+        },
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 }

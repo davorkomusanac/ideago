@@ -86,3 +86,10 @@ const String kAddCategoryTextEmptyCategories = 'Start typing to create your firs
 /// Button Text
 const String kCreateIdeaButtonText = 'Create Idea';
 const String kUpdateIdeaButtonText = 'Update Idea';
+
+/// Error exception messages
+const String kErrorLoadingCategories =
+    'There was an error while loading your categories. Please restart your app and try again.';
+const String kErrorAddingCategory = 'There was an error while creating your category. Please try again.';
+const String kErrorDeletingCategory = 'There was an error while deleting your category. Please try again.';
+const String kErrorUpdatingCategory = 'There was an error while updating your category. Please try again.';
