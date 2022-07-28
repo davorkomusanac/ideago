@@ -83,8 +83,14 @@ class _AddIdeaCategoryBottomSheetState extends State<AddIdeaCategoryBottomSheet>
                         )
                       : state.status == IdeaCategoriesStatus.error
                           ? Expanded(
-                              child: Center(
-                                child: Text(state.errorMessage),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                                child: Center(
+                                  child: Text(
+                                    state.errorMessage,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
                               ),
                             )
                           : Expanded(
