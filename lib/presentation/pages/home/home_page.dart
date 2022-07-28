@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/ideas/ideas_cubit.dart';
+import '../../../constants.dart';
 import '../../widgets/idea_card.dart';
 import '../add_idea/add_idea_page.dart';
 
@@ -33,19 +34,38 @@ class HomePage extends StatelessWidget {
               child: Text('Title'),
             ),
             Expanded(
-              child: BlocBuilder<IdeasCubit, IdeasState>(
-                builder: (context, state) {
-                  if (state.status == IdeasStatus.initial) {
-                    return const Center(
-                      child: Text("Add ideas to show them"),
+              child: BlocConsumer<IdeasCubit, IdeasState>(
+                listener: (context, state) {
+                  if (state.errorMessage.isNotEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          state.errorMessage,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     );
-                  } else if (state.status == IdeasStatus.loading) {
+                  }
+                },
+                builder: (context, state) {
+                  if (state.status == IdeasStatus.loading) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (state.status == IdeasStatus.error) {
+                  } else if (state.status == IdeasStatus.error &&
+                      state.errorMessageLoadingIdeas == kErrorLoadingIdeas) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                      child: Center(
+                        child: Text(
+                          state.errorMessageLoadingIdeas,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  } else if (state.status == IdeasStatus.success && state.ideas.isEmpty) {
                     return const Center(
-                      child: Text("There was an error loading ideas"),
+                      child: Text("Add ideas to show them"),
                     );
                   } else {
                     return ListView.builder(

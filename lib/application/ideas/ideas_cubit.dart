@@ -12,10 +12,25 @@ part 'ideas_state.dart';
 
 class IdeasCubit extends Cubit<IdeasState> {
   IdeasCubit(this._ideasRepository) : super(const IdeasState()) {
+    ///Start listening to the stream of ideas as soon as the Cubit is constructed and show success and error accordingly
     _stream?.cancel();
     _stream = _ideasRepository.getIdeas().listen(
       (ideas) {
-        _initialLoaded(ideas);
+        emit(
+          state.copyWith(
+            ideas: ideas,
+            status: IdeasStatus.success,
+            errorMessageLoadingIdeas: '',
+          ),
+        );
+      },
+      onError: (e) {
+        emit(
+          state.copyWith(
+            status: IdeasStatus.error,
+            errorMessageLoadingIdeas: e,
+          ),
+        );
       },
     );
   }
@@ -28,15 +43,6 @@ class IdeasCubit extends Cubit<IdeasState> {
 
   final IdeaRepository _ideasRepository;
   StreamSubscription? _stream;
-
-  Future<void> _initialLoaded(List<Idea> ideas) async {
-    emit(
-      state.copyWith(
-        ideas: ideas,
-        status: IdeasStatus.success,
-      ),
-    );
-  }
 
   Future<void> ideaAdded({
     required String title,
