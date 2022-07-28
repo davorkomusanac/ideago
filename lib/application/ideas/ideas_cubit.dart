@@ -47,7 +47,7 @@ class IdeasCubit extends Cubit<IdeasState> {
     required List<IdeaRatingQuestion> ratingQuestions,
     required List<String> categories,
   }) async {
-    double index = state.ideas.isNotEmpty ? state.ideas.last.index + 1 : 0;
+    double index = state.ideas.isNotEmpty ? state.ideas.first.index + 1 : 0;
     var idea = Idea(
       uid: const Uuid().v4(),
       title: title,
