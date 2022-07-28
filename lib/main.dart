@@ -5,7 +5,7 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'application/ideas/ideas_cubit.dart';
-import 'data/databases/idea/ideas_offline_db.dart';
+import 'data/databases/idea/idea_offline_db.dart';
 import 'data/databases/idea_category/idea_category_offline_db.dart';
 import 'data/models/idea/isar_idea/isar_idea.dart';
 import 'data/models/idea_category/isar_idea_category/isar_idea_category.dart';
