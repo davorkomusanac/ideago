@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../constants.dart';
 import '../../data/models/idea/idea.dart';
 import '../../data/models/idea_rating_question/idea_rating_question.dart';
 import '../../repository/idea/idea_repository.dart';
@@ -11,16 +12,26 @@ import '../../repository/idea/idea_repository.dart';
 part 'ideas_state.dart';
 
 class IdeasCubit extends Cubit<IdeasState> {
+  final IdeaRepository _ideasRepository;
+  StreamSubscription? _stream;
+
+  @override
+  Future<void> close() {
+    _stream?.cancel();
+    return super.close();
+  }
+
   IdeasCubit(this._ideasRepository) : super(const IdeasState()) {
     ///Start listening to the stream of ideas as soon as the Cubit is constructed and show success and error accordingly
     _stream?.cancel();
-    _stream = _ideasRepository.getIdeas().listen(
+    _stream = _ideasRepository.watchIdeas().listen(
       (ideas) {
         emit(
           state.copyWith(
             ideas: ideas,
             status: IdeasStatus.success,
             errorMessageLoadingIdeas: '',
+            isThereMoreIdeasToLoad: ideas.length < kNumberOfIdeasReadLimit ? false : true,
           ),
         );
       },
@@ -35,14 +46,32 @@ class IdeasCubit extends Cubit<IdeasState> {
     );
   }
 
-  @override
-  Future<void> close() {
-    _stream?.cancel();
-    return super.close();
-  }
+  Future<void> fetchIdeasNextPage(int currentLoadedIdeasLength) async {
+    bool isThereMoreIdeasToLoad = false;
+    try {
+      if (state.isThereMoreIdeasToLoad) {
+        List<Idea> ideasNextPage = await _ideasRepository.fetchIdeasNextPage(currentLoadedIdeasLength);
+        isThereMoreIdeasToLoad = ideasNextPage.length < kNumberOfIdeasReadLimit ? false : true;
+        List<Idea> updatedIdeas = <Idea>[...state.ideas, ...ideasNextPage];
 
-  final IdeaRepository _ideasRepository;
-  StreamSubscription? _stream;
+        emit(
+          state.copyWith(
+            status: IdeasStatus.success,
+            ideas: updatedIdeas,
+            errorMessageLoadingIdeas: '',
+            isThereMoreIdeasToLoad: isThereMoreIdeasToLoad,
+          ),
+        );
+      }
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: IdeasStatus.error,
+          errorMessageLoadingIdeas: e.toString(),
+        ),
+      );
+    }
+  }
 
   Future<void> ideaAdded({
     required String title,

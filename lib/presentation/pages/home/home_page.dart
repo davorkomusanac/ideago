@@ -88,7 +88,11 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<IdeasCubit>().fetchIdeasNextPage(
+                          context.read<IdeasCubit>().state.ideas.length,
+                        );
+                  },
                   child: const Text('Add'),
                 ),
                 ElevatedButton(
