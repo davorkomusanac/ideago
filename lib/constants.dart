@@ -98,3 +98,6 @@ const String kErrorLoadingIdeas = 'There was an error while loading your ideas. 
 const String kErrorAddingIdea = 'There was an error while creating your idea. Please try again.';
 const String kErrorDeletingIdea = 'There was an error while deleting your idea. Please try again.';
 const String kErrorUpdatingIdea = 'There was an error while updating your idea. Please try again.';
+
+/// Int value for limiting the number of elements read from storage in a single operation
+const int kNumberOfIdeasReadLimit = 3;

@@ -1,7 +1,9 @@
 import '../../data/models/idea/idea.dart';
 
 abstract class IdeaInterface {
-  Stream<List<Idea>> getIdeas();
+  Stream<List<Idea>> watchIdeas();
+
+  Future<List<Idea>> fetchIdeasNextPage(int currentLoadedIdeasLength);
 
   Future<void> addIdea(Idea idea);
 

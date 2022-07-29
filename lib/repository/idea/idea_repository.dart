@@ -11,12 +11,23 @@ class IdeaRepository implements IdeaInterface {
   IdeaRepository({required this.offlineDb});
 
   @override
-  Stream<List<Idea>> getIdeas() => offlineDb.getIdeas().handleError(
+  Stream<List<Idea>> watchIdeas() => offlineDb.watchIdeas().handleError(
         (e) {
           log(e);
           throw kErrorLoadingIdeas;
         },
       );
+
+  @override
+  Future<List<Idea>> fetchIdeasNextPage(int currentLoadedIdeasLength) async {
+    try {
+      List<Idea> ideas = await offlineDb.fetchIdeasNextPage(currentLoadedIdeasLength);
+      return ideas;
+    } catch (e) {
+      log(e.toString());
+      throw kErrorLoadingIdeas;
+    }
+  }
 
   @override
   Future<void> addIdea(Idea idea) async {

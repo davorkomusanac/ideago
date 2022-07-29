@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 
+import '../../../constants.dart';
 import '../../models/idea/idea.dart';
 import '../../models/idea/isar_idea/isar_idea.dart';
 
@@ -18,8 +19,8 @@ class IdeaOfflineDb {
 
   /// With Isar, you need to create a Query and then watch it to get a Stream
   /// From IsarDB we get back a Stream<List<IsarIdea>> so we need to convert it (map) to Stream<List<Idea>>
-  Stream<List<Idea>> getIdeas() {
-    Query<IsarIdea> allIdeas = _isarIdeas.where().sortByIndexDesc().limit(15).build();
+  Stream<List<Idea>> watchIdeas() {
+    Query<IsarIdea> allIdeas = _isarIdeas.where().sortByIndexDesc().limit(kNumberOfIdeasReadLimit).build();
     return allIdeas.watch(initialReturn: true).map(
           (event) => event
               .map(
@@ -27,6 +28,25 @@ class IdeaOfflineDb {
               )
               .toList(),
         );
+  }
+
+  Future<List<Idea>> fetchIdeasNextPage(int currentLoadedIdeasLength) async {
+    try {
+      //TODO Change limit size from 3 to 10
+      List<IsarIdea> isarIdeas = await _isarIdeas
+          .where()
+          .sortByIndexDesc()
+          .offset(currentLoadedIdeasLength)
+          .limit(kNumberOfIdeasReadLimit)
+          .findAll();
+      return isarIdeas
+          .map(
+            (isarIdea) => isarIdea.toIdea(),
+          )
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<void> addIdea(Idea idea) async {
