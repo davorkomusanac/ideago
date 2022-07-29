@@ -63,8 +63,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
           BlocProvider<IdeaCategoriesCubit>(
             create: (context) => IdeaCategoriesCubit(
               context.read<IdeaCategoryRepository>(),
-              //TODO Remove these categories as default?
-            )..checkedCategoriesInitialized(['Android', 'iOS', 'Web']),
+            ),
           ),
         ],
         child: WillPopScope(
