@@ -4,10 +4,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../application/ideas/ideas_cubit.dart';
 import '../../../constants.dart';
 import '../../widgets/idea_card.dart';
+import '../../widgets/load_next_page_indicator.dart';
 import '../add_idea/add_idea_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -68,17 +88,25 @@ class HomePage extends StatelessWidget {
                       child: Text("Add ideas to show them"),
                     );
                   } else {
-                    return ListView.builder(
-                      itemCount: state.ideas.length,
-                      itemBuilder: (context, index) {
-                        var idea = state.ideas[index];
-                        return IdeaCard(
-                          idea: idea,
-                          key: ValueKey(
-                            idea.uid,
-                          ),
-                        );
+                    return NotificationListener<ScrollNotification>(
+                      onNotification: (notification) {
+                        if (notification is ScrollEndNotification && _scrollController.position.extentAfter == 0) {
+                          context.read<IdeasCubit>().fetchIdeasNextPage(state.ideas.length);
+                        }
+                        return false;
                       },
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: state.isThereMoreIdeasToLoad ? state.ideas.length + 1 : state.ideas.length,
+                        itemBuilder: (context, index) => index >= state.ideas.length
+                            ? const LoadNextPageIndicator()
+                            : IdeaCard(
+                                idea: state.ideas[index],
+                                key: ValueKey(
+                                  state.ideas[index].uid,
+                                ),
+                              ),
+                      ),
                     );
                   }
                 },
