@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../../colors.dart';
 
 class AddCategoryListTile extends StatelessWidget {
   const AddCategoryListTile({Key? key, required this.title}) : super(key: key);
@@ -15,7 +16,7 @@ class AddCategoryListTile extends StatelessWidget {
             bottom: BorderSide(
               style: BorderStyle.solid,
               width: 1.0,
-              color: Colors.black.withOpacity(0.2),
+              color: AppColors.black.withOpacity(0.2),
             ),
           ),
         ),
@@ -32,6 +33,7 @@ class AddCategoryListTile extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 5,
+                  primary: AppColors.primaryForegroundColor,
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(

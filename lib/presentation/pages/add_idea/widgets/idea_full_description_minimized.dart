@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../application/add_or_update_idea/add_or_update_idea_cubit.dart';
+import '../../../../application/idea_text_fields_helpers/idea_text_fields_helpers_cubit.dart';
 import '../../../../constants.dart';
 import '../../../widgets/idea_textfield.dart';
 
@@ -33,7 +33,7 @@ class IdeaFullDescriptionMinimized extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   descriptionFullScreenFocusNode.requestFocus();
-                  context.read<AddOrUpdateIdeaCubit>().descriptionButtonPressed();
+                  context.read<IdeaTextFieldsHelpersCubit>().descriptionButtonPressed();
                 },
                 icon: const Icon(Icons.fullscreen),
               ),

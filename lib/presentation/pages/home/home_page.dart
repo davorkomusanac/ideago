@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/ideas/ideas_cubit.dart';
+import '../../../colors.dart';
 import '../../../constants.dart';
 import '../../../functions.dart';
 import '../../widgets/idea_card.dart';
 import '../../widgets/idea_error_placeholder_text.dart';
-import '../../widgets/load_next_page_indicator.dart';
+import '../../widgets/idea_textfield.dart';
+import '../../widgets/themed_circular_progress_indicator.dart';
 import '../add_idea/add_idea_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,9 +37,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Colors.blue[900],
         appBar: AppBar(
           title: const Text('IdeaGo'),
+          actions: [
+            IconButton(
+              //TODO Open drawer
+              //Open drawer menu
+              onPressed: () => {},
+              icon: const Icon(Icons.menu),
+            )
+          ],
         ),
         body: SafeArea(
           child: Stack(
@@ -47,33 +56,18 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                      left: 16,
-                      top: 16.0,
-                      right: 8.0,
+                      left: 16.0,
+                      right: 16.0,
+                      top: 24.0,
                       bottom: 8.0,
                     ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          //TODO Style it
-                          child: TextField(
-                            onChanged: (val) => _debouncer.run(
-                              () => context.read<IdeasCubit>().ideaSearched(
-                                    val.trim(),
-                                  ),
+                    child: IdeaTextField(
+                      onChanged: (val) => _debouncer.run(
+                        () => context.read<IdeasCubit>().ideaSearched(
+                              val.trim(),
                             ),
-                            decoration: const InputDecoration(
-                              hintText: kAddCategoryTextFieldHintText,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          //TODO Open drawer
-                          //Open drawer menu
-                          onPressed: () => {},
-                          icon: const Icon(Icons.menu),
-                        )
-                      ],
+                      ),
+                      hintText: kIdeaTextFieldSearchHint,
                     ),
                   ),
                   Expanded(
@@ -92,9 +86,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       builder: (context, state) {
                         if (state.status == IdeasStatus.loading) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return const ThemedCircularProgressIndicator();
                         } else if (state.status == IdeasStatus.error &&
                             state.errorMessageLoadingIdeas == kErrorLoadingIdeas) {
                           return IdeaErrorPlaceholderText(text: state.errorMessageLoadingIdeas);
@@ -112,10 +104,13 @@ class _HomePageState extends State<HomePage> {
                               return false;
                             },
                             child: ListView.builder(
+                              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                               controller: _scrollController,
                               itemCount: state.isThereMoreIdeasToLoad ? state.ideas.length + 1 : state.ideas.length,
                               itemBuilder: (context, index) => index >= state.ideas.length
-                                  ? const LoadNextPageIndicator()
+                                  ? const ThemedCircularProgressIndicator(
+                                      padding: EdgeInsets.all(8.0),
+                                    )
                                   : IdeaCard(
                                       idea: state.ideas[index],
                                       key: ValueKey(
@@ -140,6 +135,7 @@ class _HomePageState extends State<HomePage> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 10,
+                      primary: AppColors.secondaryForegroundColor,
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(

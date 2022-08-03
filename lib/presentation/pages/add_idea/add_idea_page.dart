@@ -2,8 +2,8 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../application/add_or_update_idea/add_or_update_idea_cubit.dart';
 import '../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../application/idea_text_fields_helpers/idea_text_fields_helpers_cubit.dart';
 import '../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../constants.dart';
 import '../../../idea_rating_questions.dart';
@@ -50,8 +50,8 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
-          BlocProvider<AddOrUpdateIdeaCubit>(
-            create: (context) => AddOrUpdateIdeaCubit(),
+          BlocProvider<IdeaTextFieldsHelpersCubit>(
+            create: (context) => IdeaTextFieldsHelpersCubit(),
           ),
           BlocProvider<RateIdeaCubit>(
             create: (context) => RateIdeaCubit()
@@ -92,10 +92,8 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
             //Dismiss keyboard when user taps somewhere outside a TextField
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             child: Scaffold(
-              //TODO Change design
-              backgroundColor: Colors.blue[900],
               body: SafeArea(
-                child: BlocBuilder<AddOrUpdateIdeaCubit, AddOrUpdateIdeaState>(
+                child: BlocBuilder<IdeaTextFieldsHelpersCubit, IdeaTextFieldsHelpersState>(
                   builder: (context, state) => AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
                     switchInCurve: Curves.fastOutSlowIn,

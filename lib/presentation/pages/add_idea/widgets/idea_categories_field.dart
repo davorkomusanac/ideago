@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../../colors.dart';
 import '../../add_idea_category/add_idea_category_bottom_sheet.dart';
 
 class IdeaCategoriesField extends StatelessWidget {
@@ -21,6 +22,7 @@ class IdeaCategoriesField extends StatelessWidget {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 5,
+                    primary: AppColors.primaryForegroundColor,
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -33,7 +35,7 @@ class IdeaCategoriesField extends StatelessWidget {
                     showMaterialModalBottomSheet(
                       context: context,
                       enableDrag: false,
-                      backgroundColor: Colors.transparent,
+                      backgroundColor: AppColors.transparentColor,
                       builder: (_) => BlocProvider<IdeaCategoriesCubit>.value(
                         value: BlocProvider.of<IdeaCategoriesCubit>(context),
                         child: const AddIdeaCategoryBottomSheet(),
@@ -45,6 +47,7 @@ class IdeaCategoriesField extends StatelessWidget {
                 ...state.checkedCategories
                     .map(
                       (category) => Chip(
+                        backgroundColor: AppColors.primaryForegroundColor,
                         elevation: 5,
                         label: Text(category),
                         onDeleted: () => context.read<IdeaCategoriesCubit>().ideaCategoryRemoved(category),

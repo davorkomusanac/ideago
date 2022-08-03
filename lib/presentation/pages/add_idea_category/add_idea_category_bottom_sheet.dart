@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../colors.dart';
 import '../../../constants.dart';
+import '../../widgets/themed_circular_progress_indicator.dart';
 import 'widgets/add_category_list_tile.dart';
 import 'widgets/category_list_tile.dart';
 
@@ -40,8 +42,7 @@ class _AddIdeaCategoryBottomSheetState extends State<AddIdeaCategoryBottomSheet>
           child: Container(
             height: MediaQuery.of(context).size.height * 0.5,
             decoration: const BoxDecoration(
-              //TODO Apply colors
-              color: Colors.blueGrey,
+              color: AppColors.primaryBackgroundColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30.0),
                 topRight: Radius.circular(30.0),
@@ -63,8 +64,13 @@ class _AddIdeaCategoryBottomSheetState extends State<AddIdeaCategoryBottomSheet>
                           child: TextField(
                             controller: _textEditingController,
                             onChanged: (val) => context.read<IdeaCategoriesCubit>().categorySearched(val),
+                            cursorColor: AppColors.primaryForegroundColor,
                             decoration: const InputDecoration(
+                              hoverColor: Colors.teal,
                               hintText: kAddCategoryTextFieldHintText,
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: AppColors.primaryForegroundColor),
+                              ),
                             ),
                           ),
                         ),
@@ -77,9 +83,7 @@ class _AddIdeaCategoryBottomSheetState extends State<AddIdeaCategoryBottomSheet>
                   ),
                   state.status == IdeaCategoriesStatus.loading
                       ? const Expanded(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                          child: ThemedCircularProgressIndicator(),
                         )
                       : state.status == IdeaCategoriesStatus.error
                           ? Expanded(

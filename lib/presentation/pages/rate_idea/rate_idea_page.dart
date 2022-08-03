@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/rate_idea/rate_idea_cubit.dart';
+import '../../../colors.dart';
+import '../../../constants.dart';
 import 'widgets/confirm_rating_button.dart';
 import 'widgets/rate_idea_intro.dart';
 import 'widgets/rate_idea_outro.dart';
@@ -12,11 +14,8 @@ class RateIdeaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        //TODO Change design and UI of page
-        backgroundColor: Colors.blueGrey[800],
         appBar: AppBar(
-          title: const Text('Rate idea'),
-          backgroundColor: Colors.teal,
+          title: const Text(kAppBarRateIdeaTitle),
         ),
         body: BlocBuilder<RateIdeaCubit, RateIdeaState>(
           builder: (context, state) => ListView.builder(
@@ -59,7 +58,7 @@ class RateIdeaPage extends StatelessWidget {
                       min: 1,
                       max: 10,
                       divisions: 9,
-                      activeColor: Colors.teal,
+                      activeColor: AppColors.primaryForegroundColor,
                       onChanged: (newRating) {
                         context.read<RateIdeaCubit>().rateQuestion(
                               questionIndex: index - 1,
