@@ -32,13 +32,36 @@ class IdeaOfflineDb {
 
   Future<List<Idea>> fetchIdeasNextPage(int currentLoadedIdeasLength) async {
     try {
-      //TODO Change limit size from 3 to 10
       List<IsarIdea> isarIdeas = await _isarIdeas
           .where()
           .sortByIndexDesc()
           .offset(currentLoadedIdeasLength)
           .limit(kNumberOfIdeasReadLimit)
           .findAll();
+      return isarIdeas
+          .map(
+            (isarIdea) => isarIdea.toIdea(),
+          )
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Idea>> searchIdea(String searchTerm) async {
+    try {
+      List<IsarIdea> isarIdeas = await _isarIdeas
+          .filter()
+          .titleContains(searchTerm, caseSensitive: false)
+          .or()
+          .summaryContains(searchTerm, caseSensitive: false)
+          .or()
+          .fullDescriptionContains(searchTerm, caseSensitive: false)
+          .or()
+          .categoriesAnyContains(searchTerm, caseSensitive: false)
+          .limit(kNumberOfIdeasReadLimit)
+          .findAll();
+
       return isarIdeas
           .map(
             (isarIdea) => isarIdea.toIdea(),

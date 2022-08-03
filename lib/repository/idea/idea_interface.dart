@@ -10,4 +10,6 @@ abstract class IdeaInterface {
   Future<void> deleteIdea(Idea idea);
 
   Future<void> updateIdea(Idea idea);
+
+  Future<List<Idea>> searchIdea(String searchTerm);
 }

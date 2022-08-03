@@ -25,16 +25,7 @@ class IdeasCubit extends Cubit<IdeasState> {
     ///Start listening to the stream of ideas as soon as the Cubit is constructed and show success and error accordingly
     _stream?.cancel();
     _stream = _ideasRepository.watchIdeas().listen(
-      (ideas) {
-        emit(
-          state.copyWith(
-            ideas: ideas,
-            status: IdeasStatus.success,
-            errorMessageLoadingIdeas: '',
-            isThereMoreIdeasToLoad: ideas.length < kNumberOfIdeasReadLimit ? false : true,
-          ),
-        );
-      },
+      (ideas) => loadedIdeas(ideas),
       onError: (e) {
         emit(
           state.copyWith(
@@ -46,7 +37,74 @@ class IdeasCubit extends Cubit<IdeasState> {
     );
   }
 
-  Future<void> fetchIdeasNextPage(int currentLoadedIdeasLength) async {
+  void loadedIdeas(List<Idea> ideas) {
+    //If there is nothing searched, then show all loaded ideas
+    if (state.searchTerm.isEmpty) {
+      emit(
+        state.copyWith(
+          ideas: ideas,
+          initialLoadedIdeas: ideas,
+          status: IdeasStatus.success,
+          errorMessageLoadingIdeas: '',
+          isThereMoreIdeasToLoad: ideas.length < kNumberOfIdeasReadLimit ? false : true,
+        ),
+      );
+    } else {
+      //If something is currently searched, then only update the initialLoadedIdeas
+      //so that it is updated when user finishes his search
+      emit(
+        state.copyWith(
+          initialLoadedIdeas: ideas,
+          status: IdeasStatus.success,
+          errorMessageLoadingIdeas: '',
+        ),
+      );
+    }
+  }
+
+  Future<void> ideaSearched(String searchTerm) async {
+    try {
+      if (searchTerm.isNotEmpty) {
+        emit(
+          state.copyWith(
+            status: IdeasStatus.loading,
+          ),
+        );
+
+        List<Idea> searchedIdeas = await _ideasRepository.searchIdea(searchTerm);
+
+        emit(
+          state.copyWith(
+            status: IdeasStatus.success,
+            ideas: searchedIdeas,
+            errorMessageLoadingIdeas: '',
+            isThereMoreIdeasToLoad: false,
+            searchTerm: searchTerm,
+          ),
+        );
+      } else {
+        //If searchTerm is empty, user cleared his search, and show back the original unfiltered list of ideas
+        emit(
+          state.copyWith(
+            status: IdeasStatus.success,
+            ideas: state.initialLoadedIdeas,
+            errorMessageLoadingIdeas: '',
+            searchTerm: '',
+            isThereMoreIdeasToLoad: state.initialLoadedIdeas.length < kNumberOfIdeasReadLimit ? false : true,
+          ),
+        );
+      }
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: IdeasStatus.error,
+          errorMessageLoadingIdeas: e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> fetchedIdeasNextPage(int currentLoadedIdeasLength) async {
     bool isThereMoreIdeasToLoad = false;
     try {
       if (state.isThereMoreIdeasToLoad) {

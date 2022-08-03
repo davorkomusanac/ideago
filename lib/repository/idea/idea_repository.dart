@@ -30,6 +30,17 @@ class IdeaRepository implements IdeaInterface {
   }
 
   @override
+  Future<List<Idea>> searchIdea(String searchTerm) async {
+    try {
+      List<Idea> ideas = await offlineDb.searchIdea(searchTerm);
+      return ideas;
+    } catch (e) {
+      log(e.toString());
+      throw kErrorLoadingIdeas;
+    }
+  }
+
+  @override
   Future<void> addIdea(Idea idea) async {
     try {
       await offlineDb.addIdea(idea);
