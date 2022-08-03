@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/ideas/ideas_cubit.dart';
 import '../../../constants.dart';
+import '../../../functions.dart';
 import '../../widgets/idea_card.dart';
+import '../../widgets/idea_error_placeholder_text.dart';
 import '../../widgets/load_next_page_indicator.dart';
 import '../add_idea/add_idea_page.dart';
 
@@ -16,11 +18,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late ScrollController _scrollController;
+  late Debouncer _debouncer;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    _debouncer = Debouncer(milliseconds: 500);
   }
 
   @override
@@ -46,12 +50,15 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //Row with
-            //TextField
-            //Filter button
-            //
-            const Center(
-              child: Text('Title'),
+            TextField(
+              onChanged: (val) => _debouncer.run(
+                () => context.read<IdeasCubit>().ideaSearched(
+                      val.trim(),
+                    ),
+              ),
+              decoration: const InputDecoration(
+                hintText: kAddCategoryTextFieldHintText,
+              ),
             ),
             Expanded(
               child: BlocConsumer<IdeasCubit, IdeasState>(
@@ -74,24 +81,16 @@ class _HomePageState extends State<HomePage> {
                     );
                   } else if (state.status == IdeasStatus.error &&
                       state.errorMessageLoadingIdeas == kErrorLoadingIdeas) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                      child: Center(
-                        child: Text(
-                          state.errorMessageLoadingIdeas,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
+                    return IdeaErrorPlaceholderText(text: state.errorMessageLoadingIdeas);
                   } else if (state.status == IdeasStatus.success && state.ideas.isEmpty) {
-                    return const Center(
-                      child: Text("Add ideas to show them"),
-                    );
+                    return state.searchTerm.isEmpty
+                        ? const IdeaErrorPlaceholderText(text: kNoIdeasCreatedYet)
+                        : const IdeaErrorPlaceholderText(text: kNoIdeasFound);
                   } else {
                     return NotificationListener<ScrollNotification>(
                       onNotification: (notification) {
                         if (notification is ScrollEndNotification && _scrollController.position.extentAfter == 0) {
-                          context.read<IdeasCubit>().fetchIdeasNextPage(state.ideas.length);
+                          context.read<IdeasCubit>().fetchedIdeasNextPage(state.ideas.length);
                         }
                         return false;
                       },
@@ -111,27 +110,6 @@ class _HomePageState extends State<HomePage> {
                   }
                 },
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<IdeasCubit>().fetchIdeasNextPage(
-                          context.read<IdeasCubit>().state.ideas.length,
-                        );
-                  },
-                  child: const Text('Add'),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Delete'),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Update'),
-                ),
-              ],
             ),
             const SizedBox(height: 60),
           ],

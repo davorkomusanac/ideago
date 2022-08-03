@@ -1,50 +1,3 @@
-import 'package:uuid/uuid.dart';
-
-import 'data/models/idea/idea.dart';
-import 'idea_rating_questions.dart';
-
-List<Idea> tempIdeas = [
-  Idea(
-    uid: const Uuid().v4(),
-    title: 'First Idea',
-    summary: 'Short description',
-    fullDescription: 'Description of first idea, hmmm really good',
-    status: 'TODO',
-    index: 0,
-    rating: 50,
-    ratingQuestions: initialIdeaRatingQuestions,
-    categories: const <String>['Android', 'iOS'],
-    dateTimeCreated: DateTime.now(),
-    dateTimeLastUpdated: DateTime.now(),
-  ),
-  Idea(
-    uid: const Uuid().v4(),
-    title: 'Second Idea',
-    summary: 'Short description',
-    fullDescription: 'Description of first idea, hmmm really good',
-    status: 'TRIED',
-    index: 1,
-    rating: 70,
-    ratingQuestions: initialIdeaRatingQuestions,
-    categories: const <String>['WEB', 'iOS'],
-    dateTimeCreated: DateTime.now(),
-    dateTimeLastUpdated: DateTime.now(),
-  ),
-  Idea(
-    uid: const Uuid().v4(),
-    title: 'Third Idea',
-    summary: 'Short description',
-    fullDescription: 'Description of first idea, hmmm really good',
-    status: 'DISCARDED',
-    index: 2,
-    rating: 80,
-    ratingQuestions: initialIdeaRatingQuestions,
-    categories: const <String>['Desktop', 'Android', 'iOS'],
-    dateTimeCreated: DateTime.now(),
-    dateTimeLastUpdated: DateTime.now(),
-  ),
-];
-
 /// Add/Update Idea possible statuses
 const String kIdeaStatusToDo = 'To Do';
 const String kIdeaStatusInProgress = 'In Progress';
@@ -101,3 +54,7 @@ const String kErrorUpdatingIdea = 'There was an error while updating your idea. 
 
 /// Int value for limiting the number of elements read from storage in a single operation
 const int kNumberOfIdeasReadLimit = 3;
+
+/// Empty ideas list text placeholder
+const String kNoIdeasCreatedYet = 'Start adding your first ideas.';
+const String kNoIdeasFound = 'No idea found. Try changing your search term or create a new idea.';
