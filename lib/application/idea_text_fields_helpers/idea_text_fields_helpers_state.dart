@@ -1,7 +1,7 @@
-part of 'add_or_update_idea_cubit.dart';
+part of 'idea_text_fields_helpers_cubit.dart';
 
-class AddOrUpdateIdeaState extends Equatable {
-  const AddOrUpdateIdeaState({
+class IdeaTextFieldsHelpersState extends Equatable {
+  const IdeaTextFieldsHelpersState({
     this.isDescriptionExpanded = false,
     this.ideaProjectStatus = kIdeaStatusToDo,
   });
@@ -9,11 +9,11 @@ class AddOrUpdateIdeaState extends Equatable {
   final bool isDescriptionExpanded;
   final String ideaProjectStatus;
 
-  AddOrUpdateIdeaState copyWith({
+  IdeaTextFieldsHelpersState copyWith({
     bool? isDescriptionExpanded,
     String? ideaProjectStatus,
   }) =>
-      AddOrUpdateIdeaState(
+      IdeaTextFieldsHelpersState(
         isDescriptionExpanded: isDescriptionExpanded ?? this.isDescriptionExpanded,
         ideaProjectStatus: ideaProjectStatus ?? this.ideaProjectStatus,
       );

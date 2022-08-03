@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constants.dart';
 
-part 'add_or_update_idea_state.dart';
+part 'idea_text_fields_helpers_state.dart';
 
-class AddOrUpdateIdeaCubit extends Cubit<AddOrUpdateIdeaState> {
-  AddOrUpdateIdeaCubit() : super(const AddOrUpdateIdeaState());
+class IdeaTextFieldsHelpersCubit extends Cubit<IdeaTextFieldsHelpersState> {
+  IdeaTextFieldsHelpersCubit() : super(const IdeaTextFieldsHelpersState());
 
   void descriptionButtonPressed() {
     emit(
