@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../colors.dart';
+
 class RateIdeaSliderHeader extends StatelessWidget {
   const RateIdeaSliderHeader({
     Key? key,
@@ -21,7 +23,7 @@ class RateIdeaSliderHeader extends StatelessWidget {
             Container(
               decoration: const BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(color: Colors.white, width: 1.5),
+                  bottom: BorderSide(color: AppColors.white, width: 1.5),
                 ),
               ),
               child: Text(

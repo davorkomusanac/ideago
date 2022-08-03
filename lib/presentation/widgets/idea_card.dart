@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../colors.dart';
 import '../../data/models/idea/idea.dart';
 import '../pages/update_idea/update_idea_page.dart';
 
@@ -18,7 +19,7 @@ class IdeaCard extends StatelessWidget {
             ),
           ),
           child: AnimatedContainer(
-            color: Colors.red,
+            color: AppColors.primaryForegroundColor,
             height: 200,
             duration: const Duration(seconds: 15),
             child: Column(

@@ -1,3 +1,5 @@
+const String kAppName = 'IdeaGo';
+
 /// Add/Update Idea possible statuses
 const String kIdeaStatusToDo = 'To Do';
 const String kIdeaStatusInProgress = 'In Progress';
@@ -19,6 +21,7 @@ const String kIdeaTextFieldStatus = 'Status';
 const String kIdeaTextFieldRatingTitle = 'Rating';
 const String kIdeaTextFieldRatingInitialValue = 'Tap to Rate';
 const String kIdeaTextFieldCategories = 'Categories';
+const String kIdeaTextFieldSearchHint = 'Type to search a specific idea.';
 
 /// Alert Dialog values
 const String kAlertDialogConfirmationTitle = 'Please confirm';
@@ -58,3 +61,6 @@ const int kNumberOfIdeasReadLimit = 3;
 /// Empty ideas list text placeholder
 const String kNoIdeasCreatedYet = 'Start adding your first ideas.';
 const String kNoIdeasFound = 'No idea found. Try changing your search term or create a new idea.';
+
+/// App bar tile values
+const String kAppBarRateIdeaTitle = 'Rate idea';

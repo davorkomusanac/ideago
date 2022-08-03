@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/add_or_update_idea/add_or_update_idea_cubit.dart';
+import '../../application/idea_text_fields_helpers/idea_text_fields_helpers_cubit.dart';
 import '../../constants.dart';
 import 'idea_textfield.dart';
 import 'idea_textfield_label.dart';
@@ -49,7 +49,7 @@ class IdeaFullDescriptionExpanded extends StatelessWidget {
                           right: 0,
                           bottom: 0,
                           child: InkWell(
-                            onTap: () => context.read<AddOrUpdateIdeaCubit>().descriptionButtonPressed(),
+                            onTap: () => context.read<IdeaTextFieldsHelpersCubit>().descriptionButtonPressed(),
                             child: const Padding(
                               padding: EdgeInsets.all(12.0),
                               child: Icon(Icons.fullscreen_exit),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../colors.dart';
+
 class IdeaButton extends StatelessWidget {
   const IdeaButton({
     Key? key,
@@ -17,6 +19,7 @@ class IdeaButton extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: 10,
+            primary: AppColors.primaryForegroundColor,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(

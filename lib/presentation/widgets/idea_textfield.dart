@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../colors.dart';
+
 class IdeaTextField extends StatelessWidget {
   final String? hintText;
   final bool autofocus;
@@ -8,14 +10,15 @@ class IdeaTextField extends StatelessWidget {
   final bool readOnly;
   final int? maxLines;
   final int? minLines;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final FocusNode? focusNode;
   final EdgeInsets? contentPadding;
   final Widget? suffixIcon;
   final VoidCallback? onTap;
+  final Function(String val)? onChanged;
 
   const IdeaTextField({
-    required this.controller,
+    this.controller,
     this.autofocus = false,
     this.isDense = true,
     this.expands = false,
@@ -27,6 +30,7 @@ class IdeaTextField extends StatelessWidget {
     this.contentPadding,
     this.suffixIcon,
     this.onTap,
+    this.onChanged,
     Key? key,
   }) : super(key: key);
 
@@ -40,6 +44,7 @@ class IdeaTextField extends StatelessWidget {
         focusNode: focusNode,
         readOnly: readOnly,
         onTap: onTap,
+        onChanged: onChanged,
         textAlignVertical: TextAlignVertical.top,
         decoration: InputDecoration(
           alignLabelWithHint: true,
@@ -49,8 +54,7 @@ class IdeaTextField extends StatelessWidget {
           contentPadding: contentPadding,
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
-              //TODO Change textfield colors
-              color: Colors.green,
+              color: AppColors.primaryForegroundColor,
               width: 1.5,
             ),
             borderRadius: BorderRadius.all(
@@ -58,7 +62,10 @@ class IdeaTextField extends StatelessWidget {
             ),
           ),
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(width: 1.5),
+            borderSide: BorderSide(
+              color: AppColors.grey,
+              width: 1.5,
+            ),
             borderRadius: BorderRadius.all(
               Radius.circular(15.0),
             ),

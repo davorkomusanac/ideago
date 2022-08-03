@@ -1,6 +1,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../colors.dart';
 import '../../../../constants.dart';
 import '../../../widgets/adaptive_alert_dialog.dart';
 
@@ -35,6 +36,9 @@ class DiscardIdeaButton extends StatelessWidget {
           );
           FocusManager.instance.primaryFocus?.unfocus();
         },
-        icon: Icon(icon),
+        icon: Icon(
+          icon,
+          color: AppColors.primaryForegroundColor,
+        ),
       );
 }

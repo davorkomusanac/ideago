@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../../../../application/add_or_update_idea/add_or_update_idea_cubit.dart';
+import '../../../../application/idea_text_fields_helpers/idea_text_fields_helpers_cubit.dart';
+import '../../../../colors.dart';
 import '../../../../constants.dart';
 import '../../../widgets/idea_status_bottom_sheet.dart';
 import '../../../widgets/idea_textfield.dart';
@@ -17,7 +18,7 @@ class IdeaStatusField extends StatelessWidget {
   final TextEditingController statusController;
 
   @override
-  Widget build(BuildContext context) => BlocListener<AddOrUpdateIdeaCubit, AddOrUpdateIdeaState>(
+  Widget build(BuildContext context) => BlocListener<IdeaTextFieldsHelpersCubit, IdeaTextFieldsHelpersState>(
         listener: (context, state) {
           if (state.ideaProjectStatus != statusController.text) {
             statusController.text = state.ideaProjectStatus;
@@ -38,12 +39,13 @@ class IdeaStatusField extends StatelessWidget {
                 suffixIcon: const Icon(
                   Icons.arrow_drop_down,
                   size: 30,
+                  color: AppColors.grey,
                 ),
                 onTap: () => showMaterialModalBottomSheet(
                   context: context,
-                  backgroundColor: Colors.transparent,
-                  builder: (_) => BlocProvider<AddOrUpdateIdeaCubit>.value(
-                    value: BlocProvider.of<AddOrUpdateIdeaCubit>(context),
+                  backgroundColor: AppColors.transparentColor,
+                  builder: (_) => BlocProvider<IdeaTextFieldsHelpersCubit>.value(
+                    value: BlocProvider.of<IdeaTextFieldsHelpersCubit>(context),
                     child: const IdeaStatusBottomSheet(),
                   ),
                 ),

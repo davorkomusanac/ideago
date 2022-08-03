@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../colors.dart';
+
 class IdeaTextFieldLabel extends StatelessWidget {
   final String label;
   final double leftPadding;
@@ -25,6 +27,7 @@ class IdeaTextFieldLabel extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
+              color: AppColors.primaryForegroundColor,
             ),
           ),
         ),

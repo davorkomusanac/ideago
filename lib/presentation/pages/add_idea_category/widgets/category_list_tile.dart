@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../../colors.dart';
 import '../../../../constants.dart';
 import '../../../../data/models/idea_category/idea_category.dart';
 import '../../../widgets/adaptive_alert_dialog.dart';
@@ -19,12 +20,13 @@ class CategoryListTile extends StatelessWidget {
             bottom: BorderSide(
               style: BorderStyle.solid,
               width: 1.0,
-              color: Colors.black.withOpacity(0.2),
+              color: AppColors.black.withOpacity(0.2),
             ),
           ),
         ),
         child: CheckboxListTile(
           value: category.isChecked,
+          activeColor: AppColors.primaryForegroundColor,
           onChanged: (val) {
             if (val != null) {
               val
@@ -35,7 +37,7 @@ class CategoryListTile extends StatelessWidget {
           title: Text(category.title),
           controlAffinity: ListTileControlAffinity.leading,
           secondary: Material(
-            color: Colors.transparent,
+            color: AppColors.transparentColor,
             shape: const CircleBorder(),
             clipBehavior: Clip.hardEdge,
             child: IconButton(
