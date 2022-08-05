@@ -9,11 +9,13 @@ import 'data/models/idea_category/idea_category.dart';
 String formatIdeaRatingResult(int ratingsSum) {
   String result;
   if (ratingsSum < 25) {
-    result = '$ratingsSum - Abandon it';
+    result = '$ratingsSum - Forget it';
   } else if (ratingsSum < 50) {
     result = '$ratingsSum - Not worth';
-  } else if (ratingsSum < 75) {
+  } else if (ratingsSum < 65) {
     result = '$ratingsSum - Mediocre';
+  } else if (ratingsSum < 75) {
+    result = '$ratingsSum - Interesting';
   } else if (ratingsSum < 90) {
     result = '$ratingsSum - Promising';
   } else {
@@ -33,6 +35,22 @@ void sortCategories(List<IdeaCategory> categories) {
       return prev.title.compareTo(next.title);
     }
   });
+}
+
+Color showIdeaRatingColor(int rating) {
+  if (rating < 25) {
+    return AppColors.darkRed;
+  } else if (rating < 50) {
+    return AppColors.red;
+  } else if (rating < 65) {
+    return AppColors.orange;
+  } else if (rating < 75) {
+    return AppColors.darkYellow;
+  } else if (rating < 90) {
+    return AppColors.green;
+  } else {
+    return AppColors.darkGreen;
+  }
 }
 
 Color showStatusColor(String status) {

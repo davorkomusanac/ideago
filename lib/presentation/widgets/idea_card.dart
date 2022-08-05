@@ -101,7 +101,7 @@ class IdeaCard extends StatelessWidget {
                                     maxWidth: 200,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: AppColors.red,
+                                    color: showIdeaRatingColor(idea.rating),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Text(
