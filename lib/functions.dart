@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
+import 'constants.dart';
 import 'data/models/idea_category/idea_category.dart';
 
 String formatIdeaRatingResult(int ratingsSum) {
@@ -31,6 +33,28 @@ void sortCategories(List<IdeaCategory> categories) {
       return prev.title.compareTo(next.title);
     }
   });
+}
+
+Color showStatusColor(String status) {
+  if (status == kIdeaStatusToDo) {
+    return AppColors.grey;
+  } else if (status == kIdeaStatusInProgress) {
+    return AppColors.yellow;
+  } else if (status == kIdeaStatusDone) {
+    return AppColors.green;
+  } else {
+    return AppColors.red;
+  }
+}
+
+TextDecoration showStatusTextDecoration(String status) {
+  if (status == kIdeaStatusToDo) {
+    return TextDecoration.underline;
+  } else if (status == kIdeaStatusInProgress) {
+    return TextDecoration.none;
+  } else {
+    return TextDecoration.lineThrough;
+  }
 }
 
 class Debouncer {

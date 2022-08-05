@@ -46,6 +46,7 @@ class IdeaTextField extends StatelessWidget {
         onTap: onTap,
         onChanged: onChanged,
         textAlignVertical: TextAlignVertical.top,
+        cursorColor: AppColors.primaryForegroundColor,
         decoration: InputDecoration(
           alignLabelWithHint: true,
           hintText: hintText,
