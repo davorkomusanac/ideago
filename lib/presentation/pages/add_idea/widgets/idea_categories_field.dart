@@ -22,8 +22,6 @@ class IdeaCategoriesField extends StatelessWidget {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 5,
-                    //TODO Add 3 more fields: How are you going to earn money, How are you different from competition, How fast/expensive is to launch
-                    //TODO Add it to update idea also
                     primary: AppColors.secondaryForegroundColor,
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                     shape: const RoundedRectangleBorder(
