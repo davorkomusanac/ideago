@@ -31,6 +31,10 @@ class _UpdateIdeaPageState extends State<UpdateIdeaPage> with TickerProviderStat
   late TextEditingController _fullDescriptionController;
   late TextEditingController _statusController;
   late TextEditingController _ratingController;
+  late TextEditingController _revenueController;
+  late TextEditingController _differentiationController;
+  late TextEditingController _speedController;
+  late TextEditingController _capitalController;
   final FocusNode _descriptionFullScreenFocusNode = FocusNode();
 
   @override
@@ -41,6 +45,10 @@ class _UpdateIdeaPageState extends State<UpdateIdeaPage> with TickerProviderStat
     _fullDescriptionController = TextEditingController(text: widget.idea.fullDescription);
     _statusController = TextEditingController(text: widget.idea.status);
     _ratingController = TextEditingController(text: formatIdeaRatingResult(widget.idea.rating));
+    _revenueController = TextEditingController(text: widget.idea.revenueExplanation);
+    _differentiationController = TextEditingController(text: widget.idea.differentiationExplanation);
+    _speedController = TextEditingController(text: widget.idea.speedExplanation);
+    _capitalController = TextEditingController(text: widget.idea.capitalExplanation);
   }
 
   @override
@@ -50,6 +58,10 @@ class _UpdateIdeaPageState extends State<UpdateIdeaPage> with TickerProviderStat
     _fullDescriptionController.dispose();
     _statusController.dispose();
     _ratingController.dispose();
+    _revenueController.dispose();
+    _differentiationController.dispose();
+    _speedController.dispose();
+    _capitalController.dispose();
     super.dispose();
   }
 
@@ -126,6 +138,10 @@ class _UpdateIdeaPageState extends State<UpdateIdeaPage> with TickerProviderStat
                             statusController: _statusController,
                             ratingController: _ratingController,
                             descriptionFullScreenFocusNode: _descriptionFullScreenFocusNode,
+                            revenueController: _revenueController,
+                            differentiationController: _differentiationController,
+                            speedController: _speedController,
+                            capitalController: _capitalController,
                           ),
                   ),
                 ),

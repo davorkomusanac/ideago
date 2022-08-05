@@ -136,6 +136,10 @@ class IdeasCubit extends Cubit<IdeasState> {
     required String summary,
     required String fullDescription,
     required String status,
+    required String revenueExplanation,
+    required String differentiationExplanation,
+    required String speedExplanation,
+    required String capitalExplanation,
     required int rating,
     required List<IdeaRatingQuestion> ratingQuestions,
     required List<String> categories,
@@ -147,6 +151,10 @@ class IdeasCubit extends Cubit<IdeasState> {
       summary: summary,
       fullDescription: fullDescription,
       status: status,
+      revenueExplanation: revenueExplanation,
+      differentiationExplanation: differentiationExplanation,
+      speedExplanation: speedExplanation,
+      capitalExplanation: capitalExplanation,
       index: index,
       rating: rating,
       ratingQuestions: ratingQuestions,
@@ -199,6 +207,10 @@ class IdeasCubit extends Cubit<IdeasState> {
     required String summary,
     required String fullDescription,
     required String status,
+    required String revenueExplanation,
+    required String differentiationExplanation,
+    required String speedExplanation,
+    required String capitalExplanation,
     required double index,
     required int rating,
     required List<IdeaRatingQuestion> ratingQuestions,
@@ -211,6 +223,10 @@ class IdeasCubit extends Cubit<IdeasState> {
       summary: summary,
       fullDescription: fullDescription,
       status: status,
+      revenueExplanation: revenueExplanation,
+      differentiationExplanation: differentiationExplanation,
+      speedExplanation: speedExplanation,
+      capitalExplanation: capitalExplanation,
       index: index,
       rating: rating,
       ratingQuestions: ratingQuestions,
@@ -238,7 +254,9 @@ class IdeasCubit extends Cubit<IdeasState> {
     }
   }
 
+  //TODO Implement custom sort
   void ideasSorted() {}
 
+  //TODO Implement reorder
   void ideasReordered() {}
 }
