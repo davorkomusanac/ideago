@@ -25,6 +25,10 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
   late TextEditingController _fullDescriptionController;
   late TextEditingController _statusController;
   late TextEditingController _ratingController;
+  late TextEditingController _revenueController;
+  late TextEditingController _differentiationController;
+  late TextEditingController _speedController;
+  late TextEditingController _capitalController;
   final FocusNode _descriptionFullScreenFocusNode = FocusNode();
 
   @override
@@ -35,6 +39,10 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
     _fullDescriptionController = TextEditingController();
     _statusController = TextEditingController(text: kIdeaStatusToDo);
     _ratingController = TextEditingController(text: kIdeaTextFieldRatingInitialValue);
+    _revenueController = TextEditingController();
+    _differentiationController = TextEditingController();
+    _speedController = TextEditingController();
+    _capitalController = TextEditingController();
   }
 
   @override
@@ -44,6 +52,10 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
     _fullDescriptionController.dispose();
     _statusController.dispose();
     _ratingController.dispose();
+    _revenueController.dispose();
+    _differentiationController.dispose();
+    _speedController.dispose();
+    _capitalController.dispose();
     super.dispose();
   }
 
@@ -119,6 +131,10 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
                             statusController: _statusController,
                             ratingController: _ratingController,
                             descriptionFullScreenFocusNode: _descriptionFullScreenFocusNode,
+                            revenueController: _revenueController,
+                            differentiationController: _differentiationController,
+                            speedController: _speedController,
+                            capitalController: _capitalController,
                           ),
                   ),
                 ),

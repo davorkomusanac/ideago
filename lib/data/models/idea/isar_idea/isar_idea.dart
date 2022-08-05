@@ -18,6 +18,10 @@ class IsarIdea {
   @Index(caseSensitive: false)
   late String fullDescription;
   late String status;
+  late String revenueExplanation;
+  late String differentiationExplanation;
+  late String speedExplanation;
+  late String capitalExplanation;
   @Index()
   late double index;
   @Index()
@@ -41,6 +45,10 @@ class IsarIdea {
     ..summary = idea.summary
     ..fullDescription = idea.fullDescription
     ..status = idea.status
+    ..revenueExplanation = idea.revenueExplanation
+    ..differentiationExplanation = idea.differentiationExplanation
+    ..speedExplanation = idea.speedExplanation
+    ..capitalExplanation = idea.capitalExplanation
     ..index = idea.index
     ..rating = idea.rating
     ..ratingQuestions = idea.ratingQuestions
@@ -54,6 +62,10 @@ class IsarIdea {
         summary: summary,
         fullDescription: fullDescription,
         status: status,
+        revenueExplanation: revenueExplanation,
+        differentiationExplanation: differentiationExplanation,
+        speedExplanation: speedExplanation,
+        capitalExplanation: capitalExplanation,
         index: index,
         rating: rating,
         ratingQuestions: ratingQuestions,

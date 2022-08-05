@@ -8,6 +8,10 @@ class Idea extends Equatable {
   final String summary;
   final String fullDescription;
   final String status;
+  final String revenueExplanation;
+  final String differentiationExplanation;
+  final String speedExplanation;
+  final String capitalExplanation;
   final double index;
   final int rating;
   final List<IdeaRatingQuestion> ratingQuestions;
@@ -21,6 +25,10 @@ class Idea extends Equatable {
     required this.summary,
     required this.fullDescription,
     required this.status,
+    required this.revenueExplanation,
+    required this.differentiationExplanation,
+    required this.speedExplanation,
+    required this.capitalExplanation,
     required this.index,
     required this.rating,
     required this.ratingQuestions,
@@ -30,10 +38,12 @@ class Idea extends Equatable {
   });
 
   @override
-  String toString() => 'Idea{ uid: $uid, title: $title, summary: $summary, '
-      'fullDescription: $fullDescription, status: $status, index: $index, '
+  String toString() =>
+      'Idea{uid: $uid, title: $title, summary: $summary, fullDescription: $fullDescription, status: $status, '
+      'revenueExplanation: $revenueExplanation, differentiationExplanation: $differentiationExplanation, '
+      'speedExplanation: $speedExplanation, capitalExplanation: $capitalExplanation, index: $index, '
       'rating: $rating, ratingQuestions: $ratingQuestions, categories: $categories, '
-      'dateTimeCreated: $dateTimeCreated, dateTimeLastUpdated: $dateTimeLastUpdated,}';
+      'dateTimeCreated: $dateTimeCreated, dateTimeLastUpdated: $dateTimeLastUpdated}';
 
   Idea copyWith({
     String? uid,
@@ -41,6 +51,10 @@ class Idea extends Equatable {
     String? summary,
     String? fullDescription,
     String? status,
+    String? revenueExplanation,
+    String? differentiationExplanation,
+    String? speedExplanation,
+    String? capitalExplanation,
     double? index,
     int? rating,
     List<IdeaRatingQuestion>? ratingQuestions,
@@ -54,6 +68,10 @@ class Idea extends Equatable {
         summary: summary ?? this.summary,
         fullDescription: fullDescription ?? this.fullDescription,
         status: status ?? this.status,
+        revenueExplanation: revenueExplanation ?? this.revenueExplanation,
+        differentiationExplanation: differentiationExplanation ?? this.differentiationExplanation,
+        speedExplanation: speedExplanation ?? this.speedExplanation,
+        capitalExplanation: capitalExplanation ?? this.capitalExplanation,
         index: index ?? this.index,
         rating: rating ?? this.rating,
         ratingQuestions: ratingQuestions ?? this.ratingQuestions,
@@ -67,6 +85,10 @@ class Idea extends Equatable {
         'title': title,
         'summary': summary,
         'fullDescription': fullDescription,
+        'revenueExplanation': revenueExplanation,
+        'differentiationExplanation': differentiationExplanation,
+        'speedExplanation': speedExplanation,
+        'capitalExplanation': capitalExplanation,
         'status': status,
         'index': index,
         'rating': rating,
@@ -82,6 +104,10 @@ class Idea extends Equatable {
         summary: json['summary'] as String? ?? '',
         fullDescription: json['fullDescription'] as String? ?? '',
         status: json['status'] as String? ?? '',
+        revenueExplanation: json['revenueExplanation'] as String? ?? '',
+        differentiationExplanation: json['differentiationExplanation'] as String? ?? '',
+        speedExplanation: json['speedExplanation'] as String? ?? '',
+        capitalExplanation: json['capitalExplanation'] as String? ?? '',
         index: json['index'] as double? ?? 0,
         rating: json['rating'] as int? ?? 0,
         ratingQuestions: (json['ratingQuestions'] is List)
@@ -103,6 +129,10 @@ class Idea extends Equatable {
         summary,
         fullDescription,
         status,
+        revenueExplanation,
+        differentiationExplanation,
+        speedExplanation,
+        capitalExplanation,
         index,
         rating,
         ratingQuestions,

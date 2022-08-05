@@ -22,6 +22,10 @@ class AddIdeaAllFields extends StatelessWidget {
     required this.statusController,
     required this.ratingController,
     required this.descriptionFullScreenFocusNode,
+    required this.revenueController,
+    required this.differentiationController,
+    required this.speedController,
+    required this.capitalController,
     Key? key,
   }) : super(key: key);
 
@@ -30,6 +34,10 @@ class AddIdeaAllFields extends StatelessWidget {
   final TextEditingController fullDescriptionController;
   final TextEditingController statusController;
   final TextEditingController ratingController;
+  final TextEditingController revenueController;
+  final TextEditingController differentiationController;
+  final TextEditingController speedController;
+  final TextEditingController capitalController;
   final FocusNode descriptionFullScreenFocusNode;
 
   @override
@@ -37,6 +45,9 @@ class AddIdeaAllFields extends StatelessWidget {
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Column(
           children: [
+            ///
+            ///Title
+            ///
             const SizedBox(height: 10),
             const IdeaTextFieldLabel(
               label: kIdeaTextFieldTitleLabel,
@@ -60,6 +71,10 @@ class AddIdeaAllFields extends StatelessWidget {
                 const SizedBox(width: 8),
               ],
             ),
+
+            ///
+            ///Summary
+            ///
             const SizedBox(height: 24),
             const IdeaTextFieldLabel(
               label: kIdeaTextFieldSummaryLabel,
@@ -69,6 +84,10 @@ class AddIdeaAllFields extends StatelessWidget {
               hintText: kIdeaTextFieldSummaryHint,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
             ),
+
+            ///
+            ///Description
+            ///
             const SizedBox(height: 24),
             const IdeaTextFieldLabel(
               label: kIdeaTextFieldFullDescriptionLabel,
@@ -77,6 +96,10 @@ class AddIdeaAllFields extends StatelessWidget {
               fullDescriptionController: fullDescriptionController,
               descriptionFullScreenFocusNode: descriptionFullScreenFocusNode,
             ),
+
+            ///
+            ///Status and Rating
+            ///
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -88,12 +111,69 @@ class AddIdeaAllFields extends StatelessWidget {
                 ],
               ),
             ),
+
+            ///
+            ///Categories
+            ///
             const SizedBox(height: 24),
             const IdeaTextFieldLabel(
               label: kIdeaTextFieldCategories,
             ),
             const IdeaCategoriesField(),
-            const SizedBox(height: 16),
+
+            ///
+            ///Revenue
+            ///
+            const SizedBox(height: 24),
+            const IdeaTextFieldLabel(
+              label: kIdeaTextFieldHowAreYouGoingToEarnMoneyLabel,
+            ),
+            IdeaTextField(
+              controller: revenueController,
+              hintText: kIdeaTextFieldHowAreYouGoingToEarnMoneyHint,
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
+            ),
+
+            ///
+            ///Differentiation
+            ///
+            const SizedBox(height: 24),
+            const IdeaTextFieldLabel(
+              label: kIdeaTextFieldHowAreYouDifferentLabel,
+            ),
+            IdeaTextField(
+              controller: differentiationController,
+              hintText: kIdeaTextFieldHowAreYouDifferentHint,
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
+            ),
+
+            ///
+            ///Speed
+            ///
+            const SizedBox(height: 24),
+            const IdeaTextFieldLabel(
+              label: kIdeaTextFieldHowFastToLaunchLabel,
+            ),
+            IdeaTextField(
+              controller: speedController,
+              hintText: kIdeaTextFieldHowFastToLaunchHint,
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
+            ),
+
+            ///
+            ///Capital
+            ///
+            const SizedBox(height: 24),
+            const IdeaTextFieldLabel(
+              label: kIdeaTextFieldHowMuchTimeAndMoneyNeededLabel,
+            ),
+            IdeaTextField(
+              controller: capitalController,
+              hintText: kIdeaTextFieldHowMuchTimeAndMoneyNeededHint,
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
+            ),
+
+            const SizedBox(height: 24),
             IdeaButton(
               onPressed: () {
                 context.read<IdeasCubit>().ideaAdded(
@@ -101,6 +181,10 @@ class AddIdeaAllFields extends StatelessWidget {
                       summary: summaryController.text,
                       fullDescription: fullDescriptionController.text,
                       status: statusController.text,
+                      revenueExplanation: revenueController.text,
+                      differentiationExplanation: differentiationController.text,
+                      speedExplanation: speedController.text,
+                      capitalExplanation: capitalController.text,
                       rating: context.read<RateIdeaCubit>().state.ratingsSum,
                       ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
                       categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,

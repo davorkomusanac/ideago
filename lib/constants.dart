@@ -23,6 +23,15 @@ const String kIdeaTextFieldRatingInitialValue = 'Tap to Rate';
 const String kIdeaTextFieldCategories = 'Categories';
 const String kIdeaTextFieldSearchHint = 'Type to search a specific idea.';
 
+const String kIdeaTextFieldHowAreYouGoingToEarnMoneyLabel = 'Revenue';
+const String kIdeaTextFieldHowAreYouGoingToEarnMoneyHint = 'How are you going to earn money?';
+const String kIdeaTextFieldHowAreYouDifferentLabel = 'Differentiation';
+const String kIdeaTextFieldHowAreYouDifferentHint = 'How are you different from the competition?';
+const String kIdeaTextFieldHowFastToLaunchLabel = 'Speed';
+const String kIdeaTextFieldHowFastToLaunchHint = 'How fast can you launch?';
+const String kIdeaTextFieldHowMuchTimeAndMoneyNeededLabel = 'Capital';
+const String kIdeaTextFieldHowMuchTimeAndMoneyNeededHint = 'How much time and money is needed?';
+
 /// Alert Dialog values
 const String kAlertDialogConfirmationTitle = 'Please confirm';
 const String kDeleteCategoryDialogContent = 'Are you sure you want to remove this category?';
@@ -56,7 +65,7 @@ const String kErrorDeletingIdea = 'There was an error while deleting your idea. 
 const String kErrorUpdatingIdea = 'There was an error while updating your idea. Please try again.';
 
 /// Int value for limiting the number of elements read from storage in a single operation
-const int kNumberOfIdeasReadLimit = 3;
+const int kNumberOfIdeasReadLimit = 50;
 
 /// Empty ideas list text placeholder
 const String kNoIdeasCreatedYet = 'Start adding your first ideas.';
