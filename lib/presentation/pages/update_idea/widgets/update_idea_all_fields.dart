@@ -55,12 +55,10 @@ class UpdateIdeaAllFields extends StatelessWidget {
                   icon: Icons.arrow_back,
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: IdeaTextField(
-                      controller: titleController,
-                      hintText: kIdeaTextFieldTitleHint,
-                    ),
+                  child: IdeaTextField(
+                    controller: titleController,
+                    hintText: kIdeaTextFieldTitleHint,
+                    margin: const EdgeInsets.only(right: 8.0),
                   ),
                 ),
                 DeleteIdeaButton(idea: idea),
@@ -71,12 +69,10 @@ class UpdateIdeaAllFields extends StatelessWidget {
             const IdeaTextFieldLabel(
               label: kIdeaTextFieldSummaryLabel,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: IdeaTextField(
-                controller: summaryController,
-                hintText: kIdeaTextFieldSummaryHint,
-              ),
+            IdeaTextField(
+              controller: summaryController,
+              hintText: kIdeaTextFieldSummaryHint,
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
             ),
             const SizedBox(height: 24),
             const IdeaTextFieldLabel(

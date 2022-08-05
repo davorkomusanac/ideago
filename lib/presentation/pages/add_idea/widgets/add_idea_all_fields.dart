@@ -46,13 +46,11 @@ class AddIdeaAllFields extends StatelessWidget {
               children: [
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: IdeaTextField(
-                      controller: titleController,
-                      hintText: kIdeaTextFieldTitleHint,
-                      autofocus: true,
-                    ),
+                  child: IdeaTextField(
+                    controller: titleController,
+                    hintText: kIdeaTextFieldTitleHint,
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                    autofocus: true,
                   ),
                 ),
                 const DiscardIdeaButton(
@@ -66,12 +64,10 @@ class AddIdeaAllFields extends StatelessWidget {
             const IdeaTextFieldLabel(
               label: kIdeaTextFieldSummaryLabel,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: IdeaTextField(
-                controller: summaryController,
-                hintText: kIdeaTextFieldSummaryHint,
-              ),
+            IdeaTextField(
+              controller: summaryController,
+              hintText: kIdeaTextFieldSummaryHint,
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
             ),
             const SizedBox(height: 24),
             const IdeaTextFieldLabel(
