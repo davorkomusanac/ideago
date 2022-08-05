@@ -13,6 +13,7 @@ class IdeaTextField extends StatelessWidget {
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final EdgeInsets? contentPadding;
+  final EdgeInsets margin;
   final Widget? suffixIcon;
   final VoidCallback? onTap;
   final Function(String val)? onChanged;
@@ -28,6 +29,7 @@ class IdeaTextField extends StatelessWidget {
     this.hintText,
     this.focusNode,
     this.contentPadding,
+    this.margin = EdgeInsets.zero,
     this.suffixIcon,
     this.onTap,
     this.onChanged,
@@ -35,40 +37,43 @@ class IdeaTextField extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => TextField(
-        controller: controller,
-        minLines: minLines,
-        maxLines: maxLines,
-        autofocus: autofocus,
-        expands: expands,
-        focusNode: focusNode,
-        readOnly: readOnly,
-        onTap: onTap,
-        onChanged: onChanged,
-        textAlignVertical: TextAlignVertical.top,
-        cursorColor: AppColors.primaryForegroundColor,
-        decoration: InputDecoration(
-          alignLabelWithHint: true,
-          hintText: hintText,
-          isDense: isDense,
-          suffixIcon: suffixIcon,
-          contentPadding: contentPadding,
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.primaryForegroundColor,
-              width: 1.5,
+  Widget build(BuildContext context) => Padding(
+        padding: margin,
+        child: TextField(
+          controller: controller,
+          minLines: minLines,
+          maxLines: maxLines,
+          autofocus: autofocus,
+          expands: expands,
+          focusNode: focusNode,
+          readOnly: readOnly,
+          onTap: onTap,
+          onChanged: onChanged,
+          textAlignVertical: TextAlignVertical.top,
+          cursorColor: AppColors.primaryForegroundColor,
+          decoration: InputDecoration(
+            alignLabelWithHint: true,
+            hintText: hintText,
+            isDense: isDense,
+            suffixIcon: suffixIcon,
+            contentPadding: contentPadding,
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.primaryForegroundColor,
+                width: 1.5,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(15.0),
+              ),
             ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(15.0),
-            ),
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.grey,
-              width: 1.5,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(15.0),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.grey,
+                width: 1.5,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(15.0),
+              ),
             ),
           ),
         ),

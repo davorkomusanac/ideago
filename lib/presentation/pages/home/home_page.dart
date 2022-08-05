@@ -54,20 +54,18 @@ class _HomePageState extends State<HomePage> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
+                  IdeaTextField(
+                    onChanged: (val) => _debouncer.run(
+                      () => context.read<IdeasCubit>().ideaSearched(
+                            val.trim(),
+                          ),
+                    ),
+                    hintText: kIdeaTextFieldSearchHint,
+                    margin: const EdgeInsets.only(
                       left: 16.0,
                       right: 16.0,
                       top: 24.0,
                       bottom: 8.0,
-                    ),
-                    child: IdeaTextField(
-                      onChanged: (val) => _debouncer.run(
-                        () => context.read<IdeasCubit>().ideaSearched(
-                              val.trim(),
-                            ),
-                      ),
-                      hintText: kIdeaTextFieldSearchHint,
                     ),
                   ),
                   Expanded(
