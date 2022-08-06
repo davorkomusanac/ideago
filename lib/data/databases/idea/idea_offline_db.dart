@@ -59,6 +59,14 @@ class IdeaOfflineDb {
           .fullDescriptionContains(searchTerm, caseSensitive: false)
           .or()
           .categoriesAnyContains(searchTerm, caseSensitive: false)
+          .or()
+          .revenueExplanationContains(searchTerm, caseSensitive: false)
+          .or()
+          .differentiationExplanationContains(searchTerm, caseSensitive: false)
+          .or()
+          .speedExplanationContains(searchTerm, caseSensitive: false)
+          .or()
+          .capitalExplanationContains(searchTerm, caseSensitive: false)
           .limit(kNumberOfIdeasReadLimit)
           .findAll();
 
