@@ -39,14 +39,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text('IdeaGo'),
-          actions: [
-            IconButton(
-              //TODO Open drawer
-              //Open drawer menu
-              onPressed: () => {},
-              icon: const Icon(Icons.menu),
-            )
-          ],
+          //TODO Implement drawer button to sign in with firebase
         ),
         body: SafeArea(
           child: Stack(
