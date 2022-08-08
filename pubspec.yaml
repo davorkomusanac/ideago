@@ -39,7 +39,13 @@ dev_dependencies:
   flutter_lints: ^2.0.1
   isar_generator: 2.5.0
   build_runner: ^2.1.11
+  flutter_launcher_icons: ^0.10.0
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/app_icon.png"
+  remove_alpha_ios: true
 
 # The following section is specific to Flutter packages.
 flutter:
