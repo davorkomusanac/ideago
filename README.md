@@ -2,7 +2,7 @@
 
 All of your business ideas in one place
 
-## Getting Started
+## Description
 
 This project is a starting point for a Flutter application.
 
