@@ -19,7 +19,7 @@ class ConfirmRatingButton extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: AppColors.primaryForegroundColor,
+                backgroundColor: AppColors.primaryForegroundColor,
               ),
               onPressed: onPressed,
               child: const Text(kAppBarRateIdeaTitle),
