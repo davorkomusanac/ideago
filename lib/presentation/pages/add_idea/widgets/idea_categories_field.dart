@@ -22,7 +22,7 @@ class IdeaCategoriesField extends StatelessWidget {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 5,
-                    primary: AppColors.secondaryForegroundColor,
+                    backgroundColor: AppColors.secondaryForegroundColor,
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(

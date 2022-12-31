@@ -19,7 +19,7 @@ class IdeaButton extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: 10,
-            primary: AppColors.primaryForegroundColor,
+            backgroundColor: AppColors.primaryForegroundColor,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(

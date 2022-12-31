@@ -33,7 +33,7 @@ class AddCategoryListTile extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 5,
-                  primary: AppColors.primaryForegroundColor,
+                  backgroundColor: AppColors.primaryForegroundColor,
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
