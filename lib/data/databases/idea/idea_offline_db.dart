@@ -19,8 +19,9 @@ class IdeaOfflineDb {
 
   /// With Isar, you need to create a Query and then watch it to get a Stream
   /// From IsarDB we get back a Stream<List<IsarIdea>> so we need to convert it (map) to Stream<List<Idea>>
-  Stream<List<Idea>> watchIdeas() {
-    Query<IsarIdea> allIdeas = _isarIdeas.where().sortByIndexDesc().limit(kNumberOfIdeasReadLimit).build();
+  Stream<List<Idea>> watchIdeasOfCertainStatus({required String ideaStatus}) {
+    Query<IsarIdea> allIdeas =
+        _isarIdeas.where().filter().statusEqualTo(ideaStatus).sortByIndexDesc().limit(kNumberOfIdeasReadLimit).build();
     return allIdeas.watch(initialReturn: true).map(
           (event) => event
               .map(
@@ -30,10 +31,15 @@ class IdeaOfflineDb {
         );
   }
 
-  Future<List<Idea>> fetchIdeasNextPage(int currentLoadedIdeasLength) async {
+  Future<List<Idea>> fetchIdeasOfCertainStatusNextPage({
+    required int currentLoadedIdeasLength,
+    required String ideaStatus,
+  }) async {
     try {
       List<IsarIdea> isarIdeas = await _isarIdeas
           .where()
+          .filter()
+          .statusEqualTo(ideaStatus)
           .sortByIndexDesc()
           .offset(currentLoadedIdeasLength)
           .limit(kNumberOfIdeasReadLimit)
@@ -48,25 +54,34 @@ class IdeaOfflineDb {
     }
   }
 
-  Future<List<Idea>> searchIdea(String searchTerm) async {
+  Future<List<Idea>> searchIdea({
+    required String searchTerm,
+    required String ideaStatus,
+  }) async {
     try {
       List<IsarIdea> isarIdeas = await _isarIdeas
           .filter()
-          .titleContains(searchTerm, caseSensitive: false)
-          .or()
-          .summaryContains(searchTerm, caseSensitive: false)
-          .or()
-          .fullDescriptionContains(searchTerm, caseSensitive: false)
-          .or()
-          .categoriesAnyContains(searchTerm, caseSensitive: false)
-          .or()
-          .revenueExplanationContains(searchTerm, caseSensitive: false)
-          .or()
-          .differentiationExplanationContains(searchTerm, caseSensitive: false)
-          .or()
-          .speedExplanationContains(searchTerm, caseSensitive: false)
-          .or()
-          .capitalExplanationContains(searchTerm, caseSensitive: false)
+          .statusEqualTo(ideaStatus)
+          .and()
+          .group(
+            (q) => q
+                .titleContains(searchTerm, caseSensitive: false)
+                .or()
+                .summaryContains(searchTerm, caseSensitive: false)
+                .or()
+                .fullDescriptionContains(searchTerm, caseSensitive: false)
+                .or()
+                .categoriesAnyContains(searchTerm, caseSensitive: false)
+                .or()
+                .revenueExplanationContains(searchTerm, caseSensitive: false)
+                .or()
+                .differentiationExplanationContains(searchTerm, caseSensitive: false)
+                .or()
+                .speedExplanationContains(searchTerm, caseSensitive: false)
+                .or()
+                .capitalExplanationContains(searchTerm, caseSensitive: false),
+          )
+          .sortByIndexDesc()
           .limit(kNumberOfIdeasReadLimit)
           .findAll();
 
