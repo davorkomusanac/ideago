@@ -52,10 +52,29 @@ class MyApp extends StatelessWidget {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => IdeasCubit(
-                context.read<IdeaRepository>(),
+              create: (context) => ToDoIdeasCubit(
+                ideasRepository: context.read<IdeaRepository>(),
+                ideaStatus: kIdeaStatusToDo,
               ),
-            )
+            ),
+            BlocProvider(
+              create: (context) => InProgressIdeasCubit(
+                ideasRepository: context.read<IdeaRepository>(),
+                ideaStatus: kIdeaStatusInProgress,
+              ),
+            ),
+            BlocProvider(
+              create: (context) => DoneIdeasCubit(
+                ideasRepository: context.read<IdeaRepository>(),
+                ideaStatus: kIdeaStatusDone,
+              ),
+            ),
+            BlocProvider(
+              create: (context) => DiscardedIdeasCubit(
+                ideasRepository: context.read<IdeaRepository>(),
+                ideaStatus: kIdeaStatusDiscarded,
+              ),
+            ),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

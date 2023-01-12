@@ -176,19 +176,69 @@ class AddIdeaAllFields extends StatelessWidget {
             const SizedBox(height: 24),
             IdeaButton(
               onPressed: () {
-                context.read<IdeasCubit>().ideaAdded(
-                      title: titleController.text,
-                      summary: summaryController.text,
-                      fullDescription: fullDescriptionController.text,
-                      status: statusController.text,
-                      revenueExplanation: revenueController.text,
-                      differentiationExplanation: differentiationController.text,
-                      speedExplanation: speedController.text,
-                      capitalExplanation: capitalController.text,
-                      rating: context.read<RateIdeaCubit>().state.ratingsSum,
-                      ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
-                      categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
-                    );
+                switch (statusController.text) {
+                  case kIdeaStatusInProgress:
+                    context.read<InProgressIdeasCubit>().ideaAdded(
+                          title: titleController.text,
+                          summary: summaryController.text,
+                          fullDescription: fullDescriptionController.text,
+                          status: statusController.text,
+                          revenueExplanation: revenueController.text,
+                          differentiationExplanation: differentiationController.text,
+                          speedExplanation: speedController.text,
+                          capitalExplanation: capitalController.text,
+                          rating: context.read<RateIdeaCubit>().state.ratingsSum,
+                          ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
+                          categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                        );
+                    break;
+                  case kIdeaStatusToDo:
+                    context.read<ToDoIdeasCubit>().ideaAdded(
+                          title: titleController.text,
+                          summary: summaryController.text,
+                          fullDescription: fullDescriptionController.text,
+                          status: statusController.text,
+                          revenueExplanation: revenueController.text,
+                          differentiationExplanation: differentiationController.text,
+                          speedExplanation: speedController.text,
+                          capitalExplanation: capitalController.text,
+                          rating: context.read<RateIdeaCubit>().state.ratingsSum,
+                          ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
+                          categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                        );
+                    break;
+                  case kIdeaStatusDone:
+                    context.read<DoneIdeasCubit>().ideaAdded(
+                          title: titleController.text,
+                          summary: summaryController.text,
+                          fullDescription: fullDescriptionController.text,
+                          status: statusController.text,
+                          revenueExplanation: revenueController.text,
+                          differentiationExplanation: differentiationController.text,
+                          speedExplanation: speedController.text,
+                          capitalExplanation: capitalController.text,
+                          rating: context.read<RateIdeaCubit>().state.ratingsSum,
+                          ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
+                          categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                        );
+                    break;
+                  case kIdeaStatusDiscarded:
+                    context.read<DiscardedIdeasCubit>().ideaAdded(
+                          title: titleController.text,
+                          summary: summaryController.text,
+                          fullDescription: fullDescriptionController.text,
+                          status: statusController.text,
+                          revenueExplanation: revenueController.text,
+                          differentiationExplanation: differentiationController.text,
+                          speedExplanation: speedController.text,
+                          capitalExplanation: capitalController.text,
+                          rating: context.read<RateIdeaCubit>().state.ratingsSum,
+                          ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
+                          categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                        );
+                    break;
+                }
+
                 Navigator.of(context).pop();
               },
               text: kCreateIdeaButtonText,

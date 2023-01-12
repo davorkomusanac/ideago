@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +10,34 @@ import '../../data/models/idea_rating_question/idea_rating_question.dart';
 import '../../repository/idea/idea_repository.dart';
 
 part 'ideas_state.dart';
+
+class ToDoIdeasCubit extends IdeasCubit {
+  ToDoIdeasCubit({
+    required super.ideasRepository,
+    required super.ideaStatus,
+  });
+}
+
+class InProgressIdeasCubit extends IdeasCubit {
+  InProgressIdeasCubit({
+    required super.ideasRepository,
+    required super.ideaStatus,
+  });
+}
+
+class DoneIdeasCubit extends IdeasCubit {
+  DoneIdeasCubit({
+    required super.ideasRepository,
+    required super.ideaStatus,
+  });
+}
+
+class DiscardedIdeasCubit extends IdeasCubit {
+  DiscardedIdeasCubit({
+    required super.ideasRepository,
+    required super.ideaStatus,
+  });
+}
 
 class IdeasCubit extends Cubit<IdeasState> {
   final IdeaRepository ideasRepository;
@@ -52,7 +79,7 @@ class IdeasCubit extends Cubit<IdeasState> {
           status: IdeasStatus.success,
           errorMessageLoadingIdeas: '',
           isThereMoreIdeasToLoad: ideas.length < kNumberOfIdeasReadLimit ? false : true,
-          indexOfNewestIdea: ideas.first.index,
+          indexOfNewestIdea: ideas.isNotEmpty ? ideas.first.index : 0,
         ),
       );
     } else {
@@ -63,7 +90,7 @@ class IdeasCubit extends Cubit<IdeasState> {
           initialLoadedIdeas: ideas,
           status: IdeasStatus.success,
           errorMessageLoadingIdeas: '',
-          indexOfNewestIdea: ideas.first.index,
+          indexOfNewestIdea: ideas.isNotEmpty ? ideas.first.index : 0,
         ),
       );
     }
@@ -82,7 +109,6 @@ class IdeasCubit extends Cubit<IdeasState> {
           searchTerm: searchTerm,
           ideaStatus: ideaStatus,
         );
-        log(searchedIdeas.map((e) => e.title).toList().toString());
 
         emit(
           state.copyWith(
