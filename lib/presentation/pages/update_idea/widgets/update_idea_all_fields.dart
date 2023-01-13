@@ -181,22 +181,81 @@ class UpdateIdeaAllFields extends StatelessWidget {
             const SizedBox(height: 24),
             IdeaButton(
               onPressed: () {
-                context.read<IdeasCubit>().ideaUpdated(
-                      uid: idea.uid,
-                      title: titleController.text,
-                      summary: summaryController.text,
-                      fullDescription: fullDescriptionController.text,
-                      status: statusController.text,
-                      revenueExplanation: revenueController.text,
-                      differentiationExplanation: differentiationController.text,
-                      speedExplanation: speedController.text,
-                      capitalExplanation: capitalController.text,
-                      index: idea.index,
-                      rating: context.read<RateIdeaCubit>().state.ratingsSum,
-                      ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
-                      categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
-                      dateTimeCreated: idea.dateTimeCreated,
-                    );
+                switch (statusController.text) {
+                  case kIdeaStatusInProgress:
+                    context.read<InProgressIdeasCubit>().ideaUpdated(
+                          uid: idea.uid,
+                          title: titleController.text,
+                          summary: summaryController.text,
+                          fullDescription: fullDescriptionController.text,
+                          status: statusController.text,
+                          revenueExplanation: revenueController.text,
+                          differentiationExplanation: differentiationController.text,
+                          speedExplanation: speedController.text,
+                          capitalExplanation: capitalController.text,
+                          index: idea.index,
+                          rating: context.read<RateIdeaCubit>().state.ratingsSum,
+                          ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
+                          categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                          dateTimeCreated: idea.dateTimeCreated,
+                        );
+                    break;
+                  case kIdeaStatusToDo:
+                    context.read<ToDoIdeasCubit>().ideaUpdated(
+                          uid: idea.uid,
+                          title: titleController.text,
+                          summary: summaryController.text,
+                          fullDescription: fullDescriptionController.text,
+                          status: statusController.text,
+                          revenueExplanation: revenueController.text,
+                          differentiationExplanation: differentiationController.text,
+                          speedExplanation: speedController.text,
+                          capitalExplanation: capitalController.text,
+                          index: idea.index,
+                          rating: context.read<RateIdeaCubit>().state.ratingsSum,
+                          ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
+                          categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                          dateTimeCreated: idea.dateTimeCreated,
+                        );
+                    break;
+                  case kIdeaStatusDone:
+                    context.read<DoneIdeasCubit>().ideaUpdated(
+                          uid: idea.uid,
+                          title: titleController.text,
+                          summary: summaryController.text,
+                          fullDescription: fullDescriptionController.text,
+                          status: statusController.text,
+                          revenueExplanation: revenueController.text,
+                          differentiationExplanation: differentiationController.text,
+                          speedExplanation: speedController.text,
+                          capitalExplanation: capitalController.text,
+                          index: idea.index,
+                          rating: context.read<RateIdeaCubit>().state.ratingsSum,
+                          ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
+                          categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                          dateTimeCreated: idea.dateTimeCreated,
+                        );
+                    break;
+                  case kIdeaStatusDiscarded:
+                    context.read<DiscardedIdeasCubit>().ideaUpdated(
+                          uid: idea.uid,
+                          title: titleController.text,
+                          summary: summaryController.text,
+                          fullDescription: fullDescriptionController.text,
+                          status: statusController.text,
+                          revenueExplanation: revenueController.text,
+                          differentiationExplanation: differentiationController.text,
+                          speedExplanation: speedController.text,
+                          capitalExplanation: capitalController.text,
+                          index: idea.index,
+                          rating: context.read<RateIdeaCubit>().state.ratingsSum,
+                          ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
+                          categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                          dateTimeCreated: idea.dateTimeCreated,
+                        );
+                    break;
+                }
+
                 Navigator.of(context).pop();
               },
               text: kUpdateIdeaButtonText,

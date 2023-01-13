@@ -1,9 +1,12 @@
 import '../../data/models/idea/idea.dart';
 
 abstract class IdeaInterface {
-  Stream<List<Idea>> watchIdeas();
+  Stream<List<Idea>> watchIdeas({required String ideaStatus});
 
-  Future<List<Idea>> fetchIdeasNextPage(int currentLoadedIdeasLength);
+  Future<List<Idea>> fetchIdeasNextPage({
+    required int currentLoadedIdeasLength,
+    required String ideaStatus,
+  });
 
   Future<void> addIdea(Idea idea);
 
@@ -11,5 +14,8 @@ abstract class IdeaInterface {
 
   Future<void> updateIdea(Idea idea);
 
-  Future<List<Idea>> searchIdea(String searchTerm);
+  Future<List<Idea>> searchIdea({
+    required String searchTerm,
+    required String ideaStatus,
+  });
 }
