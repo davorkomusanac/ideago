@@ -11,7 +11,8 @@ class IdeaRepository implements IdeaInterface {
   IdeaRepository({required this.offlineDb});
 
   @override
-  Stream<List<Idea>> watchIdeas() => offlineDb.watchIdeas().handleError(
+  Stream<List<Idea>> watchIdeas({required String ideaStatus}) =>
+      offlineDb.watchIdeasOfCertainStatus(ideaStatus: ideaStatus).handleError(
         (e) {
           log(e);
           throw kErrorLoadingIdeas;
@@ -19,9 +20,15 @@ class IdeaRepository implements IdeaInterface {
       );
 
   @override
-  Future<List<Idea>> fetchIdeasNextPage(int currentLoadedIdeasLength) async {
+  Future<List<Idea>> fetchIdeasNextPage({
+    required int currentLoadedIdeasLength,
+    required String ideaStatus,
+  }) async {
     try {
-      List<Idea> ideas = await offlineDb.fetchIdeasNextPage(currentLoadedIdeasLength);
+      List<Idea> ideas = await offlineDb.fetchIdeasOfCertainStatusNextPage(
+        currentLoadedIdeasLength: currentLoadedIdeasLength,
+        ideaStatus: ideaStatus,
+      );
       return ideas;
     } catch (e) {
       log(e.toString());
@@ -30,9 +37,15 @@ class IdeaRepository implements IdeaInterface {
   }
 
   @override
-  Future<List<Idea>> searchIdea(String searchTerm) async {
+  Future<List<Idea>> searchIdea({
+    required String searchTerm,
+    required String ideaStatus,
+  }) async {
     try {
-      List<Idea> ideas = await offlineDb.searchIdea(searchTerm);
+      List<Idea> ideas = await offlineDb.searchIdea(
+        searchTerm: searchTerm,
+        ideaStatus: ideaStatus,
+      );
       return ideas;
     } catch (e) {
       log(e.toString());

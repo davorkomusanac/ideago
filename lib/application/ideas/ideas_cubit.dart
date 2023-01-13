@@ -11,8 +11,37 @@ import '../../repository/idea/idea_repository.dart';
 
 part 'ideas_state.dart';
 
+class ToDoIdeasCubit extends IdeasCubit {
+  ToDoIdeasCubit({
+    required super.ideasRepository,
+    required super.ideaStatus,
+  });
+}
+
+class InProgressIdeasCubit extends IdeasCubit {
+  InProgressIdeasCubit({
+    required super.ideasRepository,
+    required super.ideaStatus,
+  });
+}
+
+class DoneIdeasCubit extends IdeasCubit {
+  DoneIdeasCubit({
+    required super.ideasRepository,
+    required super.ideaStatus,
+  });
+}
+
+class DiscardedIdeasCubit extends IdeasCubit {
+  DiscardedIdeasCubit({
+    required super.ideasRepository,
+    required super.ideaStatus,
+  });
+}
+
 class IdeasCubit extends Cubit<IdeasState> {
-  final IdeaRepository _ideasRepository;
+  final IdeaRepository ideasRepository;
+  final String ideaStatus;
   StreamSubscription? _stream;
 
   @override
@@ -21,10 +50,13 @@ class IdeasCubit extends Cubit<IdeasState> {
     return super.close();
   }
 
-  IdeasCubit(this._ideasRepository) : super(const IdeasState()) {
+  IdeasCubit({
+    required this.ideasRepository,
+    required this.ideaStatus,
+  }) : super(const IdeasState()) {
     ///Start listening to the stream of ideas as soon as the Cubit is constructed and show success and error accordingly
     _stream?.cancel();
-    _stream = _ideasRepository.watchIdeas().listen(
+    _stream = ideasRepository.watchIdeas(ideaStatus: ideaStatus).listen(
       (ideas) => loadedIdeas(ideas),
       onError: (e) {
         emit(
@@ -47,6 +79,7 @@ class IdeasCubit extends Cubit<IdeasState> {
           status: IdeasStatus.success,
           errorMessageLoadingIdeas: '',
           isThereMoreIdeasToLoad: ideas.length < kNumberOfIdeasReadLimit ? false : true,
+          indexOfNewestIdea: ideas.isNotEmpty ? ideas.first.index : 0,
         ),
       );
     } else {
@@ -57,6 +90,7 @@ class IdeasCubit extends Cubit<IdeasState> {
           initialLoadedIdeas: ideas,
           status: IdeasStatus.success,
           errorMessageLoadingIdeas: '',
+          indexOfNewestIdea: ideas.isNotEmpty ? ideas.first.index : 0,
         ),
       );
     }
@@ -71,7 +105,10 @@ class IdeasCubit extends Cubit<IdeasState> {
           ),
         );
 
-        List<Idea> searchedIdeas = await _ideasRepository.searchIdea(searchTerm);
+        List<Idea> searchedIdeas = await ideasRepository.searchIdea(
+          searchTerm: searchTerm,
+          ideaStatus: ideaStatus,
+        );
 
         emit(
           state.copyWith(
@@ -103,12 +140,16 @@ class IdeasCubit extends Cubit<IdeasState> {
       );
     }
   }
+  //TODO searchIdeaPagination
 
   Future<void> fetchedIdeasNextPage(int currentLoadedIdeasLength) async {
     bool isThereMoreIdeasToLoad = false;
     try {
       if (state.isThereMoreIdeasToLoad) {
-        List<Idea> ideasNextPage = await _ideasRepository.fetchIdeasNextPage(currentLoadedIdeasLength);
+        List<Idea> ideasNextPage = await ideasRepository.fetchIdeasNextPage(
+          currentLoadedIdeasLength: currentLoadedIdeasLength,
+          ideaStatus: ideaStatus,
+        );
         isThereMoreIdeasToLoad = ideasNextPage.length < kNumberOfIdeasReadLimit ? false : true;
         List<Idea> updatedIdeas = <Idea>[...state.ideas, ...ideasNextPage];
 
@@ -144,7 +185,7 @@ class IdeasCubit extends Cubit<IdeasState> {
     required List<IdeaRatingQuestion> ratingQuestions,
     required List<String> categories,
   }) async {
-    double index = state.ideas.isNotEmpty ? state.ideas.first.index + 1 : 0;
+    double index = state.ideas.isNotEmpty ? state.indexOfNewestIdea + 1 : 0;
     var idea = Idea(
       uid: const Uuid().v4(),
       title: title,
@@ -163,14 +204,27 @@ class IdeasCubit extends Cubit<IdeasState> {
       dateTimeLastUpdated: DateTime.now(),
     );
     try {
-      await _ideasRepository.addIdea(idea);
+      await ideasRepository.addIdea(idea);
 
-      emit(
-        state.copyWith(
-          status: IdeasStatus.success,
-          errorMessage: '',
-        ),
-      );
+      if (state.searchTerm.isEmpty) {
+        emit(
+          state.copyWith(
+            status: IdeasStatus.success,
+            errorMessage: '',
+          ),
+        );
+      } else {
+        ///When search Term is not empty, state.ideas need to be updated manually if there
+        ///is a single CRUD operation on a single idea, because state.ideas contains only the filtered ideas
+        List<Idea> updatedIdeas = <Idea>[idea, ...state.ideas];
+        emit(
+          state.copyWith(
+            status: IdeasStatus.success,
+            ideas: updatedIdeas,
+            errorMessage: '',
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(
@@ -183,14 +237,25 @@ class IdeasCubit extends Cubit<IdeasState> {
 
   Future<void> ideaDeleted({required Idea idea}) async {
     try {
-      await _ideasRepository.deleteIdea(idea);
+      await ideasRepository.deleteIdea(idea);
 
-      emit(
-        state.copyWith(
-          status: IdeasStatus.success,
-          errorMessage: '',
-        ),
-      );
+      if (state.searchTerm.isEmpty) {
+        emit(
+          state.copyWith(
+            status: IdeasStatus.success,
+            errorMessage: '',
+          ),
+        );
+      } else {
+        List<Idea> updatedIdeas = state.ideas.where((e) => e.uid != idea.uid).toList();
+        emit(
+          state.copyWith(
+            status: IdeasStatus.success,
+            ideas: updatedIdeas,
+            errorMessage: '',
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(
@@ -236,14 +301,29 @@ class IdeasCubit extends Cubit<IdeasState> {
     );
 
     try {
-      await _ideasRepository.updateIdea(idea);
+      await ideasRepository.updateIdea(idea);
 
-      emit(
-        state.copyWith(
-          status: IdeasStatus.success,
-          errorMessage: '',
-        ),
-      );
+      if (state.searchTerm.isEmpty) {
+        emit(
+          state.copyWith(
+            status: IdeasStatus.success,
+            errorMessage: '',
+          ),
+        );
+      } else {
+        List<Idea> updatedIdeas = state.ideas
+            .map(
+              (e) => e.uid != idea.uid ? e : idea,
+            )
+            .toList();
+        emit(
+          state.copyWith(
+            status: IdeasStatus.success,
+            ideas: updatedIdeas,
+            errorMessage: '',
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(

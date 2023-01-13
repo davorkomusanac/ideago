@@ -32,7 +32,20 @@ class DeleteIdeaButton extends StatelessWidget {
                 //Pop until home page
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
-                context.read<IdeasCubit>().ideaDeleted(idea: idea);
+                switch (idea.status) {
+                  case kIdeaStatusInProgress:
+                    context.read<InProgressIdeasCubit>().ideaDeleted(idea: idea);
+                    break;
+                  case kIdeaStatusToDo:
+                    context.read<ToDoIdeasCubit>().ideaDeleted(idea: idea);
+                    break;
+                  case kIdeaStatusDone:
+                    context.read<DoneIdeasCubit>().ideaDeleted(idea: idea);
+                    break;
+                  case kIdeaStatusDiscarded:
+                    context.read<DiscardedIdeasCubit>().ideaDeleted(idea: idea);
+                    break;
+                }
               },
             ),
           );

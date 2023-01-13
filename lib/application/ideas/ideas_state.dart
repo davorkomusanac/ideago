@@ -15,18 +15,25 @@ class IdeasState extends Equatable {
     this.errorMessageLoadingIdeas = '',
     this.isThereMoreIdeasToLoad = true,
     this.searchTerm = '',
+    this.indexOfNewestIdea = 0,
   });
 
   final IdeasStatus status;
   final List<Idea> ideas;
-  //An additional List<Idea> needed for real time search, so when search is done, we show back the original ideas
+
+  ///An additional List<Idea> needed for real time search, so when search is done, we show back the original ideas
   final List<Idea> initialLoadedIdeas;
   final String errorMessage;
-  //An additional String errorMessage to differentiate when showing a SnackBar error for Idea operations and static view for loading ideas
+
+  ///An additional String errorMessage to differentiate when showing a SnackBar error for Idea operations and static view for loading ideas
   final String errorMessageLoadingIdeas;
   final bool isThereMoreIdeasToLoad;
-  //Search term needed as a property to be able to update real time searched ideas
+
+  ///Search term needed as a property to be able to update real time searched ideas
   final String searchTerm;
+
+  ///Counter for knowing which index to give a new idea, necessary because when searching for ideas, state.ideas contains only filtered results
+  final double indexOfNewestIdea;
 
   IdeasState copyWith({
     IdeasStatus? status,
@@ -36,6 +43,7 @@ class IdeasState extends Equatable {
     String? errorMessageLoadingIdeas,
     bool? isThereMoreIdeasToLoad,
     String? searchTerm,
+    double? indexOfNewestIdea,
   }) =>
       IdeasState(
         status: status ?? this.status,
@@ -45,6 +53,7 @@ class IdeasState extends Equatable {
         errorMessageLoadingIdeas: errorMessageLoadingIdeas ?? this.errorMessageLoadingIdeas,
         isThereMoreIdeasToLoad: isThereMoreIdeasToLoad ?? this.isThereMoreIdeasToLoad,
         searchTerm: searchTerm ?? this.searchTerm,
+        indexOfNewestIdea: indexOfNewestIdea ?? this.indexOfNewestIdea,
       );
 
   @override
@@ -56,5 +65,6 @@ class IdeasState extends Equatable {
         errorMessageLoadingIdeas,
         isThereMoreIdeasToLoad,
         searchTerm,
+        indexOfNewestIdea,
       ];
 }
