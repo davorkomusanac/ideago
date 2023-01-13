@@ -70,6 +70,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               TabBar(
                 controller: _tabController,
                 tabs: _tabs,
+                indicatorColor: AppColors.primaryForegroundColor,
+                labelPadding: EdgeInsets.zero,
               ),
               IdeaTextField(
                 onChanged: (val) => _debouncer.run(
