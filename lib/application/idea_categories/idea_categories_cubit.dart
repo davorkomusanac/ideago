@@ -82,6 +82,9 @@ class IdeaCategoriesCubit extends Cubit<IdeaCategoriesState> {
           isSearchedCategoryAlreadyCreated: true,
         ),
       );
+
+      //When a category is created, also automatically check it inside current idea
+      categoryChecked(category);
     } catch (e) {
       emit(
         state.copyWith(
