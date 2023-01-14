@@ -49,7 +49,7 @@ Color showIdeaRatingColor(int rating) {
   } else if (rating < 90) {
     return AppColors.green;
   } else {
-    return AppColors.darkGreen;
+    return AppColors.lightGreen;
   }
 }
 
