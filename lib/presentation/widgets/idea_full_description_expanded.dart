@@ -10,29 +10,29 @@ class IdeaFullDescriptionExpanded extends StatelessWidget {
   const IdeaFullDescriptionExpanded({
     Key? key,
     required this.fullDescriptionController,
-    required this.descriptionFullScreenFocusNode,
+    this.descriptionFullScreenFocusNode,
   }) : super(key: key);
 
   final TextEditingController fullDescriptionController;
-  final FocusNode descriptionFullScreenFocusNode;
+  final FocusNode? descriptionFullScreenFocusNode;
 
   @override
   Widget build(BuildContext context) => CustomScrollView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           //A scrollview is needed to be able to dismiss keyboard on drag, CustomScrollView works with Expanded
           SliverFillRemaining(
             child: Column(
               children: [
                 const IdeaTextFieldLabel(
+                  leftPadding: 20,
                   label: kIdeaTextFieldFullDescriptionLabel,
                 ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                      left: 16.0,
-                      right: 16.0,
-                      bottom: 16.0,
+                      left: 8,
+                      right: 8,
+                      bottom: 8,
                     ),
                     child: Stack(
                       children: [

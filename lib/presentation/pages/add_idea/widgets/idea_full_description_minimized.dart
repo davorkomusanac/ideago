@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../application/idea_text_fields_helpers/idea_text_fields_helpers_cubit.dart';
+import '../../../../colors.dart';
 import '../../../../constants.dart';
 import '../../../widgets/idea_text_field.dart';
 
@@ -35,7 +36,10 @@ class IdeaFullDescriptionMinimized extends StatelessWidget {
                   descriptionFullScreenFocusNode.requestFocus();
                   context.read<IdeaTextFieldsHelpersCubit>().descriptionButtonPressed();
                 },
-                icon: const Icon(Icons.fullscreen),
+                icon: Container(
+                  color: AppColors.primaryBackgroundColor,
+                  child: const Icon(Icons.fullscreen),
+                ),
               ),
             ),
           ],
