@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../application/ideas/ideas_cubit.dart';
 import '../../../../constants.dart';
-import '../../../widgets/idea_card.dart';
-import '../../../widgets/idea_error_placeholder_text.dart';
 import '../../../widgets/themed_circular_progress_indicator.dart';
+import '../widgets/idea_card.dart';
+import '../widgets/idea_error_placeholder_text.dart';
 
 ///Similar to rest of the IdeaTabViews, but have to duplicate code to be able to call appropriate cubit
 class ToDoTabView extends StatelessWidget {

@@ -88,3 +88,49 @@ class Debouncer {
     _timer = Timer(Duration(milliseconds: milliseconds), action);
   }
 }
+
+///Take in a list of categories for an idea and return the number of categories to actually render on screen.
+///
+///Categories are of dynamic length and it is hard to check by itself how much exact screen space they will take up.
+///This method is then needed for a "hacky" solution, where a TextPainter is used to check how much space a TextSpan containing all
+///of the categories would take up on a screen. It is called iteratively for each element so that when there are too many
+///categories to render on screen, it will cut it off and show how many remaining categories there are.
+List<String> formatCategoriesToRenderForIdeaCard({
+  required List<String> categories,
+  required double maxWidth,
+}) {
+  String text = '';
+  bool didExceedRender = false;
+  int numberOfCategoriesLeftToShow = 0;
+
+  for (int i = 0; i < categories.length; i++) {
+    text += ' ${categories[i]}';
+
+    var span = TextSpan(
+      text: text,
+      style: const TextStyle(fontSize: 34),
+    );
+
+    var tp = TextPainter(
+      maxLines: 1,
+      textAlign: TextAlign.left,
+      textDirection: TextDirection.ltr,
+      text: span,
+    );
+
+    tp.layout(maxWidth: maxWidth);
+
+    didExceedRender = tp.didExceedMaxLines;
+
+    if (didExceedRender) {
+      numberOfCategoriesLeftToShow = categories.length - i;
+      break;
+    }
+  }
+
+  int indexOfLastCategoryToShow = categories.length - numberOfCategoriesLeftToShow;
+
+  return didExceedRender
+      ? [...categories.sublist(0, indexOfLastCategoryToShow), '+$numberOfCategoriesLeftToShow']
+      : [...categories];
+}
