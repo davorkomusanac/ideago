@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/idea_text_fields_helpers/idea_text_fields_helpers_cubit.dart';
 import '../../constants.dart';
-import 'idea_textfield.dart';
-import 'idea_textfield_label.dart';
+import 'idea_text_field.dart';
+import 'idea_text_field_label.dart';
 
 class IdeaFullDescriptionExpanded extends StatelessWidget {
   const IdeaFullDescriptionExpanded({
