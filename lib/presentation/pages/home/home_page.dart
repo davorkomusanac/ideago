@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late ScrollController _toDoTabScrollController;
   late ScrollController _doneTabScrollController;
   late ScrollController _discardedTabScrollController;
+  late TextEditingController _searchIdeasController;
   late Debouncer _debouncer;
   late TabController _tabController;
   final List<Tab> _tabs = <Tab>[
@@ -46,6 +47,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       length: _tabs.length,
       vsync: this,
     );
+    _searchIdeasController = TextEditingController();
   }
 
   @override
@@ -74,22 +76,27 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 labelPadding: EdgeInsets.zero,
               ),
               IdeaTextField(
-                onChanged: (val) => _debouncer.run(
-                  () {
-                    context.read<InProgressIdeasCubit>().ideaSearched(
-                          val.trim(),
-                        );
-                    context.read<ToDoIdeasCubit>().ideaSearched(
-                          val.trim(),
-                        );
-                    context.read<DoneIdeasCubit>().ideaSearched(
-                          val.trim(),
-                        );
-                    context.read<DiscardedIdeasCubit>().ideaSearched(
-                          val.trim(),
-                        );
-                  },
-                ),
+                controller: _searchIdeasController,
+                onChanged: (val) {
+                  //Calling this setState so that the _searchController gets updated and delete search button appears
+                  setState(() {});
+                  _debouncer.run(
+                    () {
+                      context.read<InProgressIdeasCubit>().ideaSearched(
+                            val.trim(),
+                          );
+                      context.read<ToDoIdeasCubit>().ideaSearched(
+                            val.trim(),
+                          );
+                      context.read<DoneIdeasCubit>().ideaSearched(
+                            val.trim(),
+                          );
+                      context.read<DiscardedIdeasCubit>().ideaSearched(
+                            val.trim(),
+                          );
+                    },
+                  );
+                },
                 hintText: kIdeaTextFieldSearchHint,
                 margin: const EdgeInsets.only(
                   left: 16.0,
@@ -97,6 +104,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   top: 24.0,
                   bottom: 8.0,
                 ),
+                suffixIcon: _searchIdeasController.text.isEmpty
+                    ? null
+                    : IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _searchIdeasController.clear();
+                          });
+                          context.read<InProgressIdeasCubit>().ideaSearched();
+                          context.read<ToDoIdeasCubit>().ideaSearched();
+                          context.read<DoneIdeasCubit>().ideaSearched();
+                          context.read<DiscardedIdeasCubit>().ideaSearched();
+                        },
+                        icon: const Icon(
+                          Icons.clear,
+                          size: 26,
+                          //color: AppColors.grey,
+                        ),
+                      ),
               ),
               Expanded(
                 child: Stack(
