@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../colors.dart';
-import '../../data/models/idea/idea.dart';
-import '../../functions.dart';
-import '../pages/update_idea/update_idea_page.dart';
+import '../../../../colors.dart';
+import '../../../../data/models/idea/idea.dart';
+import '../../../../functions.dart';
+import '../../update_idea/update_idea_page.dart';
+import 'idea_card_categories_chip.dart';
 
 class IdeaCard extends StatelessWidget {
   final Idea idea;
@@ -12,7 +13,7 @@ class IdeaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
         child: GestureDetector(
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
@@ -23,166 +24,95 @@ class IdeaCard extends StatelessWidget {
             elevation: 20,
             borderRadius: BorderRadius.circular(20),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.54,
               decoration: BoxDecoration(
                 color: AppColors.primaryForegroundColor,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
-                mainAxisSize: MainAxisSize.max,
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
+                  const SizedBox(height: 12),
+                  if (idea.title.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 12,
+                        left: 12,
+                        right: 12,
+                      ),
+                      child: Text(
+                        idea.title,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  if (idea.summary.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 12,
+                        left: 12,
+                        right: 12,
+                      ),
+                      child: Text(
+                        idea.summary,
+                        textAlign: TextAlign.center,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 12.0,
-                          horizontal: 32.0,
-                        ),
-                        child: Text(
-                          idea.title,
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                        ),
-                        child: Text(
-                          idea.summary,
-                          maxLines: 3,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                constraints: const BoxConstraints(
-                                  minWidth: 100,
-                                  maxWidth: 200,
-                                ),
-                                child: Text(
-                                  idea.status,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: showStatusColor(idea.status),
-                                    decoration: showStatusTextDecoration(idea.status),
-                                  ),
-                                ),
-                              ),
-                              Material(
-                                elevation: 5,
-                                borderRadius: BorderRadius.circular(10),
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 100,
-                                    maxWidth: 200,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: showIdeaRatingColor(idea.rating),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text(
-                                    formatIdeaRatingResult(idea.rating),
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      if (idea.categories.isNotEmpty)
                         Expanded(
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
+                          child: LayoutBuilder(
+                            builder: (context, constraints) => Padding(
                               padding: const EdgeInsets.only(left: 12.0),
-                              child: Wrap(
-                                clipBehavior: Clip.hardEdge,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                spacing: 10,
-                                children: idea.categories
+                              child: Row(
+                                children: formatCategoriesToRenderForIdeaCard(
+                                        categories: idea.categories, maxWidth: constraints.maxWidth)
                                     .map(
-                                      (e) => Chip(
-                                        elevation: 5,
-                                        //padding: EdgeInsets.zero,
-                                        //labelPadding: EdgeInsets.zero,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                        backgroundColor: AppColors.grey,
-                                        label: Text(
-                                          e,
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                      ),
+                                      (e) => IdeaCardCategoriesChip(category: e),
                                     )
                                     .toList(),
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text('first half'),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'test androidd chrome test another one new andr 6 7',
-                                style: TextStyle(fontSize: 24),
+                      Expanded(
+                        child: UnconstrainedBox(
+                          child: Material(
+                            elevation: 5,
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              constraints: const BoxConstraints(
+                                minWidth: 100,
+                                maxWidth: 200,
                               ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text('first half'),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: LayoutBuilder(
-                                builder: (context, constraints) => Row(
-                                  children: formatCategoriesToRenderForIdeaCard(
-                                          categories: idea.categories, maxWidth: constraints.maxWidth)
-                                      .map(
-                                        (e) => Chip(
-                                          label: Text(e),
-                                        ),
-                                      )
-                                      .toList(),
+                              decoration: BoxDecoration(
+                                color: showIdeaRatingColor(idea.rating),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                formatIdeaRatingResult(idea.rating),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 12,
                                 ),
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 12),
                 ],
               ),
             ),
