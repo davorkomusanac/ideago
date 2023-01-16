@@ -20,8 +20,13 @@ class IdeaOfflineDb {
   /// With Isar, you need to create a Query and then watch it to get a Stream
   /// From IsarDB we get back a Stream<List<IsarIdea>> so we need to convert it (map) to Stream<List<Idea>>
   Stream<List<Idea>> watchIdeasOfCertainStatus({required String ideaStatus}) {
-    Query<IsarIdea> allIdeas =
-        _isarIdeas.where().filter().statusEqualTo(ideaStatus).sortByIndexDesc().limit(kNumberOfIdeasReadLimit).build();
+    Query<IsarIdea> allIdeas = _isarIdeas
+        .where()
+        .filter()
+        .statusEqualTo(ideaStatus)
+        .sortByDateTimeLastUpdatedDesc()
+        .limit(kNumberOfIdeasReadLimit)
+        .build();
     return allIdeas.watch(initialReturn: true).map(
           (event) => event
               .map(
@@ -40,7 +45,7 @@ class IdeaOfflineDb {
           .where()
           .filter()
           .statusEqualTo(ideaStatus)
-          .sortByIndexDesc()
+          .sortByDateTimeLastUpdatedDesc()
           .offset(currentLoadedIdeasLength)
           .limit(kNumberOfIdeasReadLimit)
           .findAll();
@@ -81,7 +86,7 @@ class IdeaOfflineDb {
                 .or()
                 .capitalExplanationContains(searchTerm, caseSensitive: false),
           )
-          .sortByIndexDesc()
+          .sortByDateTimeLastUpdatedDesc()
           .limit(kNumberOfIdeasReadLimit)
           .findAll();
 
