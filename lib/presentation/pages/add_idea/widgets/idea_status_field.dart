@@ -6,8 +6,8 @@ import '../../../../application/idea_text_fields_helpers/idea_text_fields_helper
 import '../../../../colors.dart';
 import '../../../../constants.dart';
 import '../../../widgets/idea_status_bottom_sheet.dart';
-import '../../../widgets/idea_textfield.dart';
-import '../../../widgets/idea_textfield_label.dart';
+import '../../../widgets/idea_text_field.dart';
+import '../../../widgets/idea_text_field_label.dart';
 
 class IdeaStatusField extends StatelessWidget {
   const IdeaStatusField({

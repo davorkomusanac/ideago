@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../application/idea_text_fields_helpers/idea_text_fields_helpers_cubit.dart';
 import '../../../../constants.dart';
-import '../../../widgets/idea_textfield.dart';
+import '../../../widgets/idea_text_field.dart';
 
 class IdeaFullDescriptionMinimized extends StatelessWidget {
   const IdeaFullDescriptionMinimized({
