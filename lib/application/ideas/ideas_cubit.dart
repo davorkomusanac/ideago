@@ -96,7 +96,7 @@ class IdeasCubit extends Cubit<IdeasState> {
     }
   }
 
-  Future<void> ideaSearched(String searchTerm) async {
+  Future<void> ideaSearched([String searchTerm = '']) async {
     try {
       if (searchTerm.isNotEmpty) {
         emit(
