@@ -23,7 +23,7 @@ class IdeaCard extends StatelessWidget {
             elevation: 20,
             borderRadius: BorderRadius.circular(20),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.24,
+              height: MediaQuery.of(context).size.height * 0.54,
               decoration: BoxDecoration(
                 color: AppColors.primaryForegroundColor,
                 borderRadius: BorderRadius.circular(20),
@@ -129,8 +129,14 @@ class IdeaCard extends StatelessWidget {
                                     .map(
                                       (e) => Chip(
                                         elevation: 5,
+                                        //padding: EdgeInsets.zero,
+                                        //labelPadding: EdgeInsets.zero,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                         backgroundColor: AppColors.grey,
-                                        label: Text(e),
+                                        label: Text(
+                                          e,
+                                          style: TextStyle(fontSize: 14),
+                                        ),
                                       ),
                                     )
                                     .toList(),
@@ -139,6 +145,41 @@ class IdeaCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text('first half'),
+                            ),
+                            Expanded(
+                              child: Text(
+                                'test androidd chrome test another one new andr 6 7',
+                                style: TextStyle(fontSize: 24),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text('first half'),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: LayoutBuilder(
+                                builder: (context, constraints) => Row(
+                                  children: formatCategoriesToRenderForIdeaCard(
+                                          categories: idea.categories, maxWidth: constraints.maxWidth)
+                                      .map(
+                                        (e) => Chip(
+                                          label: Text(e),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
