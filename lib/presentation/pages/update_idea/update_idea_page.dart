@@ -127,7 +127,6 @@ class _UpdateIdeaPageState extends State<UpdateIdeaPage> with TickerProviderStat
                             //A key is needed here so that AnimatedSwitcher can know the difference between children and animate them
                             key: const ValueKey<int>(0),
                             fullDescriptionController: _fullDescriptionController,
-                            descriptionFullScreenFocusNode: _descriptionFullScreenFocusNode,
                           )
                         : UpdateIdeaAllFields(
                             idea: widget.idea,
