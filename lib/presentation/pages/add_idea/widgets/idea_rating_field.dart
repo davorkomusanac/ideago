@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../../constants.dart';
 import '../../../../functions.dart';
-import '../../../widgets/idea_textfield.dart';
-import '../../../widgets/idea_textfield_label.dart';
+import '../../../widgets/idea_text_field.dart';
+import '../../../widgets/idea_text_field_label.dart';
 import '../../rate_idea/rate_idea_page.dart';
 
 class IdeaRatingField extends StatelessWidget {
