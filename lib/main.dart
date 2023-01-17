@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'application/ideas/idea_tab_view_helper/idea_tab_view_helper_cubit.dart';
 import 'application/ideas/ideas_cubit.dart';
 import 'constants.dart';
 import 'data/databases/idea/idea_offline_db.dart';
@@ -74,6 +75,9 @@ class MyApp extends StatelessWidget {
                 ideasRepository: context.read<IdeaRepository>(),
                 ideaStatus: kIdeaStatusDiscarded,
               ),
+            ),
+            BlocProvider(
+              create: (context) => IdeaTabViewHelperCubit(),
             ),
           ],
           child: MaterialApp(
