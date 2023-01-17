@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../colors.dart';
+import '../../../application/ideas/idea_tab_view_helper/idea_tab_view_helper_cubit.dart';
 import '../../../application/ideas/ideas_cubit.dart';
 import '../../../constants.dart';
 import '../../../functions.dart';
@@ -65,6 +66,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         appBar: AppBar(
           title: const Text('IdeaGo'),
           //TODO Implement drawer button to sign in with firebase
+          actions: [
+            BlocBuilder<IdeaTabViewHelperCubit, IdeaTabViewHelperState>(
+              builder: (context, state) => IconButton(
+                onPressed: () => context.read<IdeaTabViewHelperCubit>().changeIdeaTabLayoutPressed(),
+                icon: Icon(
+                  state.isListViewSelected ? Icons.grid_view : Icons.view_agenda_outlined,
+                ),
+              ),
+            ),
+            // SizedBox(
+            //   width: 200,
+            //   child: IdeaTextField(),
+            // ),
+          ],
         ),
         body: SafeArea(
           child: Column(

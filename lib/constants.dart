@@ -65,11 +65,14 @@ const String kErrorDeletingIdea = 'There was an error while deleting your idea. 
 const String kErrorUpdatingIdea = 'There was an error while updating your idea. Please try again.';
 
 /// Int value for limiting the number of elements read from storage in a single operation
-const int kNumberOfIdeasReadLimit = 50;
+const int kNumberOfIdeasReadLimit = 12;
 
 /// Empty ideas list text placeholder
 const String kNoIdeasCreatedYet = 'Start adding your first ideas.';
 const String kNoIdeasFound = 'No idea found. Try changing your search term or create a new idea.';
 
-/// App bar tile values
+/// App bar title values
 const String kAppBarRateIdeaTitle = 'Rate idea';
+
+/// Values for SharedPrefs storage
+const String kSharedPrefsIdeaTabViewKey = 'listViewIsIdeaTabViewPref';
