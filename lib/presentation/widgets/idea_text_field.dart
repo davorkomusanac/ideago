@@ -16,6 +16,12 @@ class IdeaTextField extends StatelessWidget {
   final EdgeInsets margin;
   final Widget? suffixIcon;
   final VoidCallback? onTap;
+  final Color focusedBorderColor;
+  final Color enabledBorderColor;
+  final Color? fillColor;
+  final bool? filled;
+  final Color? cursorColor;
+  final TextStyle? style;
   final Function(String val)? onChanged;
 
   const IdeaTextField({
@@ -33,6 +39,12 @@ class IdeaTextField extends StatelessWidget {
     this.suffixIcon,
     this.onTap,
     this.onChanged,
+    this.focusedBorderColor = AppColors.primaryForegroundColor,
+    this.enabledBorderColor = AppColors.grey,
+    this.fillColor,
+    this.filled,
+    this.cursorColor,
+    this.style,
     Key? key,
   }) : super(key: key);
 
@@ -50,27 +62,31 @@ class IdeaTextField extends StatelessWidget {
           onTap: onTap,
           onChanged: onChanged,
           textAlignVertical: TextAlignVertical.top,
+          style: style,
+          cursorColor: cursorColor,
           decoration: InputDecoration(
             alignLabelWithHint: true,
             hintText: hintText,
             isDense: isDense,
             suffixIcon: suffixIcon,
+            fillColor: fillColor,
+            filled: filled,
             contentPadding: contentPadding,
-            focusedBorder: const OutlineInputBorder(
+            focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: AppColors.primaryForegroundColor,
+                color: focusedBorderColor,
                 width: 1.5,
               ),
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(15.0),
               ),
             ),
-            enabledBorder: const OutlineInputBorder(
+            enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: AppColors.grey,
+                color: enabledBorderColor,
                 width: 1.5,
               ),
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(15.0),
               ),
             ),
