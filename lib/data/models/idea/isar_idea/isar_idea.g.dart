@@ -15,7 +15,7 @@ extension GetIsarIdeaCollection on Isar {
 const IsarIdeaSchema = CollectionSchema(
   name: 'IsarIdea',
   schema:
-      '{"name":"IsarIdea","idName":"id","properties":[{"name":"capitalExplanation","type":"String"},{"name":"categories","type":"StringList"},{"name":"dateTimeCreated","type":"Long"},{"name":"dateTimeLastUpdated","type":"Long"},{"name":"differentiationExplanation","type":"String"},{"name":"fullDescription","type":"String"},{"name":"index","type":"Double"},{"name":"rating","type":"Long"},{"name":"ratingQuestions","type":"String"},{"name":"revenueExplanation","type":"String"},{"name":"speedExplanation","type":"String"},{"name":"status","type":"String"},{"name":"summary","type":"String"},{"name":"title","type":"String"},{"name":"uid","type":"String"}],"indexes":[{"name":"categories","unique":false,"properties":[{"name":"categories","type":"HashElements","caseSensitive":false}]},{"name":"dateTimeCreated","unique":false,"properties":[{"name":"dateTimeCreated","type":"Value","caseSensitive":false}]},{"name":"dateTimeLastUpdated","unique":false,"properties":[{"name":"dateTimeLastUpdated","type":"Value","caseSensitive":false}]},{"name":"fullDescription","unique":false,"properties":[{"name":"fullDescription","type":"Hash","caseSensitive":false}]},{"name":"index","unique":false,"properties":[{"name":"index","type":"Value","caseSensitive":false}]},{"name":"rating","unique":false,"properties":[{"name":"rating","type":"Value","caseSensitive":false}]},{"name":"summary","unique":false,"properties":[{"name":"summary","type":"Hash","caseSensitive":false}]},{"name":"title","unique":false,"properties":[{"name":"title","type":"Hash","caseSensitive":false}]},{"name":"uid","unique":true,"properties":[{"name":"uid","type":"Hash","caseSensitive":true}]}],"links":[]}',
+      '{"name":"IsarIdea","idName":"id","properties":[{"name":"capitalExplanation","type":"String"},{"name":"categories","type":"StringList"},{"name":"dateTimeCreated","type":"Long"},{"name":"dateTimeLastUpdated","type":"Long"},{"name":"differentiationExplanation","type":"String"},{"name":"fullDescription","type":"String"},{"name":"index","type":"Double"},{"name":"rating","type":"Long"},{"name":"ratingQuestions","type":"String"},{"name":"revenueExplanation","type":"String"},{"name":"speedExplanation","type":"String"},{"name":"status","type":"String"},{"name":"summary","type":"String"},{"name":"tasks","type":"String"},{"name":"title","type":"String"},{"name":"uid","type":"String"}],"indexes":[{"name":"categories","unique":false,"properties":[{"name":"categories","type":"HashElements","caseSensitive":false}]},{"name":"dateTimeCreated","unique":false,"properties":[{"name":"dateTimeCreated","type":"Value","caseSensitive":false}]},{"name":"dateTimeLastUpdated","unique":false,"properties":[{"name":"dateTimeLastUpdated","type":"Value","caseSensitive":false}]},{"name":"fullDescription","unique":false,"properties":[{"name":"fullDescription","type":"Hash","caseSensitive":false}]},{"name":"index","unique":false,"properties":[{"name":"index","type":"Value","caseSensitive":false}]},{"name":"rating","unique":false,"properties":[{"name":"rating","type":"Value","caseSensitive":false}]},{"name":"summary","unique":false,"properties":[{"name":"summary","type":"Hash","caseSensitive":false}]},{"name":"title","unique":false,"properties":[{"name":"title","type":"Hash","caseSensitive":false}]},{"name":"uid","unique":true,"properties":[{"name":"uid","type":"Hash","caseSensitive":true}]}],"links":[]}',
   idName: 'id',
   propertyIds: {
     'capitalExplanation': 0,
@@ -31,8 +31,9 @@ const IsarIdeaSchema = CollectionSchema(
     'speedExplanation': 10,
     'status': 11,
     'summary': 12,
-    'title': 13,
-    'uid': 14
+    'tasks': 13,
+    'title': 14,
+    'uid': 15
   },
   listProperties: {'categories'},
   indexIds: {
@@ -108,6 +109,7 @@ List<IsarLinkBase> _isarIdeaGetLinks(IsarIdea object) {
 
 const _isarIdeaIsarIdeaRatingQuestionConverter =
     IsarIdeaRatingQuestionConverter();
+const _isarIdeaIsarTaskConverter = IsarTaskConverter();
 
 void _isarIdeaSerializeNative(
     IsarCollection<IsarIdea> collection,
@@ -160,11 +162,14 @@ void _isarIdeaSerializeNative(
   final value12 = object.summary;
   final _summary = IsarBinaryWriter.utf8Encoder.convert(value12);
   dynamicSize += (_summary.length) as int;
-  final value13 = object.title;
-  final _title = IsarBinaryWriter.utf8Encoder.convert(value13);
+  final value13 = _isarIdeaIsarTaskConverter.toIsar(object.tasks);
+  final _tasks = IsarBinaryWriter.utf8Encoder.convert(value13);
+  dynamicSize += (_tasks.length) as int;
+  final value14 = object.title;
+  final _title = IsarBinaryWriter.utf8Encoder.convert(value14);
   dynamicSize += (_title.length) as int;
-  final value14 = object.uid;
-  final _uid = IsarBinaryWriter.utf8Encoder.convert(value14);
+  final value15 = object.uid;
+  final _uid = IsarBinaryWriter.utf8Encoder.convert(value15);
   dynamicSize += (_uid.length) as int;
   final size = staticSize + dynamicSize;
 
@@ -185,8 +190,9 @@ void _isarIdeaSerializeNative(
   writer.writeBytes(offsets[10], _speedExplanation);
   writer.writeBytes(offsets[11], _status);
   writer.writeBytes(offsets[12], _summary);
-  writer.writeBytes(offsets[13], _title);
-  writer.writeBytes(offsets[14], _uid);
+  writer.writeBytes(offsets[13], _tasks);
+  writer.writeBytes(offsets[14], _title);
+  writer.writeBytes(offsets[15], _uid);
 }
 
 IsarIdea _isarIdeaDeserializeNative(IsarCollection<IsarIdea> collection, int id,
@@ -207,8 +213,10 @@ IsarIdea _isarIdeaDeserializeNative(IsarCollection<IsarIdea> collection, int id,
   object.speedExplanation = reader.readString(offsets[10]);
   object.status = reader.readString(offsets[11]);
   object.summary = reader.readString(offsets[12]);
-  object.title = reader.readString(offsets[13]);
-  object.uid = reader.readString(offsets[14]);
+  object.tasks =
+      _isarIdeaIsarTaskConverter.fromIsar(reader.readString(offsets[13]));
+  object.title = reader.readString(offsets[14]);
+  object.uid = reader.readString(offsets[15]);
   return object;
 }
 
@@ -245,8 +253,11 @@ P _isarIdeaDeserializePropNative<P>(
     case 12:
       return (reader.readString(offset)) as P;
     case 13:
-      return (reader.readString(offset)) as P;
+      return (_isarIdeaIsarTaskConverter.fromIsar(reader.readString(offset)))
+          as P;
     case 14:
+      return (reader.readString(offset)) as P;
+    case 15:
       return (reader.readString(offset)) as P;
     default:
       throw 'Illegal propertyIndex';
@@ -276,6 +287,8 @@ dynamic _isarIdeaSerializeWeb(
   IsarNative.jsObjectSet(jsObj, 'speedExplanation', object.speedExplanation);
   IsarNative.jsObjectSet(jsObj, 'status', object.status);
   IsarNative.jsObjectSet(jsObj, 'summary', object.summary);
+  IsarNative.jsObjectSet(
+      jsObj, 'tasks', _isarIdeaIsarTaskConverter.toIsar(object.tasks));
   IsarNative.jsObjectSet(jsObj, 'title', object.title);
   IsarNative.jsObjectSet(jsObj, 'uid', object.uid);
   return jsObj;
@@ -322,6 +335,8 @@ IsarIdea _isarIdeaDeserializeWeb(
       IsarNative.jsObjectGet(jsObj, 'speedExplanation') ?? '';
   object.status = IsarNative.jsObjectGet(jsObj, 'status') ?? '';
   object.summary = IsarNative.jsObjectGet(jsObj, 'summary') ?? '';
+  object.tasks = _isarIdeaIsarTaskConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'tasks') ?? '');
   object.title = IsarNative.jsObjectGet(jsObj, 'title') ?? '';
   object.uid = IsarNative.jsObjectGet(jsObj, 'uid') ?? '';
   return object;
@@ -376,6 +391,9 @@ P _isarIdeaDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'status') ?? '') as P;
     case 'summary':
       return (IsarNative.jsObjectGet(jsObj, 'summary') ?? '') as P;
+    case 'tasks':
+      return (_isarIdeaIsarTaskConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'tasks') ?? '')) as P;
     case 'title':
       return (IsarNative.jsObjectGet(jsObj, 'title') ?? '') as P;
     case 'uid':
@@ -2171,6 +2189,109 @@ extension IsarIdeaQueryFilter
     ));
   }
 
+  QueryBuilder<IsarIdea, IsarIdea, QAfterFilterCondition> tasksEqualTo(
+    List<Task>? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'tasks',
+      value: _isarIdeaIsarTaskConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<IsarIdea, IsarIdea, QAfterFilterCondition> tasksGreaterThan(
+    List<Task>? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'tasks',
+      value: _isarIdeaIsarTaskConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<IsarIdea, IsarIdea, QAfterFilterCondition> tasksLessThan(
+    List<Task>? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'tasks',
+      value: _isarIdeaIsarTaskConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<IsarIdea, IsarIdea, QAfterFilterCondition> tasksBetween(
+    List<Task>? lower,
+    List<Task>? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'tasks',
+      lower: _isarIdeaIsarTaskConverter.toIsar(lower),
+      includeLower: includeLower,
+      upper: _isarIdeaIsarTaskConverter.toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<IsarIdea, IsarIdea, QAfterFilterCondition> tasksStartsWith(
+    List<Task> value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'tasks',
+      value: _isarIdeaIsarTaskConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<IsarIdea, IsarIdea, QAfterFilterCondition> tasksEndsWith(
+    List<Task> value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'tasks',
+      value: _isarIdeaIsarTaskConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<IsarIdea, IsarIdea, QAfterFilterCondition> tasksContains(
+      List<Task> value,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'tasks',
+      value: _isarIdeaIsarTaskConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<IsarIdea, IsarIdea, QAfterFilterCondition> tasksMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'tasks',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
   QueryBuilder<IsarIdea, IsarIdea, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -2492,6 +2613,14 @@ extension IsarIdeaQueryWhereSortBy
     return addSortByInternal('summary', Sort.desc);
   }
 
+  QueryBuilder<IsarIdea, IsarIdea, QAfterSortBy> sortByTasks() {
+    return addSortByInternal('tasks', Sort.asc);
+  }
+
+  QueryBuilder<IsarIdea, IsarIdea, QAfterSortBy> sortByTasksDesc() {
+    return addSortByInternal('tasks', Sort.desc);
+  }
+
   QueryBuilder<IsarIdea, IsarIdea, QAfterSortBy> sortByTitle() {
     return addSortByInternal('title', Sort.asc);
   }
@@ -2620,6 +2749,14 @@ extension IsarIdeaQueryWhereSortThenBy
     return addSortByInternal('summary', Sort.desc);
   }
 
+  QueryBuilder<IsarIdea, IsarIdea, QAfterSortBy> thenByTasks() {
+    return addSortByInternal('tasks', Sort.asc);
+  }
+
+  QueryBuilder<IsarIdea, IsarIdea, QAfterSortBy> thenByTasksDesc() {
+    return addSortByInternal('tasks', Sort.desc);
+  }
+
   QueryBuilder<IsarIdea, IsarIdea, QAfterSortBy> thenByTitle() {
     return addSortByInternal('title', Sort.asc);
   }
@@ -2705,6 +2842,11 @@ extension IsarIdeaQueryWhereDistinct
     return addDistinctByInternal('summary', caseSensitive: caseSensitive);
   }
 
+  QueryBuilder<IsarIdea, IsarIdea, QDistinct> distinctByTasks(
+      {bool caseSensitive = true}) {
+    return addDistinctByInternal('tasks', caseSensitive: caseSensitive);
+  }
+
   QueryBuilder<IsarIdea, IsarIdea, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('title', caseSensitive: caseSensitive);
@@ -2777,6 +2919,10 @@ extension IsarIdeaQueryProperty
 
   QueryBuilder<IsarIdea, String, QQueryOperations> summaryProperty() {
     return addPropertyNameInternal('summary');
+  }
+
+  QueryBuilder<IsarIdea, List<Task>?, QQueryOperations> tasksProperty() {
+    return addPropertyNameInternal('tasks');
   }
 
   QueryBuilder<IsarIdea, String, QQueryOperations> titleProperty() {
