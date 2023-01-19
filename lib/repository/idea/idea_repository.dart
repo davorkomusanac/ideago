@@ -14,7 +14,7 @@ class IdeaRepository implements IdeaInterface {
   Stream<List<Idea>> watchIdeas({required String ideaStatus}) =>
       offlineDb.watchIdeasOfCertainStatus(ideaStatus: ideaStatus).handleError(
         (e) {
-          log(e);
+          log(e.toString());
           throw kErrorLoadingIdeas;
         },
       );
