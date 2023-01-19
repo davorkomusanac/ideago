@@ -2,6 +2,8 @@ import 'package:isar/isar.dart';
 
 import '../../idea_rating_question/idea_rating_question.dart';
 import '../../idea_rating_question/isar_idea_rating_question/isar_idea_rating_question_converter.dart';
+import '../../task/isar_task/isar_task_converter.dart';
+import '../../task/task.dart';
 import '../idea.dart';
 
 part 'isar_idea.g.dart';
@@ -30,6 +32,11 @@ class IsarIdea {
   late List<IdeaRatingQuestion> ratingQuestions;
   @Index(caseSensitive: false)
   late List<String> categories;
+
+  ///Tasks is added in newer version of app, i.e. there are some users who have old data
+  ///without tasks field so we have to check it for nullability and assign an empty list
+  @IsarTaskConverter()
+  List<Task>? tasks;
   @Index()
   late DateTime dateTimeCreated;
   @Index()
@@ -53,6 +60,7 @@ class IsarIdea {
     ..rating = idea.rating
     ..ratingQuestions = idea.ratingQuestions
     ..categories = idea.categories
+    ..tasks = idea.tasks
     ..dateTimeCreated = idea.dateTimeCreated
     ..dateTimeLastUpdated = idea.dateTimeLastUpdated;
 
@@ -70,6 +78,7 @@ class IsarIdea {
         rating: rating,
         ratingQuestions: ratingQuestions,
         categories: categories,
+        tasks: tasks ?? <Task>[],
         dateTimeCreated: dateTimeCreated,
         dateTimeLastUpdated: dateTimeLastUpdated,
       );

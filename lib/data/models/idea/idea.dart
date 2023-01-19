@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../idea_rating_question/idea_rating_question.dart';
+import '../task/task.dart';
 
 class Idea extends Equatable {
   final String uid;
@@ -16,6 +17,7 @@ class Idea extends Equatable {
   final int rating;
   final List<IdeaRatingQuestion> ratingQuestions;
   final List<String> categories;
+  final List<Task> tasks;
   final DateTime dateTimeCreated;
   final DateTime dateTimeLastUpdated;
 
@@ -33,6 +35,7 @@ class Idea extends Equatable {
     required this.rating,
     required this.ratingQuestions,
     required this.categories,
+    required this.tasks,
     required this.dateTimeCreated,
     required this.dateTimeLastUpdated,
   });
@@ -42,7 +45,7 @@ class Idea extends Equatable {
       'Idea{uid: $uid, title: $title, summary: $summary, fullDescription: $fullDescription, status: $status, '
       'revenueExplanation: $revenueExplanation, differentiationExplanation: $differentiationExplanation, '
       'speedExplanation: $speedExplanation, capitalExplanation: $capitalExplanation, index: $index, '
-      'rating: $rating, ratingQuestions: $ratingQuestions, categories: $categories, '
+      'rating: $rating, ratingQuestions: $ratingQuestions, categories: $categories, tasks: $tasks, '
       'dateTimeCreated: $dateTimeCreated, dateTimeLastUpdated: $dateTimeLastUpdated}';
 
   Idea copyWith({
@@ -59,6 +62,7 @@ class Idea extends Equatable {
     int? rating,
     List<IdeaRatingQuestion>? ratingQuestions,
     List<String>? categories,
+    List<Task>? tasks,
     DateTime? dateTimeCreated,
     DateTime? dateTimeLastUpdated,
   }) =>
@@ -76,6 +80,7 @@ class Idea extends Equatable {
         rating: rating ?? this.rating,
         ratingQuestions: ratingQuestions ?? this.ratingQuestions,
         categories: categories ?? this.categories,
+        tasks: tasks ?? this.tasks,
         dateTimeCreated: dateTimeCreated ?? this.dateTimeCreated,
         dateTimeLastUpdated: dateTimeLastUpdated ?? this.dateTimeLastUpdated,
       );
@@ -94,6 +99,7 @@ class Idea extends Equatable {
         'rating': rating,
         'ratingQuestions': ratingQuestions.map((question) => question.toJson()).toList(),
         'categories': categories,
+        'tasks': tasks.map((task) => task.toJson()).toList(),
         'dateTimeCreated': dateTimeCreated,
         'dateTimeLastUpdated': dateTimeLastUpdated,
       };
@@ -118,6 +124,13 @@ class Idea extends Equatable {
                 .toList()
             : <IdeaRatingQuestion>[],
         categories: json['categories'] as List<String>? ?? <String>[],
+        tasks: (json['tasks'] is List)
+            ? (json['tasks'] as List)
+                .map(
+                  (q) => Task.fromJson(q),
+                )
+                .toList()
+            : <Task>[],
         dateTimeCreated: json['dateTimeCreated'] as DateTime? ?? DateTime.now(),
         dateTimeLastUpdated: json['dateTimeLastUpdated'] as DateTime? ?? DateTime.now(),
       );
@@ -137,6 +150,7 @@ class Idea extends Equatable {
         rating,
         ratingQuestions,
         categories,
+        tasks,
         dateTimeCreated,
         dateTimeLastUpdated,
       ];
