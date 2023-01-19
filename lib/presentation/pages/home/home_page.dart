@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _discardedTabScrollController = ScrollController();
     _debouncer = Debouncer(milliseconds: 500);
     _tabController = TabController(
+      //TODO Check here with local storage, when user creates his first idea, change starting tab to in Progress
       initialIndex: 0,
       length: _tabs.length,
       vsync: this,
@@ -69,6 +70,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             IconButton(
               onPressed: () {
                 //TODO Open Hamburger menu here
+                //Put Red Badge on menu if user is not logged in (as a CTA basically)
                 //Options to add here:
                 //Login with firebase, privacy and terms of use pages
                 //Rate app?
