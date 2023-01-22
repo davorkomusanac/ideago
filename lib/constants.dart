@@ -17,6 +17,8 @@ const String kIdeaTextFieldSummaryLabel = 'Summary';
 const String kIdeaTextFieldSummaryHint = 'Add short summary of your idea..';
 const String kIdeaTextFieldFullDescriptionLabel = 'Full description';
 const String kIdeaTextFieldFullDescriptionHint = 'Add full description regarding your idea..';
+const String kIdeaTextFieldTasks = 'Tasks';
+const String kIdeaTextFieldTasksHint = 'Press the button to create tasks..';
 const String kIdeaTextFieldStatus = 'Status';
 const String kIdeaTextFieldRatingTitle = 'Rating';
 const String kIdeaTextFieldRatingInitialValue = 'Tap to Rate';
@@ -26,7 +28,7 @@ const String kIdeaTextFieldSearchHint = 'Type to search a specific idea.';
 const String kIdeaTextFieldHowAreYouGoingToEarnMoneyLabel = 'Revenue';
 const String kIdeaTextFieldHowAreYouGoingToEarnMoneyHint = 'How are you going to earn money?';
 const String kIdeaTextFieldHowAreYouDifferentLabel = 'Differentiation';
-const String kIdeaTextFieldHowAreYouDifferentHint = 'How are you different from the competition?';
+const String kIdeaTextFieldHowAreYouDifferentHint = 'How are you different from the rest?';
 const String kIdeaTextFieldHowFastToLaunchLabel = 'Speed';
 const String kIdeaTextFieldHowFastToLaunchHint = 'How fast can you launch?';
 const String kIdeaTextFieldHowMuchTimeAndMoneyNeededLabel = 'Capital';
@@ -76,3 +78,7 @@ const String kAppBarRateIdeaTitle = 'Rate idea';
 
 /// Values for SharedPrefs storage
 const String kSharedPrefsIdeaTabViewKey = 'listViewIsIdeaTabViewPref';
+
+/// Add Idea Tasks
+const String kAddIdeaTasksEmptyTasks = 'You have no tasks. Create your first task.';
+const String kAddIdeaTaskTextFieldHintText = 'Type to create task';

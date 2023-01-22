@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../application/idea_tasks/idea_tasks_cubit.dart';
 import '../../../application/idea_text_fields_helpers/idea_text_fields_helpers_cubit.dart';
 import '../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../constants.dart';
+import '../../../data/models/task/task.dart';
 import '../../../idea_rating_questions.dart';
 import '../../../repository/idea_category/idea_category_repository.dart';
 import '../../widgets/adaptive_alert_dialog.dart';
@@ -76,6 +78,12 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
             create: (context) => IdeaCategoriesCubit(
               context.read<IdeaCategoryRepository>(),
             ),
+          ),
+          BlocProvider<IdeaTasksCubit>(
+            create: (context) => IdeaTasksCubit()
+              ..tasksInitialized(
+                const <Task>[],
+              ),
           ),
         ],
         child: WillPopScope(
