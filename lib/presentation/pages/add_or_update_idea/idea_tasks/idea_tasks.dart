@@ -5,8 +5,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../../application/idea_tasks/idea_tasks_cubit.dart';
 import '../../../../colors.dart';
 import '../../../../constants.dart';
-import '../tasks/add_task_bottom_sheet.dart';
-import '../tasks/task_list_tile.dart';
+import 'add_task_bottom_sheet.dart';
+import 'task_list_tile.dart';
 
 class IdeaTasks extends StatelessWidget {
   const IdeaTasks({Key? key}) : super(key: key);

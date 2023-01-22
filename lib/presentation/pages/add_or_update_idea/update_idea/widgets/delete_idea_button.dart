@@ -2,11 +2,11 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../application/ideas/ideas_cubit.dart';
-import '../../../../colors.dart';
-import '../../../../constants.dart';
-import '../../../../data/models/idea/idea.dart';
-import '../../../widgets/adaptive_alert_dialog.dart';
+import '../../../../../application/ideas/ideas_cubit.dart';
+import '../../../../../colors.dart';
+import '../../../../../constants.dart';
+import '../../../../../data/models/idea/idea.dart';
+import '../../../../widgets/adaptive_alert_dialog.dart';
 
 class DeleteIdeaButton extends StatelessWidget {
   const DeleteIdeaButton({

@@ -2,11 +2,11 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../application/idea_categories/idea_categories_cubit.dart';
-import '../../../../colors.dart';
-import '../../../../constants.dart';
-import '../../../../data/models/idea_category/idea_category.dart';
-import '../../../widgets/adaptive_alert_dialog.dart';
+import '../../../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../../../colors.dart';
+import '../../../../../constants.dart';
+import '../../../../../data/models/idea_category/idea_category.dart';
+import '../../../../widgets/adaptive_alert_dialog.dart';
 
 class CategoryListTile extends StatelessWidget {
   const CategoryListTile({Key? key, required this.category}) : super(key: key);

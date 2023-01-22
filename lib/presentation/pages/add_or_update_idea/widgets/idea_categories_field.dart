@@ -4,7 +4,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../application/idea_categories/idea_categories_cubit.dart';
 import '../../../../colors.dart';
-import '../../add_idea_category/add_idea_category_bottom_sheet.dart';
+import '../add_idea_category/add_idea_category_bottom_sheet.dart';
 
 class IdeaCategoriesField extends StatelessWidget {
   const IdeaCategoriesField({Key? key}) : super(key: key);
