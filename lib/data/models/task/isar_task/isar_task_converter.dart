@@ -11,11 +11,11 @@ class IsarTaskConverter extends TypeConverter<List<Task>?, String> {
   List<Task> fromIsar(String? object) {
     ///Tasks is added in newer version of app, i.e. there are some users who have old data
     ///without tasks field so we have to check it for nullability and assign an empty list
-    if (object == null) {
-      List<dynamic> decodedList = jsonDecode(object!);
+    if (object != null && object.isNotEmpty) {
+      List<dynamic> decodedList = jsonDecode(object);
       List<Task> unmappedList = decodedList
           .map(
-            (task) => Task.fromJson(task),
+            (task) => Task.fromJsonEncoded(task),
           )
           .toList();
       return unmappedList;
@@ -28,7 +28,7 @@ class IsarTaskConverter extends TypeConverter<List<Task>?, String> {
   String toIsar(List<Task>? object) {
     final mappedList = object
         ?.map(
-          (task) => task.toJson(),
+          (task) => task.toJsonEncode(),
         )
         .toList();
     return jsonEncode(mappedList);
