@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../../application/idea_tasks/idea_tasks_cubit.dart';
 import '../../../../application/ideas/ideas_cubit.dart';
 import '../../../../application/rate_idea/rate_idea_cubit.dart';
 import '../../../../constants.dart';
@@ -13,6 +14,7 @@ import 'idea_categories_field.dart';
 import 'idea_full_description_minimized.dart';
 import 'idea_rating_field.dart';
 import 'idea_status_field.dart';
+import 'idea_tasks.dart';
 
 class AddIdeaAllFields extends StatelessWidget {
   const AddIdeaAllFields({
@@ -98,6 +100,15 @@ class AddIdeaAllFields extends StatelessWidget {
               fullDescriptionController: fullDescriptionController,
               descriptionFullScreenFocusNode: descriptionFullScreenFocusNode,
             ),
+
+            ///
+            ///Tasks
+            ///
+            const SizedBox(height: 24),
+            const IdeaTextFieldLabel(
+              label: kIdeaTextFieldTasks,
+            ),
+            const IdeaTasks(),
 
             ///
             ///Status and Rating
@@ -196,6 +207,7 @@ class AddIdeaAllFields extends StatelessWidget {
                           rating: context.read<RateIdeaCubit>().state.ratingsSum,
                           ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
                           categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                          tasks: context.read<IdeaTasksCubit>().state.tasks,
                         );
                     break;
                   case kIdeaStatusToDo:
@@ -211,6 +223,7 @@ class AddIdeaAllFields extends StatelessWidget {
                           rating: context.read<RateIdeaCubit>().state.ratingsSum,
                           ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
                           categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                          tasks: context.read<IdeaTasksCubit>().state.tasks,
                         );
                     break;
                   case kIdeaStatusDone:
@@ -226,6 +239,7 @@ class AddIdeaAllFields extends StatelessWidget {
                           rating: context.read<RateIdeaCubit>().state.ratingsSum,
                           ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
                           categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                          tasks: context.read<IdeaTasksCubit>().state.tasks,
                         );
                     break;
                   case kIdeaStatusDiscarded:
@@ -241,6 +255,7 @@ class AddIdeaAllFields extends StatelessWidget {
                           rating: context.read<RateIdeaCubit>().state.ratingsSum,
                           ratingQuestions: context.read<RateIdeaCubit>().state.questionRatings,
                           categories: context.read<IdeaCategoriesCubit>().state.checkedCategories,
+                          tasks: context.read<IdeaTasksCubit>().state.tasks,
                         );
                     break;
                 }
