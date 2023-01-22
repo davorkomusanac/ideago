@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 import '../../constants.dart';
 import '../../data/models/idea/idea.dart';
 import '../../data/models/idea_rating_question/idea_rating_question.dart';
+import '../../data/models/task/task.dart';
 import '../../repository/idea/idea_repository.dart';
 
 part 'ideas_state.dart';
@@ -62,7 +63,7 @@ class IdeasCubit extends Cubit<IdeasState> {
         emit(
           state.copyWith(
             status: IdeasStatus.error,
-            errorMessageLoadingIdeas: e,
+            errorMessageLoadingIdeas: e.toString(),
           ),
         );
       },
@@ -184,6 +185,7 @@ class IdeasCubit extends Cubit<IdeasState> {
     required int rating,
     required List<IdeaRatingQuestion> ratingQuestions,
     required List<String> categories,
+    required List<Task> tasks,
   }) async {
     double index = state.ideas.isNotEmpty ? state.indexOfNewestIdea + 1 : 0;
     var idea = Idea(
@@ -200,6 +202,7 @@ class IdeasCubit extends Cubit<IdeasState> {
       rating: rating,
       ratingQuestions: ratingQuestions,
       categories: categories,
+      tasks: tasks,
       dateTimeCreated: DateTime.now(),
       dateTimeLastUpdated: DateTime.now(),
     );
@@ -280,6 +283,7 @@ class IdeasCubit extends Cubit<IdeasState> {
     required int rating,
     required List<IdeaRatingQuestion> ratingQuestions,
     required List<String> categories,
+    required List<Task> tasks,
     required DateTime dateTimeCreated,
   }) async {
     var idea = Idea(
@@ -296,6 +300,7 @@ class IdeasCubit extends Cubit<IdeasState> {
       rating: rating,
       ratingQuestions: ratingQuestions,
       categories: categories,
+      tasks: tasks,
       dateTimeCreated: dateTimeCreated,
       dateTimeLastUpdated: DateTime.now(),
     );
