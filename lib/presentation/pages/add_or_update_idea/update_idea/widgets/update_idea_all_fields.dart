@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../application/idea_categories/idea_categories_cubit.dart';
-import '../../../../application/idea_tasks/idea_tasks_cubit.dart';
-import '../../../../application/ideas/ideas_cubit.dart';
-import '../../../../application/rate_idea/rate_idea_cubit.dart';
-import '../../../../constants.dart';
-import '../../../../data/models/idea/idea.dart';
-import '../../../widgets/idea_text_field.dart';
-import '../../../widgets/idea_text_field_label.dart';
-import '../../add_idea/widgets/discard_idea_button.dart';
-import '../../add_idea/widgets/idea_button.dart';
-import '../../add_idea/widgets/idea_categories_field.dart';
-import '../../add_idea/widgets/idea_full_description_minimized.dart';
-import '../../add_idea/widgets/idea_rating_field.dart';
-import '../../add_idea/widgets/idea_status_field.dart';
-import '../../add_idea/widgets/idea_tasks.dart';
+import '../../../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../../../application/idea_tasks/idea_tasks_cubit.dart';
+import '../../../../../application/ideas/ideas_cubit.dart';
+import '../../../../../application/rate_idea/rate_idea_cubit.dart';
+import '../../../../../constants.dart';
+import '../../../../../data/models/idea/idea.dart';
+import '../../../../widgets/idea_text_field.dart';
+import '../../../../widgets/idea_text_field_label.dart';
+import '../../idea_tasks/idea_tasks.dart';
+import '../../widgets/discard_idea_button.dart';
+import '../../widgets/idea_button.dart';
+import '../../widgets/idea_categories_field.dart';
+import '../../widgets/idea_full_description_minimized.dart';
+import '../../widgets/idea_rating_field.dart';
+import '../../widgets/idea_status_field.dart';
 import 'delete_idea_button.dart';
 
 class UpdateIdeaAllFields extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../colors.dart';
 import '../../../../data/models/idea/idea.dart';
 import '../../../../functions.dart';
-import '../../update_idea/update_idea_page.dart';
+import '../../add_or_update_idea/update_idea/update_idea_page.dart';
 import 'idea_card_categories_chip.dart';
 
 class IdeaCard extends StatelessWidget {

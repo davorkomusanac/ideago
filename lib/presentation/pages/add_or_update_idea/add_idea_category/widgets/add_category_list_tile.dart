@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../application/idea_categories/idea_categories_cubit.dart';
-import '../../../../colors.dart';
+import '../../../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../../../colors.dart';
 
 class AddCategoryListTile extends StatelessWidget {
   const AddCategoryListTile({Key? key, required this.title}) : super(key: key);

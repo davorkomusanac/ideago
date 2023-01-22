@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../application/idea_categories/idea_categories_cubit.dart';
-import '../../../colors.dart';
-import '../../../constants.dart';
-import '../../widgets/themed_circular_progress_indicator.dart';
+import '../../../../application/idea_categories/idea_categories_cubit.dart';
+import '../../../../colors.dart';
+import '../../../../constants.dart';
+import '../../../widgets/themed_circular_progress_indicator.dart';
 import 'widgets/add_category_list_tile.dart';
 import 'widgets/category_list_tile.dart';
 

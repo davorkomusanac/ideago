@@ -7,7 +7,7 @@ import '../../../application/ideas/ideas_cubit.dart';
 import '../../../constants.dart';
 import '../../../functions.dart';
 import '../../widgets/idea_text_field.dart';
-import '../add_idea/add_idea_page.dart';
+import '../add_or_update_idea/add_idea/add_idea_page.dart';
 import 'tab_views/discarded_tab_view.dart';
 import 'tab_views/done_tab_view.dart';
 import 'tab_views/in_progress_tab_view.dart';
