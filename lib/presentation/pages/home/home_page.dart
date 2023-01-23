@@ -65,11 +65,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          //TODO remove after implementing drawer
           //title: const Text('IdeaGo'),
           actions: [
             IconButton(
               onPressed: () {
-                //TODO Move widgets to corresponding directory? e.g. add and update idea pages
                 //TODO Introduce bloc tests? test the logic? => move to feature layer architecture
                 //TODO Open Hamburger menu here
                 //Put Red Badge on menu if user is not logged in (as a CTA basically)
