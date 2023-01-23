@@ -11,7 +11,6 @@ class IdeaTasksCubit extends Cubit<IdeaTasksState> {
   IdeaTasksCubit() : super(const IdeaTasksState());
 
   void tasksInitialized(List<Task> tasks) {
-    //TODO reorder task reverse index/list index desc
     emit(
       state.copyWith(tasks: tasks),
     );
@@ -24,11 +23,12 @@ class IdeaTasksCubit extends Cubit<IdeaTasksState> {
       uid: const Uuid().v4(),
       title: title,
       status: kIdeaStatusToDo,
-      index: state.tasks.isEmpty ? 0 : state.tasks.last.index + 1,
+      index: state.tasks.isEmpty ? 0 : state.tasks.first.index + 1,
       dateTimeCreated: DateTime.now(),
       dateTimeLastUpdated: DateTime.now(),
     );
-    final updatedTasks = [...state.tasks, task];
+    //Task are going to be sorted index desc
+    final updatedTasks = [task, ...state.tasks];
 
     emit(
       state.copyWith(tasks: updatedTasks),
