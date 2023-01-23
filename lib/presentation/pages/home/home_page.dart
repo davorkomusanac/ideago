@@ -43,9 +43,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _doneTabScrollController = ScrollController();
     _discardedTabScrollController = ScrollController();
     _debouncer = Debouncer(milliseconds: 500);
+
+    //Check if InProgress ideas are empty, if they are set starting tab to To Do ideas
+    int initialIndex = context.read<InProgressIdeasCubit>().state.ideas.isEmpty ? 1 : 0;
     _tabController = TabController(
-      //TODO Check here with local storage, when user creates his first idea, change starting tab to in Progress
-      initialIndex: 0,
+      initialIndex: initialIndex,
       length: _tabs.length,
       vsync: this,
     );
