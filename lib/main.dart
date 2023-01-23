@@ -11,7 +11,7 @@ import 'data/databases/idea/idea_offline_db.dart';
 import 'data/databases/idea_category/idea_category_offline_db.dart';
 import 'data/models/idea/isar_idea/isar_idea.dart';
 import 'data/models/idea_category/isar_idea_category/isar_idea_category.dart';
-import 'presentation/pages/home/home_page.dart';
+import 'presentation/pages/splash/splash_page.dart';
 import 'repository/idea/idea_repository.dart';
 import 'repository/idea_category/idea_category_repository.dart';
 import 'theme.dart';
@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: kAppName,
             theme: appTheme,
-            home: const HomePage(),
+            home: const SplashPage(),
           ),
         ),
       );
