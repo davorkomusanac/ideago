@@ -67,22 +67,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          //TODO remove after implementing drawer
-          //title: const Text('IdeaGo'),
           actions: [
-            IconButton(
-              onPressed: () {
-                //TODO Introduce bloc tests? test the logic? => move to feature layer architecture
-                //TODO Open Hamburger menu here
-                //Put Red Badge on menu if user is not logged in (as a CTA basically)
-                //Options to add here:
-                //Login with firebase, privacy and terms of use pages
-                //Rate app?
-                //Give feedback
-                //Settings?
-                //Show logo of app
-              },
-              icon: const Icon(Icons.menu),
+            //TODO Introduce bloc tests? test the logic? => move to feature layer architecture
+            //TODO Open Drawer menu here
+            //Put Red Badge on menu if user is not logged in (as a CTA basically)
+            //Options to add here:
+            //Login with firebase, privacy and terms of use pages
+            //Rate app?
+            //Give feedback
+            //Settings?
+            //Show logo of app
+            const SizedBox(width: 10),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  'IdeaGo',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
             ),
             Expanded(
               child: Center(
