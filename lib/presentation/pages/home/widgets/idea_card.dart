@@ -1,10 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../../../../colors.dart';
+import '../../../../constants.dart';
 import '../../../../data/models/idea/idea.dart';
 import '../../../../functions.dart';
 import '../../add_or_update_idea/update_idea/update_idea_page.dart';
 import 'idea_card_categories_chip.dart';
+import 'idea_card_list_view_task.dart';
 
 class IdeaCard extends StatelessWidget {
   final Idea idea;
@@ -65,6 +69,22 @@ class IdeaCard extends StatelessWidget {
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
+                    ),
+                  //Show only if idea contains tasks and it is In Progress
+                  if (idea.tasks.isNotEmpty && idea.status == kIdeaStatusInProgress)
+                    ...idea.tasks
+                        .sublist(
+                          //Always show maximum of 3 latest tasks, or less, min is needed to not cause an inclusive error in arrays with less than 3 items
+                          0,
+                          min(idea.tasks.length, 3),
+                        )
+                        .map(
+                          (task) => IdeaCardListViewTask(task: task),
+                        )
+                        .toList(),
+                  if (idea.tasks.isNotEmpty)
+                    const SizedBox(
+                      height: 12,
                     ),
                   Row(
                     children: [
