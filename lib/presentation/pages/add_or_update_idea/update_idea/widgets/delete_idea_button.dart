@@ -20,6 +20,7 @@ class DeleteIdeaButton extends StatelessWidget {
   Widget build(BuildContext context) => IconButton(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         onPressed: () {
+          // ignore: unused_result
           showOkCancelAlertDialog(
             context: context,
             builder: (_, __) => AdaptiveAlertDialog(
