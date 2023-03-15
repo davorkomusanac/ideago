@@ -66,6 +66,7 @@ class TaskListTile extends StatelessWidget {
                       //Dismiss keyboard
                       FocusManager.instance.primaryFocus?.unfocus();
 
+                      // ignore: unused_result
                       showOkCancelAlertDialog(
                         context: context,
                         builder: (_, __) => AdaptiveAlertDialog(
