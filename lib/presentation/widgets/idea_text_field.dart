@@ -23,6 +23,7 @@ class IdeaTextField extends StatelessWidget {
   final Color? cursorColor;
   final TextStyle? style;
   final Function(String val)? onChanged;
+  final TextCapitalization textCapitalization;
 
   const IdeaTextField({
     this.controller,
@@ -45,6 +46,7 @@ class IdeaTextField extends StatelessWidget {
     this.filled,
     this.cursorColor,
     this.style,
+    this.textCapitalization = TextCapitalization.sentences,
     Key? key,
   }) : super(key: key);
 
@@ -62,6 +64,7 @@ class IdeaTextField extends StatelessWidget {
           onTap: onTap,
           onChanged: onChanged,
           textAlignVertical: TextAlignVertical.top,
+          textCapitalization: textCapitalization,
           style: style,
           cursorColor: cursorColor,
           decoration: InputDecoration(
