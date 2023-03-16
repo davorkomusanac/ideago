@@ -41,7 +41,7 @@ class IdeaCardGridView extends StatelessWidget {
                     ),
                     child: Text(
                       idea.title,
-                      maxLines: 1,
+                      maxLines: 2,
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
