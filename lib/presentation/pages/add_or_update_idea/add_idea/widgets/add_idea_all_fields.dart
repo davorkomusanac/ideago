@@ -64,7 +64,7 @@ class AddIdeaAllFields extends StatelessWidget {
                     hintText: kIdeaTextFieldTitleHint,
                     margin: const EdgeInsets.symmetric(horizontal: 8.0),
                     autofocus: true,
-                    maxLines: 2,
+                    maxLines: 3,
                   ),
                 ),
                 const DiscardIdeaButton(
@@ -86,7 +86,7 @@ class AddIdeaAllFields extends StatelessWidget {
               controller: summaryController,
               hintText: kIdeaTextFieldSummaryHint,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              maxLines: 2,
+              maxLines: 3,
             ),
 
             ///
@@ -145,7 +145,7 @@ class AddIdeaAllFields extends StatelessWidget {
               controller: revenueController,
               hintText: kIdeaTextFieldHowAreYouGoingToEarnMoneyHint,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              maxLines: 2,
+              maxLines: 3,
             ),
 
             ///
@@ -159,7 +159,7 @@ class AddIdeaAllFields extends StatelessWidget {
               controller: differentiationController,
               hintText: kIdeaTextFieldHowAreYouDifferentHint,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              maxLines: 2,
+              maxLines: 3,
             ),
 
             ///
@@ -173,7 +173,7 @@ class AddIdeaAllFields extends StatelessWidget {
               controller: speedController,
               hintText: kIdeaTextFieldHowFastToLaunchHint,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              maxLines: 2,
+              maxLines: 3,
             ),
 
             ///
@@ -187,7 +187,7 @@ class AddIdeaAllFields extends StatelessWidget {
               controller: capitalController,
               hintText: kIdeaTextFieldHowMuchTimeAndMoneyNeededHint,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              maxLines: 2,
+              maxLines: 3,
             ),
 
             const SizedBox(height: 24),
