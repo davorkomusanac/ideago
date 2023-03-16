@@ -29,15 +29,16 @@ class IdeaFullDescriptionMinimized extends StatelessWidget {
               contentPadding: const EdgeInsets.fromLTRB(12, 12, 20, 12),
             ),
             Positioned(
-              right: 0,
-              bottom: 0,
-              child: IconButton(
-                onPressed: () {
+              right: 8,
+              bottom: 8,
+              child: InkWell(
+                onTap: () {
                   descriptionFullScreenFocusNode.requestFocus();
                   context.read<IdeaTextFieldsHelpersCubit>().descriptionButtonPressed();
                 },
-                icon: Container(
+                child: Container(
                   color: AppColors.primaryBackgroundColor,
+                  padding: const EdgeInsets.all(6),
                   child: const Icon(Icons.fullscreen),
                 ),
               ),

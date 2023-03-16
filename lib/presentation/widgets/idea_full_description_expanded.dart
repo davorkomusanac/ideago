@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/idea_text_fields_helpers/idea_text_fields_helpers_cubit.dart';
+import '../../colors.dart';
 import '../../constants.dart';
 import 'idea_text_field.dart';
 import 'idea_text_field_label.dart';
@@ -43,16 +44,17 @@ class IdeaFullDescriptionExpanded extends StatelessWidget {
                           minLines: null,
                           maxLines: null,
                           expands: true,
-                          contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 36),
+                          contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
                         ),
                         Positioned(
-                          right: 0,
-                          bottom: 0,
+                          right: 8,
+                          bottom: 8,
                           child: InkWell(
                             onTap: () => context.read<IdeaTextFieldsHelpersCubit>().descriptionButtonPressed(),
-                            child: const Padding(
-                              padding: EdgeInsets.all(12.0),
-                              child: Icon(Icons.fullscreen_exit),
+                            child: Container(
+                              color: AppColors.primaryBackgroundColor,
+                              padding: const EdgeInsets.all(6.0),
+                              child: const Icon(Icons.fullscreen_exit),
                             ),
                           ),
                         ),
