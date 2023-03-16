@@ -19,6 +19,9 @@ class IdeaStatusField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocListener<IdeaTextFieldsHelpersCubit, IdeaTextFieldsHelpersState>(
+        ///Implemented listenWhen because listener would get called whenever something changed in IdeaTextFieldsHelpers
+        ///which would then change idea status if user expanded full description by default value (To Do value)
+        listenWhen: (previous, current) => previous.ideaProjectStatus == current.ideaProjectStatus ? false : true,
         listener: (context, state) {
           if (state.ideaProjectStatus != statusController.text) {
             statusController.text = state.ideaProjectStatus;
