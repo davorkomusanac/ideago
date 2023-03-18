@@ -74,7 +74,7 @@ class ToDoTabView extends StatelessWidget {
                           controller: scrollController,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 0.95,
+                            mainAxisExtent: 220,
                             mainAxisSpacing: 12,
                             crossAxisSpacing: 12,
                           ),
