@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../application/idea_tasks/idea_tasks_cubit.dart';
 import '../../../../colors.dart';
 import '../../../../constants.dart';
-import 'add_task_bottom_sheet.dart';
+import 'idea_tasks_page.dart';
 import 'task_list_tile.dart';
 
 class IdeaTasks extends StatelessWidget {
@@ -26,7 +25,7 @@ class IdeaTasks extends StatelessWidget {
                     width: 1.5,
                   ),
                 ),
-                height: 200,
+                height: 235,
                 child: state.tasks.isEmpty
                     ? Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,18 +76,14 @@ class IdeaTasks extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      //Same as inside Reorderable ListView, just needs a text field for entering new tasks
-                      showMaterialModalBottomSheet(
-                        context: context,
-                        enableDrag: false,
-                        backgroundColor: AppColors.transparentColor,
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
                         builder: (_) => BlocProvider<IdeaTasksCubit>.value(
                           value: BlocProvider.of<IdeaTasksCubit>(context),
-                          child: const AddTaskBottomSheet(),
+                          child: const IdeaTasksPage(),
                         ),
-                      );
-                    },
+                      ),
+                    ),
                     child: const Icon(Icons.add, size: 30),
                   ),
                 ),

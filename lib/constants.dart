@@ -81,4 +81,4 @@ const String kSharedPrefsIdeaTabViewKey = 'listViewIsIdeaTabViewPref';
 
 /// Add Idea Tasks
 const String kAddIdeaTasksEmptyTasks = 'You have no tasks. Create your first task.';
-const String kAddIdeaTaskTextFieldHintText = 'Type to create task';
+const String kAddIdeaTaskTextFieldHintText = 'Type to create task..';
