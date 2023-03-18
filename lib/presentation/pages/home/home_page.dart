@@ -69,6 +69,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(65),
           child: AppBar(
+            toolbarHeight: 65,
+            centerTitle: true,
             actions: [
               //TODO Introduce bloc tests? test the logic? => move to feature layer architecture
               //TODO Open Drawer menu here

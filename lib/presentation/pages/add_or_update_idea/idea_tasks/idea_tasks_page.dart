@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,12 +36,16 @@ class _IdeaTasksPageState extends State<IdeaTasksPage> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(65),
           child: AppBar(
+            toolbarHeight: 65,
             automaticallyImplyLeading: false,
             actions: [
-              const SizedBox(
-                width: 8,
-              ),
+              ///Android and iOS have different default BackButtons and paddings
+              if (Platform.isIOS)
+                const SizedBox(
+                  width: 8,
+                ),
               const BackButton(),
+              if (Platform.isAndroid) const SizedBox(width: 8),
               Expanded(
                 child: Center(
                   //Theme needed as parent widget to pass color to suffixIcons
