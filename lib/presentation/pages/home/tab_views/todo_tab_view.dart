@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../application/ideas/idea_tab_view_helper/idea_tab_view_helper_cubit.dart';
 import '../../../../application/ideas/ideas_cubit.dart';
 import '../../../../constants.dart';
+import '../../../../functions.dart';
 import '../../../widgets/themed_circular_progress_indicator.dart';
 import '../widgets/idea_card.dart';
 import '../widgets/idea_card_grid_view.dart';
@@ -72,12 +73,7 @@ class ToDoTabView extends StatelessWidget {
                           physics: const AlwaysScrollableScrollPhysics(),
                           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                           controller: scrollController,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.95,
-                            mainAxisSpacing: 12,
-                            crossAxisSpacing: 12,
-                          ),
+                          gridDelegate: fixedHeightSliverGridViewDelegate(),
                           itemCount: state.isThereMoreIdeasToLoad ? state.ideas.length + 1 : state.ideas.length,
                           itemBuilder: (context, index) => index >= state.ideas.length
                               ? const ThemedCircularProgressIndicator(

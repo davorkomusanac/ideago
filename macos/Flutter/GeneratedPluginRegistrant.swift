@@ -8,7 +8,7 @@ import Foundation
 import dynamic_color
 import isar_flutter_libs
 import macos_ui
-import path_provider_macos
+import path_provider_foundation
 import shared_preferences_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {

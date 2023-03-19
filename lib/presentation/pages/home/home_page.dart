@@ -66,102 +66,106 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          actions: [
-            //TODO Introduce bloc tests? test the logic? => move to feature layer architecture
-            //TODO Open Drawer menu here
-            //Put Red Badge on menu if user is not logged in (as a CTA basically)
-            //Options to add here:
-            //Login with firebase, privacy and terms of use pages
-            //Rate app?
-            //Give feedback
-            //Settings?
-            //Show logo of app
-            const SizedBox(width: 10),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  'IdeaGo',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Center(
-                //Theme needed as parent widget to pass color to suffixIcons
-                child: Theme(
-                  data: Theme.of(context).copyWith(
-                    colorScheme: const ColorScheme.dark(
-                      primary: AppColors.white,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(65),
+          child: AppBar(
+            toolbarHeight: 65,
+            centerTitle: true,
+            actions: [
+              //TODO Introduce bloc tests? test the logic? => move to feature layer architecture
+              //TODO Open Drawer menu here
+              //Put Red Badge on menu if user is not logged in (as a CTA basically)
+              //Options to add here:
+              //Login with firebase, privacy and terms of use pages
+              //Rate app?
+              //Give feedback
+              //Settings?
+              //Show logo of app
+              const SizedBox(width: 10),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    kAppName,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  child: IdeaTextField(
-                    controller: _searchIdeasController,
-                    focusedBorderColor: AppColors.white,
-                    filled: true,
-                    fillColor: AppColors.primaryBackgroundColor,
-                    style: const TextStyle(fontSize: 14),
-                    onChanged: (val) {
-                      //Calling this setState so that the _searchController gets updated and delete search button appears
-                      setState(() {});
-                      _debouncer.run(
-                        () {
-                          context.read<InProgressIdeasCubit>().ideaSearched(
-                                val.trim(),
-                              );
-                          context.read<ToDoIdeasCubit>().ideaSearched(
-                                val.trim(),
-                              );
-                          context.read<DoneIdeasCubit>().ideaSearched(
-                                val.trim(),
-                              );
-                          context.read<DiscardedIdeasCubit>().ideaSearched(
-                                val.trim(),
-                              );
-                        },
-                      );
-                    },
-                    hintText: kIdeaTextFieldSearchHint,
-                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                    contentPadding: const EdgeInsets.all(16.0),
-                    cursorColor: AppColors.white,
-                    suffixIcon: _searchIdeasController.text.isEmpty
-                        ? const Icon(
-                            Icons.search,
-                            size: 20,
-                          )
-                        : IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _searchIdeasController.clear();
-                              });
-                              context.read<InProgressIdeasCubit>().ideaSearched();
-                              context.read<ToDoIdeasCubit>().ideaSearched();
-                              context.read<DoneIdeasCubit>().ideaSearched();
-                              context.read<DiscardedIdeasCubit>().ideaSearched();
-                            },
-                            icon: const Icon(
-                              Icons.clear,
-                              size: 20,
+                ],
+              ),
+              Expanded(
+                child: Center(
+                  //Theme needed as parent widget to pass color to suffixIcons
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      colorScheme: const ColorScheme.dark(
+                        primary: AppColors.white,
+                      ),
+                    ),
+                    child: IdeaTextField(
+                      controller: _searchIdeasController,
+                      focusedBorderColor: AppColors.white,
+                      filled: true,
+                      fillColor: AppColors.primaryBackgroundColor,
+                      onChanged: (val) {
+                        //Calling this setState so that the _searchController gets updated and delete search button appears
+                        setState(() {});
+                        _debouncer.run(
+                          () {
+                            context.read<InProgressIdeasCubit>().ideaSearched(
+                                  val.trim(),
+                                );
+                            context.read<ToDoIdeasCubit>().ideaSearched(
+                                  val.trim(),
+                                );
+                            context.read<DoneIdeasCubit>().ideaSearched(
+                                  val.trim(),
+                                );
+                            context.read<DiscardedIdeasCubit>().ideaSearched(
+                                  val.trim(),
+                                );
+                          },
+                        );
+                      },
+                      hintText: kIdeaTextFieldSearchHint,
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                      contentPadding: const EdgeInsets.all(16.0),
+                      cursorColor: AppColors.white,
+                      suffixIcon: _searchIdeasController.text.isEmpty
+                          ? const Icon(
+                              Icons.search,
+                              size: 24,
+                            )
+                          : IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _searchIdeasController.clear();
+                                });
+                                context.read<InProgressIdeasCubit>().ideaSearched();
+                                context.read<ToDoIdeasCubit>().ideaSearched();
+                                context.read<DoneIdeasCubit>().ideaSearched();
+                                context.read<DiscardedIdeasCubit>().ideaSearched();
+                              },
+                              icon: const Icon(
+                                Icons.clear,
+                                size: 24,
+                              ),
                             ),
-                          ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            BlocBuilder<IdeaTabViewHelperCubit, IdeaTabViewHelperState>(
-              builder: (context, state) => IconButton(
-                onPressed: () => context.read<IdeaTabViewHelperCubit>().changeIdeaTabLayoutPressed(),
-                icon: Icon(
-                  state.isListViewSelected ? Icons.grid_view : Icons.view_agenda_outlined,
+              BlocBuilder<IdeaTabViewHelperCubit, IdeaTabViewHelperState>(
+                builder: (context, state) => IconButton(
+                  onPressed: () => context.read<IdeaTabViewHelperCubit>().changeIdeaTabLayoutPressed(),
+                  icon: Icon(
+                    state.isListViewSelected ? Icons.grid_view : Icons.view_agenda_outlined,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         body: Column(
           children: [

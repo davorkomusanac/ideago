@@ -23,6 +23,10 @@ class IdeaTextField extends StatelessWidget {
   final Color? cursorColor;
   final TextStyle? style;
   final Function(String val)? onChanged;
+  final Function(String val)? onSubmitted;
+  final Function()? onEditingComplete;
+
+  final TextCapitalization textCapitalization;
 
   const IdeaTextField({
     this.controller,
@@ -39,12 +43,15 @@ class IdeaTextField extends StatelessWidget {
     this.suffixIcon,
     this.onTap,
     this.onChanged,
+    this.onSubmitted,
+    this.onEditingComplete,
     this.focusedBorderColor = AppColors.primaryForegroundColor,
     this.enabledBorderColor = AppColors.grey,
     this.fillColor,
     this.filled,
     this.cursorColor,
     this.style,
+    this.textCapitalization = TextCapitalization.sentences,
     Key? key,
   }) : super(key: key);
 
@@ -61,7 +68,10 @@ class IdeaTextField extends StatelessWidget {
           readOnly: readOnly,
           onTap: onTap,
           onChanged: onChanged,
+          onSubmitted: onSubmitted,
+          onEditingComplete: onEditingComplete,
           textAlignVertical: TextAlignVertical.top,
+          textCapitalization: textCapitalization,
           style: style,
           cursorColor: cursorColor,
           decoration: InputDecoration(

@@ -89,6 +89,7 @@ class _AddIdeaPageState extends State<AddIdeaPage> with TickerProviderStateMixin
         child: WillPopScope(
           onWillPop: () async {
             bool shouldPop = false;
+            // ignore: unused_result
             await showOkCancelAlertDialog(
               context: context,
               builder: (_, __) => AdaptiveAlertDialog(
