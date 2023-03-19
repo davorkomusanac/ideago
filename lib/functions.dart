@@ -134,3 +134,11 @@ List<String> formatCategoriesToRenderForIdeaCard({
       ? [...categories.sublist(0, indexOfLastCategoryToShow), '+$numberOfCategoriesLeftToShow']
       : [...categories];
 }
+
+SliverGridDelegateWithFixedCrossAxisCount fixedHeightSliverGridViewDelegate() =>
+    const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2,
+      mainAxisExtent: 220,
+      mainAxisSpacing: 12,
+      crossAxisSpacing: 12,
+    );
